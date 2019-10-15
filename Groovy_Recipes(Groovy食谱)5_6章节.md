@@ -29,7 +29,7 @@ println "Hello Groovy World"
 类unix操作系统的爱好者熟悉他们的脚本的“shebanging”—“hash”和“bang”的缩写，即脚本第一行的前两个字符。敲打脚本可让您在命令行输入时省去命令解释器。无需键入`groovy hello`来运行此脚本，您只需键入`hello.groovy`。 因为脚本是自我感知的(也就是说，它已经知道它是一个Groovy脚本)，所以在命名文件时甚至可以省略文件扩展名。在命令提示符中键入hello使它看起来像一个本机命令。
 
 Shebanging Groovy脚本假设有四件事：
-+ 您使用的是类似Unix的操作系统：Linux，Mac OS X，Solaris等（很抱歉，Windows用户，除非您也是Cygwin [^ 502]用户）。
++ 您使用的是类似Unix的操作系统：Linux，Mac OS X，Solaris等（很抱歉，Windows用户，除非您也是Cygwin [^502]用户）。
 + 您已将文件设置为可执行文件（chmod a+x hello）。
 + 当前目录（.）在您的PATH中。 如果不是，`./ hello`还算不错。
 + 环境变量`GROOVY_HOME`存在，`GROOVY_HOME/bin`在您的路径中的某个地方。您总是可以在脚本的顶部硬编码到groovy命令解释器的确切路径，但这将阻止您使用第2.1节(在Unix、Linux和Mac OS X上安装groovy，见第25页)中讨论的符号链接技巧在不同版本的groovy之间切换。
@@ -60,18 +60,19 @@ public class HelloWorld{
 
 在编译完`javac HelloWorld.java`之后，您可以通过输入`java HelloWorld Bub`来运行它。
 
-Using Groovy, you can boil the same exercise down to its bare essentials. Type the code that started this tip into a file named Hola.groovy. Next type groovy Hola Bub. Since all Groovy scripts are compiled into valid Java bytecode by the groovy command interpreter in memory, you effectively end up with the Java example without having to type all of that additional boilerplate code.
+使用Groovy，您可以将相同的练习简化为基本要领。 在一个名为`Hola.groovy`的文件中键入启动此技巧的代码。 接下来键入`Hola Bub`。 由于groovy命令解释器将所有Groovy脚本都编译到内存中的有效Java字节代码中，因此您可以有效地得到Java示例，而不必键入所有其他示例代码。
 
-The reason this terse if statement works is thanks to Groovy truth. For more information, see Section 3.10, Groovy Truth, on page 54.
+这个简洁的if语句之所以有效，是因为Groovy的真理。有关更多信息，请参见第54页第3.10节，Groovy真相。
 
-Every Groovy script has an implicit argsString array that represents the command-line arguments passed into the script. (You guessed it—this is the args of public static void main(String[ ] args) fame.) To see the magic args array in action, create a file named cli.groovy, and type the following:
+每个Groovy脚本都有一个隐式的`args`字符串数组，它表示传入脚本的命令行参数。(你猜对了——这就是《public static void main》的args。)要查看magic args数组的运行情况，请创建一个名为`cli.groovy`的文件。，然后键入以下内容:
 ```groovy
 args.each{println it}
 ```
 
-Typing groovy cli this is a test yields the following:
+输入`groovy cli this is a test`，结果如下：
 ```bash
 $ groovy cli this is a test
+
 ===>
 this
 is
@@ -79,7 +80,7 @@ a
 test
 ```
 
-### 5.4 Running a Shell Command
+### 5.4 Running a Shell Command {#运行Shell命令}
 ```bash
 // in Windows:
 println "cmd /c dir".execute().text
@@ -87,15 +88,15 @@ println "cmd /c dir".execute().text
 //in Unix / Linux / Mac OS X:
 println "ls -al".execute().text
 ```
-Running a shell command is as simple as calling .execute() on a String. This returns a java.lang.Process. You can use this trick to run full programs or simple command-line tasks. As the code examples demonstrate, the commands inside the String will most likely differ between operating systems. The ls command will work only on Mac OS X, Unix, and Linux systems. The dir command will work only on Windows derivatives.
+运行shell命令就像在字符串上调用`execute()`一样简单。这将返回一个`java.lang.Process`。您可以使用此技巧来运行完整的程序或简单的命令行任务。正如代码示例所演示的，字符串中的命令很可能在不同的操作系统之间有所不同。`ls`命令只适用于Mac OS X、Unix和Linux系统。`dir`命令只适用于Windows衍生工具。
 
-If you simply call .execute() on a String, the resulting output text is not captured. This might be acceptable for commands such as "rm some-file.txt".execute(). If  you want to see the output returned from the shell command, you append .text to the end of .execute().
+如果仅在字符串上调用" .execute()"，则不会捕获结果输出文本。 对于`" rm some-file.txt".execute()`之类的命令，这可能是可以接受的。 如果要查看shell命令返回的输出，请在" .execute()"的末尾附加" .text"。
 
-On Unix-like systems, most shell commands are actually executable programs. Type which ls to see the path to the command. This means that nearly everything you would normally type at the command line can simply be wrapped up in quotes and executed. (One unfortunate exception to this rule is when you are dealing with wildcards. See Section 5.5, Using Shell Wildcards in Groovy Scripts, on the next page for more details.) For example, you can run println "ifconfig".execute().text to see the current network settings.
+在类似Unix的系统上，大多数shell命令实际上是可执行程序。 键入哪个" ls"以查看命令的路径。 这意味着您通常在命令行中键入的几乎所有内容都可以用引号引起来并执行。 （此规则的一个不幸例外是在处理通配符时。有关更多详细信息，请参见下一页的第5.5节，在Groovy脚本中使用Shell通配符。）例如，您可以运行`println  "ifconfig".execute().text`查看当前网络设置。
 
-On Windows systems, println "ipconfig /all".execute().text returns similar results. This trick works because ipconfig.exe lives on your path in c:\windows\system32. Unfortunately, many of the most common commands you type at a command prompt in Windows are not executable programs at all. Search as you might, you’ll never find a dir.exe or copy.com tucked away in a system directory somewhere. These commands are embedded in cmd.exe.
+在Windows系统上，`println "ipconfig /all".execute().text`返回相似的结果。 因为"ipconfig.exe"位于" c:\windows\system32"中的路径上，所以可以使用此技巧。 不幸的是，您在Windows中的命令提示符下键入的许多最常见命令根本不是可执行程序。 进行搜索时，您永远找不到隐藏在系统目录中的`dir.exe` 或 `copy.com`。 这些命令嵌入在 " cmd.exe" 中。
 
-To execute them, you must type cmd /c. For a list of the embedded commands, type cmd /? at a command prompt. You’ll see the following list on Windows XP:
+要执行它们，必须键入 " cmd /c"。 有关嵌入式命令的列表，请键入" cmd/?"。 在命令提示符下。 您将在Windows XP上看到以下列表：
 ```bash
 DIR
 COPY
@@ -120,11 +121,11 @@ ASSOC
 FTYPE
 ```
 
-Knowing this, many Windows users just prepend cmd /c to all commands they execute in Groovy. Although it’s a bit more verbose, it certainly doesn’t hurt  anything to type "cmd /c ipconfig /all".execute().text.
+知道了这一点，许多Windows用户只是将"cmd /c"放在他们在Groovy中执行的所有命令之前。 尽管有点冗长，但键入`"cmd/c ipconfig /all".execute().text`肯定不会对您造成任何伤害。
 
-One last bit of advice for Windows users—don’t forget to escape your backslashes in directories: println "cmd /c dir c:\\tmp".execute().text.
+Windows用户的最后一点建议-不要忘记在目录中转义反斜杠：`println "cmd /c dir c:\\tmp".execute().text`。
 
-### 5.5 Using Shell Wildcards in Groovy Scripts
+### 5.5 Using Shell Wildcards in Groovy Scripts {#在Groovy脚本中使用Shell通配符}
 ```groovy
 //in Windows:
 println "cmd /c dir *.groovy".execute().text
@@ -140,31 +141,31 @@ println "ls -al *.groovy".execute().text
 println "sh -c ls -al *.groovy".execute().text
 ```
 
-In Section 5.4, Running a Shell Command, on the preceding page, you learned that some common commands that you type on a Windows machine (dir, copy, and so on) are embedded in the cmd shell. That shell manages wildcard expansion as well. So, asking for all files that end in .groovy is something that the shell expands into a list and then passes on to the dir command.
+在上一页的5.4节，运行Shell命令中，您了解到，在Windows机器上键入的一些常见命令（目录，副本等）已嵌入在"cmd Shell"中。 该外壳还可以管理通配符扩展。 因此，要求所有以".groovy"结尾的文件都是shell扩展为列表然后传递给dir命令的事情。
 
-On Unix-like systems, the shell is responsible for expanding wildcard characters as well. Knowing that, explicitly including the shell in your command makes sense. You can type sh -c "ls -al *.groovy" to get an idea of what we are trying to accomplish.
+在类似Unix的系统上，外壳程序还负责扩展通配符。 知道这一点后，在命令中明确包含外壳程序是有意义的。 您可以输入`sh -c " ls -al * .groovy" `了解我们要完成的工作。
 
-Unfortunately, the embedded quotes required for this command cause me a bit of heartburn if I try to call execute on a single string. Luckily, we can call execute on a String array as well. The first element in the array is the command, and all the following elements are passed in as arguments. Although this form is a bit more verbose (and admittedly not exactly intuitive at first glance), it does work. We get -1 for style points, but +1 for getting the job done....
+不幸的是，如果我尝试在单个字符串上调用`execute`，则此命令所需的嵌入式引号会引起我极大的伤痛。 幸运的是，我们也可以在String数组上调用execute。 数组中的第一个元素是命令，所有随后的元素都作为参数传递。 尽管这种形式较为冗长（乍一看也不太直观），但它确实有效。 我们为样式点获得-1，但为完成工作而获得+1。...
 
-### 5.6 Running Multiple Shell Commands at Once
+### 5.6 Running Multiple Shell Commands at Once {#一次运行多个Shell命令}
 ```bash
 //in Windows:
 println "cmd /c dir c:\\opt & dir c:\\tmp".execute().text
 //in Unix / Linux / Mac OS X:
 println "ls /opt & ls /tmp".execute().text
 ```
-You can string together multiple shell commands using the & character. Of course, this has nothing to do with Groovy—this is a feature of the underlying OS. To prove it, try typing the commands surrounded by quotes directly at a command prompt.
+您可以使用“＆”字符将多个shell命令串在一起。 当然，这与Groovy无关-这是基础OS的功能。 为了证明这一点，请尝试直接在命令提示符下键入用引号引起来的命令。
 
-### 5.7 Waiting for a Shell Command to Finish Before Continuing
+### 5.7 Waiting for a Shell Command to Finish Before Continuing {#等待Shell命令完成后再继续}
 ```bash
 def p = "convert -crop 256x256 full.jpg tile.jpg".execute()
 p.waitFor()
 println "ls".execute().text
 ```
 
-If you have a long-running command and want to wait for it to complete before proceeding, you can assign the command to a variable and use the ".waitFor()" method. This example shows the ImageMagick command convert -crop, which takes a large image and breaks it up into 256-by-256 pixel tiles. You’ll want to wait for the command to complete before displaying the directory listing of the current directory to ensure that all the resulting tiles appear.
+如果您有一个运行时间较长的命令，并希望在继续操作之前等待它完成，则可以将该命令分配给一个变量，然后使用" .waitFor()"方法。 此示例显示了ImageMagick命令"convert -crop"，该命令拍摄大图像并将其分解为"256 x 256"像素的图块。 在显示当前目录的目录列表之前，您需要等待命令完成，以确保显示所有生成的图块。
 
-### 5.8 Getting System Properties
+### 5.8 Getting System Properties {#获取系统属性}
 ```bash
 println System.getProperty("java.version")
 ===> 1.5.0_07
@@ -180,16 +181,15 @@ user.home=/Users/sdavis
 ...
 ```
 
-The JVM provides you with a comfortable sandbox, shielding your code from operating system differences. Sun coined the phrase “write once, run anywhere” (WORA) to describe this phenomena, although the oldtimers and cynics bend this a bit to “write once, debug everywhere.”
+JVM为您提供了一个舒适的沙箱，保护您的代码不受操作系统差异的影响。Sun创造了“一次编写，随处运行”(WORA)这个短语来描述这种现象，尽管老前辈和愤世嫉俗者将其稍作修改为“一次编写，到处调试”。
 
-Almost everything you are doing in this chapter expressly pokes WORA in the eye. You are messing around at the OS level, running commands that will almost certainly break if you try to run them anywhere but the operating system for which they were expressly written. Given that, it’s nice to be able to determine programmatically what type of hardware you are running on, what version of the JVM you are using, and so on. The System.properties hashmap allows you to do this type of introspection.
+您在本章中所做的几乎所有事情都将WORA视作眼中钉。 您正在操作系统级别上乱七八糟，如果您尝试在明确为其编写操作系统的任何地方运行它们，几乎可以肯定会破坏这些命令。 鉴于此，很高兴能够以编程方式确定您所运行的硬件类型，所使用的JVM版本，等等。 "System.properties"哈希表使您可以进行这种自省。
 
-If you already know the name of the variable you are looking for, you can ask for it explicitly; System.getProperty("file.separator"), for example, lets you know whether you should be in a forward-slashy or backwardslashy kind of mood.
+如果您已经知道要查找的变量的名称，则可以明确要求它； 例如，` System.getProperty(" file.separator")`可让您知道您是处于正斜线状态还是反斜线状态。
 
-On the other hand, you might feel like doing some window shopping instead. Typing System.properties.each{println it} allows you to dump the full list of properties out, one by one. This is a great tool for exposing all the interesting bits of a running system. I usually have this oneliner Groovlet running on each of my production servers so that I can keep an eye on them remotely. (For more on Groovlets, see Section 2.6, Running Groovy on a Web Server (Groovlets), on page 33. For more on
-keeping your private bits from becoming public bits, see the venerable Tomcat documentation on Security Realms[^508].)
+另一方面，你可能会想去逛街。输入`System.properties.each{println it}`允许您一个一个地输出完整的属性列表。这是一个展示运行系统中所有有趣部分的好工具。我通常在每个生产服务器上运行这个Groovlet，这样我就可以远程监视它们。(有关groovlet的更多信息，请参见第2.6节，在Web服务器上运行Groovy (groovlet)，见第33页。有关防止私有位成为公共位的更多信息，请参阅关于安全域的Tomcat文档[^508])。
 
-Here are various useful system properties as they appear on my MacBook Pro:
+以下是出现在我的MacBook Pro上的各种有用的系统属性:
 ```bash
 java.version=1.5.0_07
 java.vendor=Apple Computer, Inc.
@@ -213,21 +213,21 @@ user.country=US
 user.language=en
 ```
 **file.separator, path.separator, and line.separator**
->  These, as you already know, are the most common things that vary between Windows and Unix-like operating systems.
+>  您已经知道，这些是在Windows和类unix操作系统之间最常见的差异。
 
 **user.dir**
->  This is the current directory (the directory from which the class is being run). Knowing the user.dir is nice if you want to look for directories and files relative to where you are right now.
+>  这是当前目录（运行类的目录）。 如果您要查找相对于当前位置的目录和文件，则知道`user.dir`是很好的。
 
 **java.io.tmp**
->  This is a good place to write short-lived, temporary files. This variable exists on every system, although the exact file path varies. Having a generic dumping ground that is guaranteed to exist on every system is a nice little hidden gem. Just don’t expect those files to live beyond the current block of execution.
+>  这是写入短期临时文件的好地方。 尽管确切的文件路径有所不同，但每个系统上都存在此变量。 有一个通用的垃圾场，可以保证在每个系统上都存在，是一个很好的隐藏的宝石。 只是不要期望这些文件会超出当前的执行范围。
 
 **user.home**
->  This little fella, like java.io.tmp, is guaranteed to exist on every system, although the exact file path varies. This is a great place to write more permanent data.
+>  尽管确切的文件路径各不相同，但可以保证每个小系统（如“ java.io.tmp”）都存在于每个系统上。 这是写入更多永久数据的好地方。
 
 **Reading in Custom Values from -D or JAVA_OPTS**
-The System.properties hashmap is good for more than just dealing with the boring old default values that appear on every system. Custom values can be passed into System.properties in a couple of ways. If you have ever used the -D parameter with Ant targets (for example, ant -Dserver.port=9090 deploy), you know they show up in System.properties as well (System.getProperty("server.port")). Values stored in the JAVA_OPTS environment variable also show up in System.properties.
+`System.properties`哈希表不仅可以处理每个系统上出现的无聊的旧默认值，还可以提供更多好处。 自定义值可以通过两种方法传递到`System.properties`中。 如果您曾经在Ant目标中使用过“-D”参数（例如，`ant -Dserver.port = 9090 deploy`），则您知道它们也会显示在` System.properties`中（System.getProperty("server.port")）。 存储在`JAVA_OPTS`环境变量中的值也显示在`System.properties`中。
 
-### 5.9 Getting Environment Variables
+### 5.9 Getting Environment Variables {#获取环境变量}
 ```groovy
 println System.getenv("JAVA_HOME")
 ===> /Library/Java/Home
@@ -247,15 +247,15 @@ SHELL=/bin/bash
 PATH=/opt/local/bin:/usr/local/bin:...
 ```
 
-Like system properties (as discussed in Section 5.8, Getting System Properties, on page 92), environment variables are another rich vein to mine for system-specific information.
+与系统属性类似（如第5.8节，获取系统属性，在第92页中所述），环境变量是挖掘系统特定信息的另一个丰富途径。
 
-If you already know the name of the environment variable you are looking for, you can ask for it explicitly; System.getenv("GROOVY_HOME"), for example, lets you know the directory where Groovy is installed. To iterate through all the environment variables on the system, System.env.each{println it} does the trick.
+如果您已经知道要查找的环境变量的名称，则可以明确要求它； 例如，`System.getenv("GROOVY_HOME")`可让您知道Groovy的安装目录。 要遍历系统上的所有环境变量，请执行`System.env.each {println it}`。
 
-You may notice some overlap between environment and system variables. For example, System.getProperty("groovy.home") and System. getenv("GROOVY_HOME") both yield the same thing: /opt/groovy. Other times, the specific bit of information you are looking for can be found only in one place or the other. For example, the list of environment variables will likely contain variables such as TOMCAT_HOME, JBOSS_HOME, and ANT_HOME that don’t appear in the list of system  properties.
+您可能会注意到环境变量和系统变量之间有一些重叠。 例如，`System.getProperty("groovy.home")`和`System. getenv("GROOVY_HOME")`都得到同样的事情：`/opt/groovy`。 有时，您要查找的特定信息只能在一个地方或另一个地方找到。 例如，环境变量列表可能包含未出现在系统属性列表中的变量，例如TOMCAT_HOME，JBOSS_HOME和ANT_HOME。
 
-Like anything else, having both available to you will be important at different times. Your customization tweaks might come in via environment variables or -D parameters. Those variables might point you toward the user’s home directory or an application directory where config files can be found such as server.xml, struts-config.xml, or .bash_profile. The important thing is that you’ll be able to manage the whole system, regardless of which specific mechanism is used.
+像其他任何东西一样，在不同的时间提供给您都很重要。 您的自定义调整可能通过环境变量或`-D`参数进入。 这些变量可能会将您指向用户的主目录或可以找到配置文件的应用程序目录，例如`server.xml`，`struts-config.xml`或`.bash_profile`。 重要的是，无论使用哪种特定机制，您都将能够管理整个系统。
 
-### 5.10 Evaluating a String
+### 5.10 Evaluating a String {#计算一个字符串}
 ```groovy
 def s = "Scott"
 def cmdName = "size"
@@ -266,30 +266,31 @@ evaluate "println s.${cmdName}()"
 ===> SCOTT
 ```
 
-In Section 5.4, Running a Shell Command, on page 89, we discussed how to call execute on an arbitrary string. evaluate works slightly differently.
+在第89页的5.4节中，我们讨论了如何对任意字符串调用execute。evaluate的工作方式略有不同。
 
-Instead of running a shell command, evaluate allows you to dynamically execute a random string as Groovy code. The previous examples were dynamically calling two methods on a String—size() and toUpperCase(). (Did you notice the optional parentheses in the second example?) This leads to some interesting capabilities, such as being able to iterate over all methods on an object and call them:
+evaluate不运行shell命令，而是允许您以Groovy代码的形式动态执行随机字符串。前面的示例动态地调用了String的`size()`和`toUpperCase()`上的两个方法。(你注意到第二个例子中的可选括号了吗?)这带来了一些有趣的功能，比如能够迭代一个对象上的所有方法并调用它们:
 ```groovy
 //NOTE: This is pseudocode -- it won't actually run
 def s = "Scott"
 s.class.methods.each{cmdName ->
-evaluate("s.${cmdName}()")
+  evaluate("s.${cmdName}()")
 }
 ```
 
-Although this example won’t work as written—it does not take into account the arguments that some of the String methods require such as s.substring(2,4)—it shows the potential value of evaluating Groovy code on the fly. It also quite nicely illustrates the risks. If you blindly accept commands from an end user and execute them on the fly, you should be prepared for the script kiddie who sends you rm -Rf /. For a working example of evaluating methods on the fly, see Section 10.4, Discovering the Methods of a Class, on page 188.
+尽管此示例无法按书面形式运行-它没有考虑到一些字符串方法需要的参数，比如“s.substring(2,4)”它显示了动态评估Groovy代码的潜在价值。它也很好地说明了其中的风险。如果您盲目地接受终端用户的命令并动态地执行它们，那么您应该为发送给您`rm -Rf /`的脚本准备好。有关动态评估方法的工作示例，请参见第10.4节，类方法的发现，见第188页。
 
-### 5.11 Calling Another Groovy Script
+### 5.11 Calling Another Groovy Script {#调用另一个Groovy脚本}
 ```groovy
 // hello.groovy
 println "Howdy"
+
 // goodbye.groovy
 hello.main()
 println "Goodbye"
 ```
-You probably call one Java class from inside another Java class all the time. If the two classes are in the same package, you can call one from the other directly: AnotherClass.doSomething();. If they live in separate packages, you need to import the other package or fully qualify the class:  com.elsewhere.AnotherClass.doSomething();. Calling one Groovy script from another works in fundamentally the same way. As long as you remember that Groovy code gets compiled to bytecode on the fly, you’ll never go wrong.
+您可能一直从另一个Java类中调用一个Java类。如果这两个类在同一个包中，您可以直接从另一个调用: "AnotherClass.doSomething();"。如果它们位于单独的包中，则需要导入另一个包或完全限定类: "com.else.anotherclass.dosomething();"。从另一个Groovy脚本调用另一个Groovy脚本的工作原理基本相同。只要您记住Groovy代码被动态地编译为字节码，就永远不会出错。
 
-In the previous example, hello.groovy gets compiled into the following equivalent Java code:
+在前面的例子中，"hello.groovy"被编译成如下等价的Java代码:
 ```groovy
 public class hello{
   public static void main(String[] args){
@@ -297,10 +298,9 @@ public class hello{
   }
 }
 ```
-The lowercase class name might look strange, but Groovy simply uses the filename as the class name. (Sound familiar?) Script content that 
-isn’t explicitly wrapped in a function/closure/whatever is that script’s public static void main(String[ ] args). Two scripts living in the same directory are effectively in the same package. So, calling any script in the same directory as you’re in is as simple as calling the static main method on the class.
+小写的类名可能看起来很奇怪，但Groovy只是使用文件名作为类名。(听起来很熟悉吗?)没有显式封装在函数/闭包/脚本的"public static void main(String[ ] args)"中的脚本内容。位于相同目录中的两个脚本实际上位于相同的包中。因此，调用与所在目录相同的脚本与调用类上的静态main方法一样简单。
 
-**Calling Another Script with Parameters**
+**使用参数调用另一个脚本**
 ```groovy
 //hello2.groovy
 if(args){
@@ -317,9 +317,9 @@ hello2.main("Dorothy", "Toto")
 println "Goodbye"
 ```
 
-Since the script body is effectively the public static void main(String[ ] args) method, it only follows that you are able to pass in parameters via the provided string array.
+由于脚本体实际上是"public static void main(String[ ] args)"方法，因此只能通过提供的字符串数组传递参数。
 
-**Calling Methods in Another Script**
+**在另一个脚本中调用方法**
 ```groovy
 //hello3.groovy
 if(args){
@@ -342,17 +342,17 @@ h = new hello3()
 h.sayHola()
 ```
 
-If the other script has static methods (such as main), you can call them statically. If the other script defines instance methods, you must instantiate the script before you can call them.
+如果其他脚本有静态方法(如main)，则可以静态地调用它们。如果其他脚本定义了实例方法，则必须在调用它们之前实例化脚本。
 
-Calling Another Script in a Different Directory
+**调用不同目录中的另一个脚本**
 ```groovy
 evaluate(new File("/some/other/dir/hello.groovy"))
 ```
-Our friend evaluate comes back for another visit. (See Section 5.10, Evaluating a String, on page 95 for an alternate use of evaluate.) This time you are evaluating a file instead of an arbitrary string. This effectively calls the main method of the other file.
+我们的朋友`evaluate`又来了。(参见第95页第5.10节，求值字符串，用于求值的另一种用法。)这一次，您要计算的是一个文件，而不是一个任意字符串。这实际上调用了另一个文件的主方法。
 
-If you are trying to do anything more complicated with script-to-script calls than what we’ve already discussed, my recommendation is to compile your scripts to bytecode, place them in the package of your choice, JAR them up, and call them as you would any other Java class.
+如果您试图使用脚本到脚本的调用来做比我们已经讨论过的更复杂的事情，我的建议是将您的脚本编译成字节码，将它们放在您选择的包中，将它们打包，然后像调用其他任何Java类一样调用它们。
 
-### 5.12 Groovy on the Fly (groovy -e)
+### 5.12 Groovy on the Fly (groovy -e) {#动态的Groovy (Groovy -e)}
 ```bash
 $ groovy -e "println System.properties['java.class.path']"
 ===>
@@ -360,18 +360,18 @@ $ groovy -e "println System.properties['java.class.path']"
 /JavaVM.framework/Versions/1.5.0/Classes/.compatibility/14compatibility.jar
 ```
 
-Groovy makes it easy to run code quickly. You can save a file and run it immediately. You can open up a quick Groovy shell or Groovy console to work with the language interactively. But sometimes running a single line of Groovy at the command line is all you need. The -e flag tells Groovy to evaluate the string you just  passed in.
+Groovy使快速运行代码变得很容易。您可以保存一个文件并立即运行它。您可以打开一个快速的Groovy shell或Groovy控制台来交互地使用该语言。但是有时候，在命令行上运行Groovy的一行就足够了。`-e`标志告诉Groovy对刚刚传入的字符串求值。
 
-For example, let’s say you are picking up a strange JAR on your classpath. You can type echo $CLASSPATH on a Unix-like system to see if the environment variable is the culprit. (set on a Windows system will give you similar results.) If the classpath comes up empty, there are many other places those pesky JARs can sneak in. Look in $JAVA_HOME/lib, $JAVA_HOME/lib/ext, and $GROOVY_HOME/lib to see if any strangers are lurking around. The previous example will show you exactly what the JRE sees—it is up to you to hunt down the intruders from there.
+例如，假设您正在类路径上拾取一个奇怪的JAR。 您可以在类似Unix的系统上键入"echo $CLASSPATH"来查看环境变量是否是罪魁祸首。 （在Windows系统上设置将获得相似的结果。）如果类路径显示为空，那么讨厌的JAR可以在许多其他地方潜入。 查看 "$JAVA_HOME/lib, $JAVA_HOME/lib/ext, 和 $GROOVY_HOME/lib"，以查看是否有任何陌生人潜伏。 前面的示例将向您精确显示JRE所看到的内容-您可以从那里查找入侵者。
 
-### 5.13 Including JARs at the Command Line
+### 5.13 Including JARs at the Command Line {#在命令行中包含JAR}
 ```bash
 $ groovy -classpath ~/lib/derbyclient.jar:~/lib/jdom.jar:. db2xml.groovy
 ```
 
-If you have a script that depends on other libraries, you can pass groovy a -classpath switch with a list of JARs. This is, of course, no different from running java from the command line. To run our fictional db2xml.groovy script, it’s not surprising that the script needs access to both a database driver and an XML library.
+如果您有依赖于其他库的脚本，则可以通过JAR列表向groovy传递`-classpath`开关。 当然，这与从命令行运行Java没有什么不同。 要运行我们的"db2xml.groovy"脚本，该脚本需要访问数据库驱动程序和XML库就不足为奇了。
 
-**Automatically Including JARs in the .groovy/lib Directory**
+**在`.groovy/lib`目录中自动包括JAR**
 ```bash
 //on Windows:
 mkdir C:\Documents and Settings\UserName\.groovy\lib
@@ -385,15 +385,15 @@ mkdir ~/.groovy/lib
 load !{user.home}/.groovy/lib/*.jar
 ```
 
-You’ll soon grow tired of having to type commonly used JARs (such as JDBC drivers) on the command line each time. If you create a ".groovy/lib" directory in your home directory (don’t forget the leading dot), any JARs found in this directory will be automatically included in the CLASSPATH when you run Groovy from the command prompt. The ".groovy/lib" directory is disabled by default; be sure to enable it in "$GROOVY_HOME/conf/ groovy-starter.conf".
+您很快就会厌倦了每次都必须在命令行上键入常用的JAR（例如JDBC驱动程序）。 如果在主目录中创建`.groovy/lib`目录（请不要忘记前导点），则在命令提示符下运行Groovy时，在此目录中找到的所有JAR都会自动包含在CLASSPATH中。 默认情况下，`.groovy/lib`目录是禁用的； 确保在`$GROOVY_HOME/conf/groovy-starter.conf`中启用它。
 
-## File Tricks
+## File Tricks {#文件的技巧}
 
-Groovy offers many shortcuts for dealing with files and directories. Listing files, copying files, renaming files, deleting files—Groovy brings welcome help for all  these mundane tasks. The fact that Groovy adds new methods directly to the standard JDK classes such as java.io.File make these new features feel like a natural part of the language.
+Groovy提供了许多处理文件和目录的捷径。 列出文件，复制文件，重命名文件，删除文件-Groovy为所有这些平凡的任务带来了可喜的帮助。 Groovy直接向标准JDK类（例如java.io.File）添加新方法的事实使这些新功能看起来像是该语言的自然组成部分。
 
-The stalwart Java build tool Ant makes a cameo appearance in this chapter as well. Ant goes far beyond the standard Java I/O library capabilities, adding support for related functionality such as batch operations and ZIP files. Even though Ant is written in Java, the interface most developers are familiar with is the ubiquitous build.xml file. Groovy’s native support for XML is covered extensively in Chapter 7, Parsing XML, on page 116 and Chapter 8, Writing XML, on page 136. In this chapter, you’ll see a great example of this in action with AntBuilder—all the power of Ant, none of the XML. It’s pure code all the way; you’ll never look at build files the same way again.
+健壮的Java构建工具Ant在本章中也有客串出现。 Ant远远超出了标准Java I/O库功能，增加了对相关功能（如批处理操作和ZIP文件）的支持。 即使Ant是用Java编写的，但大多数开发人员熟悉的接口是普遍存在的build.xml文件。 Groovy对XML的本机支持在第7章“解析XML”（第116页）和第8章“编写XML”（第136页）中进行了广泛讨论。在本章中，您将看到一个很好的例子，说明如何在AntBuilder中使用它-所有功能 Ant，没有XML。 一路都是纯代码； 您再也不会以相同的方式查看构建文件了。
 
-### 6.1 Listing All Files in a Directory
+### 6.1 Listing All Files in a Directory {#列出目录中的所有文件}
 ```groovy
 new File(".").eachFile{file ->
   println file
@@ -409,10 +409,10 @@ new File(".").eachFile{file ->
 ./WEB-INF
 ```
 
-The eachFile method that Groovy adds to the standard java.io.File makes short work of displaying a directory listing. In this case, you’re looking at the current directory ("."). You can, of course, pass in a fully qualified directory name as well: new File("/opt/tomcat/webapps/myapp").
+Groovy添加到标准java.io.File中的eachFile方法使显示目录列表的工作很简单。 在这种情况下，您要查看当前目录（"."）。 当然，您也可以传入完全限定的目录名称：`new File("/opt/tomcat/webapps/myapp")`。
 
-To give you an idea of the keystrokes Groovy saves you, here is the corresponding code in Java:
-```groovy
+为了让您了解Groovy为您保存的击键信息，下面是Java中相应的代码:
+```java
 import java.io.File;
 
 public class DirList {
@@ -427,9 +427,9 @@ public class DirList {
 }
 ```
 
-Again, you should note that Groovy augments the java.io.File object that comes with Java. This means that all the standard JDK methods are available for use as well as the new Groovy ones. The eachFile method is added to the class, as discussed in Section 10.11, Adding Methods to a Class Dynamically (ExpandoMetaClass), on page 198. To see all the methods added to java.io.File, refer to the GDK documentation[^601].
+同样，您应该注意到Groovy增强了Java附带的对象`Java.io.file`。这意味着所有标准的JDK方法和新的Groovy方法都是可用的。`eachFile`方法被添加到类中，如第10.11节所讨论的，在第198页动态地将方法添加到类中(ExpandoMetaClass)。查看添加到java.io中的所有方法。文件，请参阅GDK文档[^601]。
 
-**Command-Line Input**
+**命令行输入**
 ```groovy
 $ groovy list /some/other/dir
 
@@ -439,9 +439,9 @@ new File(args[0]).eachFile{file ->
 }
 ```
 
-For a more flexible version of this script, you can borrow the trick discussed in Section 5.3, Accepting Command-Line Arguments, on page 88. Assuming that this script is saved in a file named list.groovy, this example gives you the flexibility to pass in any directory name.
+对于这个脚本的更灵活的版本，您可以借鉴第5.3节中讨论的技巧，即接受命令行参数，见第88页。假设这个脚本保存在一个名为`list.groovy`的文件中，这个示例为您提供了传递任何目录名的灵活性。
 
-**Listing Only Directories**
+**仅列出目录**
 ```groovy
 new File(".").eachDir{dir ->
   println dir
@@ -452,7 +452,7 @@ new File(".").eachDir{dir ->
 ./WEB-INF
 ```
 
-To limit your output to directories, you use File.eachDir. You can also use File.eachDirRecurse to traverse the entire directory tree:
+要将输出限制为目录，请使用`File.eachDir`。 您还可以使用`File.eachDirRecurse`遍历整个目录树：
 ```groovy
 new File(".").eachDirRecurse{dir ->
   println dir
@@ -467,7 +467,7 @@ new File(".").eachDirRecurse{dir ->
 ./WEB-INF/lib
 ```
 
-**Listing Only Files**
+**仅列出文件**
 ```groovy
 new File(".").eachFile{file ->
   if(file.isFile()){
@@ -482,14 +482,14 @@ new File(".").eachFile{file ->
 ./result.jsp
 ```
 
-At the beginning of this section, we saw that File.eachFile returns both files and directories. (Don’t blame Groovy—this mirrors the standard JDK behavior of File.listFiles.) Luckily, you can use another standard JDK method to filter your output: File.isFile.
+在本节的开头，我们看到`File.eachFile`返回文件和目录。 （不要怪Groovy，这反映了`File.listFiles`的标准JDK行为。）幸运的是，您可以使用另一种标准JDK方法来过滤输出：`File.isFile`。
 
-Groovy also offers a File.eachFileRecurse method that allows you to see all files in the directory tree:
+Groovy还提供了一个`File.eachFileRecurse`方法，允许您查看目录树中的所有文件:
 ```groovy
 new File(".").eachFileRecurse{file ->
-if(file.isFile()){
-println file
-}
+  if(file.isFile()){
+    println file
+  }
 }
 
 ===>
@@ -503,12 +503,12 @@ println file
 ./WEB-INF/lib/groovy.jar
 ```
 
-**Listing Specific Files in a Directory**
+**列出目录中的特定文件**
 ```groovy
 new File(".").eachFile{file ->
-if(file.name.endsWith(".jsp")){
-println file
-}
+  if(file.name.endsWith(".jsp")){
+    println file
+  }
 }
 ===>
 ./error.jsp
@@ -516,16 +516,16 @@ println file
 ./result.jsp
 ```
 
-The if statement is a perfect example of using Groovy and Java together. file.name is the Groovy equivalent of file.getName(), as discussed in Section 4.2, Getter and Setter Shortcut Syntax, on page 72. file.name returns a String, which allows you to use the standard JDK endsWith() method.
+if语句是一个将Groovy和Java结合使用的完美示例。`file.name`是Groovy中的`file.getName()`，如第72页4.2节“Getter和Setter快捷语法”中所述。name返回一个字符串，该字符串允许您使用标准JDK `endsWith()`方法。
 
-If you’re a fan of regular expressions, Groovy offers a File.eachFileMatch method:
+如果您是正则表达式的爱好者，Groovy提供了一个`File.eachFileMatch`方法:
 ```groovy
 new File(".").eachFileMatch(~/.*\.jsp/){file ->
   println file
 }
 ```
 
-File.eachFileMatch technically accepts any class with a method boolean isCase(String s). This means you could expand the example to include a JspFilter class:
+`File.eachFileMatch`在技术上接受任何具有布尔方法`isCase(String s)`的类。这意味着你可以扩展这个例子来包含一个JspFilter类:
 ```groovy
 class JspFilter {
   boolean isCase(String filename) {
@@ -538,7 +538,7 @@ new File(".").eachFileMatch(new JspFilter()){file ->
 }
 ```
 
-Unfortunately, "File.eachFileMatch" passes "File.getName()" to the filter class, not "File.getAbsolutePath()". In other words, the filter sees MyServlet.class, not "./WEB-INF/classes/org/davisworld/MyServlet.class". This means that in order to do any sophisticated filtering on the list (for example, listing only those files bigger than a certain size), you should use "File.eachFile" or "File.eachFileRecurse" with your own if statement rather than relying on "File.eachFileMatch".
+不幸的是，`File.eachFileMatch`将`File.getName()`传递给过滤器类，而不是`File.getAbsolutePath()`。换句话说，过滤器看到的是`MyServlet.class`，而不是`./WEB-INF/classes/org/davisworld/myservlet.class`。这意味着，为了对列表进行任何复杂的过滤(例如，只列出那些大于特定大小的文件)，您应该使用`File.eachFile`或`File.eachFileRecurse`自己的if语句，而不是依赖`File.eachFileMatch`。
 
 ```groovy
 //list files greater than 500kb
@@ -552,23 +552,23 @@ new File(".").eachFile{file ->
 ./GroovyLogo.zip
 ```
 
-### 6.2 Reading the Contents of a File
+### 6.2 Reading the Contents of a File {#读取文件的内容}
 ```groovy
 new File("x.txt").eachLine{line->
   println line
 }
 ```
 
-Just as you can walk through each file in a directory, you can also easily walk through each line of a file using File.eachLine. For binary files, there is also  "File.eachByte".
+正如您可以遍历目录中的每个文件一样，您也可以使用`file . eachline`轻松遍历文件的每一行。对于二进制文件，还有`File.eachByte`。
 
-Section 8.14, Converting CSV to XML, on page 148 demonstrates a slightly more sophisticated version of File.eachLine. In the example, a comma-separated value  (CSV) file is walked through line by line using File.splitEachLine.
+第8.14节，将CSV转换为XML，在第148页演示了一个稍微复杂的版本`File.eachLine`。在这个例子中，使用`file.spliteachline`逐行遍历逗号分隔值(CSV)文件。
 
-**Reading the Contents of a File into a String Variable**
+**将文件内容读入字符串变量**
 ```groovy
 String body = new File("x.txt").text
 ```
 
-It’s pretty convenient to be able to read in the entire contents of a file using a single method: File.getText(). This trick will prove to be convenient in later sections  such as Section 6.4, Copying Files, on page 108 and Section 6.3, Appending Data to an Existing File, on page 107.
+It’s pretty convenient to be able to read in the entire contents of a file using a single method: File.getText(). This trick will prove to be convenient in later sections  such as Section 6.4, Copying Files, on page 108 and Section 6.3, Appending Data to an Existing File, on page 107.
 
 For binary files, Groovy offers an alternate method, File.readBytes, which returns the entire contents as a byte[ ].
 
@@ -622,7 +622,7 @@ println file.readLines().size()
 1
 ```
 
-The convenience of a single File.write method in Groovy is pretty breathtaking. Contrast the four lines of Groovy code with the forty-plus lines of corresponding  Java code:
+The convenience of a single File.write method in Groovy is pretty breathtaking. Contrast the four lines of Groovy code with the forty-plus lines of corresponding  Java code:
 ```groovy
 import java.io.*;
 public class NewFile {
@@ -663,7 +663,7 @@ public class NewFile {
   }
 }
 ```
-The File.write method is destructive: the contents of the file are overwritten with the new data. The ability to write an entire file in a single line of code is used to great effect in Section 6.4, Copying Files, on page 108.
+The File.write method is destructive: the contents of the file are overwritten with the new data. The ability to write an entire file in a single line of code is used to great effect in Section 6.4, Copying Files, on page 108.
 
 **Appending Data to an Existing File**
 ```groovy
@@ -675,9 +675,9 @@ file << "I'm fine, thanks.\n"
 println "${file.size()} lines"
 ===> 3 lines
 ```
-While File.write is a destructive call, File.append leaves the existing content in place, adding the new text to the end of the file.
+While File.write is a destructive call, File.append leaves the existing content in place, adding the new text to the end of the file.
 
-Did you notice the operator overloading in action? The << operator is equivalent to the append() method call. (See Section 3.7, Operator Overloading, on page 50  for more information.)
+Did you notice the operator overloading in action? The << operator is equivalent to the append() method call. (See Section 3.7, Operator Overloading, on page 50  for more information.)
 
 **Merging Several Text Files**
 ```bash
@@ -723,7 +723,7 @@ new File("dest.jpg").withOutputStream{ out ->
 }
 ```
 
-The majority of the convenience methods Groovy adds to java.io.File are geared toward text files. Luckily, binary files aren’t completely ignored. Calling withOutputStream allows you to write binary data within the closure, knowing that all that silly flush() and close() nonsense is already taken care of.
+The majority of the convenience methods Groovy adds to java.io.File are geared toward text files. Luckily, binary files aren’t completely ignored. Calling withOutputStream allows you to write binary data within the closure, knowing that all that silly flush() and close() nonsense is already taken care of.
 
 Of course, this method works for text files as well. What you sacrifice in brevity you gain back in a generic algorithm that can be used for any file, regardless of type.
 
@@ -747,7 +747,7 @@ File.metaClass.copy = {String destName ->
 new File("src.jpg").copy("dest.jpg")
 ```
 
-Now that we’ve explored several ways to copy files, you can add the method of your choice directly to the java.io.File object. (For more information, see Section 10.11, Adding Methods to a Class Dynamically (ExpandoMetaClass), on page 198)
+Now that we’ve explored several ways to copy files, you can add the method of your choice directly to the java.io.File object. (For more information, see Section 10.11, Adding Methods to a Class Dynamically (ExpandoMetaClass), on page 198)
 
 ### 6.5 Using AntBuilder to Copy a File
 ```groovy
@@ -755,7 +755,7 @@ def ant = new AntBuilder()
 ant.copy(file:"src.txt", tofile:"dest.txt")
 ```
 
-Anything that can be expressed in the traditional Ant XML format (usually found in a file named build.xml) can also be expressed in Groovy code using an groovy.util.AntBuilder. (See Chapter 8, Writing XML, on page 136 for more on easily working with XML using Groovy builders.) Since the underlying Ant JARs are included with Groovy, you don’t even need to have Ant installed on your system to take advantage of AntBuilder.
+Anything that can be expressed in the traditional Ant XML format (usually found in a file named build.xml) can also be expressed in Groovy code using an groovy.util.AntBuilder. (See Chapter 8, Writing XML, on page 136 for more on easily working with XML using Groovy builders.) Since the underlying Ant JARs are included with Groovy, you don’t even need to have Ant installed on your system to take advantage of AntBuilder.
 
 In this example, we’re taking the <copy> task from Ant and using it in Groovy. (A great place to see all the core Ant tasks and their parameters is in the online documentation[^605]. ) Here is what this task looks like in its native Ant dialect:
 ```xml
@@ -776,7 +776,7 @@ BUILD SUCCESSFUL
 Total time: 0 seconds
 ```
 
-Creating an AntBuilder object in Groovy implicitly takes care of the boilerplate <project> and <target> code, much like a Groovy script takes care of the boilerplate public class and public static void main(String[ ] args), as discussed in Section 5.3, Accepting Command-Line Arguments, on page 88. After that,  ant.copy(file:"src.txt", tofile:"dest.txt") mirrors the Ant XML, albeit in MarkupBuilder dialect.
+Creating an AntBuilder object in Groovy implicitly takes care of the boilerplate <project> and <target> code, much like a Groovy script takes care of the boilerplate public class and public static void main(String[ ] args), as discussed in Section 5.3, Accepting Command-Line Arguments, on page 88. After that,  ant.copy(file:"src.txt", tofile:"dest.txt") mirrors the Ant XML, albeit in MarkupBuilder dialect.
 
 It initially might seem strange to use Ant for things other than building Java projects. But if you think about it for just a moment, <javac> is only one of the many tasks that Ant supports natively. If Ant provides convenient tasks for copying, moving, renaming, and deleting files—all implemented in Java, therefore ensuring cross-platform compliance, I might add—why not take advantage of it? If you already are familiar with the common Ant tasks, this is a way you can reuse your existing knowledge rather than learning Yet Another API.
 
@@ -868,7 +868,7 @@ backup/button.jpg
 backup/arrow.jpg
 backup/big_image_thumb.jpg
 ```
-Ant offers a quirky little attribute called flatten on the <copy> task. Let’s assume you have files in images, images/icons, and images/thumbnails. If you want to consolidate them all to the backup directory without preserving the nested directory structure, you set the flatten attribute to true. Of course, bear in mind that you run the risk of filename collisions when you copy from many different directories into a single one. Remember to set the overwrite attribute appropriately.
+Ant offers a quirky little attribute called flatten on the <copy> task. Let’s assume you have files in images, images/icons, and images/thumbnails. If you want to consolidate them all to the backup directory without preserving the nested directory structure, you set the flatten attribute to true. Of course, bear in mind that you run the risk of filename collisions when you copy from many different directories into a single one. Remember to set the overwrite attribute appropriately.
 
 ### 6.7 Moving/Renaming Files
 ```groovy
@@ -883,7 +883,7 @@ src.renameTo(new File("dest.txt"))
 def ant = new AntBuilder()
 ant.move(file:"src.txt", tofile:"dest.txt")
 ```
-After Section 6.4, Copying Files, on page 108 and Section 6.5, Using AntBuilder to Copy a File, on page 109, this section might be a bit anticlimactic. You can move files using the standard JDK File.renameTo method. You can also shell out to your operating system. You can also use the AntBuilder.move method. They all do the same thing—it’s a matter of personal preference which technique you use.
+After Section 6.4, Copying Files, on page 108 and Section 6.5, Using AntBuilder to Copy a File, on page 109, this section might be a bit anticlimactic. You can move files using the standard JDK File.renameTo method. You can also shell out to your operating system. You can also use the AntBuilder.move method. They all do the same thing—it’s a matter of personal preference which technique you use.
 
 ### 6.8 Deleting Files
 ```groovy
@@ -906,7 +906,7 @@ def ant = new AntBuilder()
 ant.delete(dir:"tmp")
 ```
 
-Just like with AntBuilder.copy, you can delete either an individual file or a directory. Remember that AntBuilder.copy won’t overwrite a newer destination file? Well, AntBuilder.delete won’t delete empty directories unless you explicitly ask it to do so:
+Just like with AntBuilder.copy, you can delete either an individual file or a directory. Remember that AntBuilder.copy won’t overwrite a newer destination file? Well, AntBuilder.delete won’t delete empty directories unless you explicitly ask it to do so:
 ```groovy
 def ant = new AntBuilder()
 ant.delete(dir:"tmp", includeemptydirs:"true")
