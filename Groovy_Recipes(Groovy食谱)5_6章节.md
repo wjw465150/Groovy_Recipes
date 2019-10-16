@@ -568,18 +568,18 @@ new File("x.txt").eachLine{line->
 String body = new File("x.txt").text
 ```
 
-It’s pretty convenient to be able to read in the entire contents of a file using a single method: File.getText(). This trick will prove to be convenient in later sections  such as Section 6.4, Copying Files, on page 108 and Section 6.3, Appending Data to an Existing File, on page 107.
+使用单一方法`file.gettext()`读取文件的全部内容非常方便。在后面的章节，如第108页的第6.4节“复制文件”和第107页的第6.3节“将数据附加到现有文件”中，这种技巧将被证明是很方便的。
 
-For binary files, Groovy offers an alternate method, File.readBytes, which returns the entire contents as a byte[ ].
+对于二进制文件，Groovy提供了另一种方法`File.readBytes`，它以`byte[]`的形式返回整个内容。
 
-**Reading the Contents of a File into an ArrayList**
+**将文件的内容读入ArrayList**
 ```groovy
 List lines = new File("x.txt").readLines()
 ```
 
-File.readLines returns the contents of the file as an ArrayList: one element per line in the file. This provides the convenience of having the entire file in memory (like File.getText()), while still allowing you to iterate through it line by line (like File.eachLine).
+`File.readlines`以ArrayList的形式返回文件的内容:文件中的每行一个元素。这提供了在内存中保存整个文件的便利(比如`File.gettext()`)，同时仍然允许逐行遍历(比如`File.eachline`)。
 
-**Quick-and-Dirty File Content Analysis**
+**快速文件内容分析**
 ```groovy
 // juliet.txt
 O Romeo, Romeo! wherefore art thou Romeo?
@@ -594,7 +594,7 @@ println "Number of lines: ${lines.size()}"
 int wordCount = 0
 file.splitEachLine(" "){words ->
 println words.size()
-wordCount += words.size()
+  wordCount += words.size()
 }
 println "Number of words: ${wordCount}"
 
@@ -607,9 +607,9 @@ Number of lines: 4
 Number of words: 31
 ```
 
-Using the few convenience methods on File that we’ve discussed in this section, you can easily return some metadata such as line and word count. In this case, I chose a quick snippet from Romeo and Juliet[^602]. As programmers, it’s not too much of a reach to imagine a Groovy script that could recurse through a directory, looking only at .java files, and return a basic line count/file count for your project, is it?
+使用我们在本节中讨论的几个方便的文件方法，您可以轻松地返回一些元数据，如行数和字数。在本例中，我选择了罗密欧与朱丽叶的一个简短片段[^602]。作为程序员，不难想象Groovy脚本可以递归遍历一个目录，只查看`.java`文件，并返回项目的基本"行数/文件数"，不是吗?
 
-### 6.3 Writing Text to a File
+### 6.3 Writing Text to a File {#将文本写入文件}
 ```groovy
 File file = new File("hello.txt")
 file.write("Hello World\n")
@@ -622,7 +622,7 @@ println file.readLines().size()
 1
 ```
 
-The convenience of a single File.write method in Groovy is pretty breathtaking. Contrast the four lines of Groovy code with the forty-plus lines of corresponding  Java code:
+一个文件的便利性。Groovy中的写方法是相当惊人的。将Groovy的四行代码与相应的Java代码的四十多行代码进行对比:
 ```groovy
 import java.io.*;
 public class NewFile {
@@ -663,23 +663,25 @@ public class NewFile {
   }
 }
 ```
-The File.write method is destructive: the contents of the file are overwritten with the new data. The ability to write an entire file in a single line of code is used to great effect in Section 6.4, Copying Files, on page 108.
+`File.write`方法是破坏性的：文件的内容被新数据覆盖。 在第108页的第6.4节“复制文件”中，可以使用用单行代码写入整个文件的功能就可以发挥很大的作用。
 
-**Appending Data to an Existing File**
+**将数据附加到现有文件**
 ```groovy
 File file = new File("hello.txt")
 println "${file.size()} lines"
 ===> 1 lines
+
 file.append("How's it going?\n")
 file << "I'm fine, thanks.\n"
+
 println "${file.size()} lines"
 ===> 3 lines
 ```
-While File.write is a destructive call, File.append leaves the existing content in place, adding the new text to the end of the file.
+虽然`File.write`是一个破坏性的调用，但`File.append`保留了现有内容，将新文本添加到文件的末尾。
 
-Did you notice the operator overloading in action? The << operator is equivalent to the append() method call. (See Section 3.7, Operator Overloading, on page 50  for more information.)
+你注意到操作符重载了吗? `<<`操作符等价于`append()`方法调用。(更多信息见第50页第3.7节，操作符重载。)
 
-**Merging Several Text Files**
+**合并多个文本文件**
 ```bash
 ? ls -al
 drwxr-xr-x 8 sdavis sdavis 272 Dec 2 13:02 .
@@ -701,21 +703,20 @@ logDir.eachFile{file ->
 }
 ```
 
-At the end of each month, I like rolling up my web server’s daily traffic files into a monthly summary. With a mere eight lines of code, I can do this with ease. I create a file in the summary directory named "merged.log". If the file already exists, a quick mergedFile.write("") ensures that it is emptied out of any data from the previous run. I then walk through each item in the current directory, limiting my focus to files that end with .log. (The file.isFile check makes sure I don’t accidentally include a directory name that ends with .log.) mergedFile.append(file.text) takes the file contents of the current file and appends it to mergedFile.
+在每个月末，我喜欢将网络服务器的每日流量文件汇总为每月摘要。 仅用八行代码，我就可以轻松实现这一点。 我在摘要目录中创建了一个名为`merged.log`的文件。 如果该文件已经存在，则可以通过快速`mergedFile.write("")`清空上一次运行中的所有数据。 然后，我遍历当前目录中的每个项目，将重点放在以`.log`结尾的文件上。 （`file.isFile`检查确保我不会意外地包含以`.log`结尾的目录名称。）`mergedFile.append(file.text)`获取当前文件的文件内容并将其附加到 mergedFile。
 
 
-### 6.4 Copying Files
+### 6.4 Copying Files {#复制文件}
 ```groovy
 def src = new File("src.txt")
 new File("dest.txt").write(src.text)
 ```
 
-Combining the tricks from Section 6.2, Reading the Contents of a File, on page 104 and Section 6.3, Writing Text to a File, on page 105, you can see how easy it is to quickly write the text of one file to another.
+结合第6.2节(读取文件内容，见第104页)和第6.3节(将文本写入文件，见第105页)中的技巧，您可以看到将一个文件的文本快速写入另一个文件是多么容易。
 
-You might think it’s odd that Groovy doesn’t provide a simple copy method to do this on your behalf. I wish I had a better response than “Uh, I agree.” At any rate, there are several other ways to copy files using Groovy that are worth looking into. And thanks to the dynamic nature of Groovy, at the end of this section I’ll show you how to fix this interesting API omission. (You might also take a look at Section 6.5, Using AntBuilder to Copy a File, on the following page for yet another 
-way to copy files.)
+您可能会觉得奇怪，Groovy没有提供一个简单的复制方法来代替您完成这项工作。我希望我有一个比“嗯，我同意”更好的回答。无论如何，还有其他几种使用Groovy复制文件的方法值得研究。由于Groovy的动态特性，在本节的最后，我将向您展示如何修复这个有趣的API遗漏。(你也可以看看6.5节，使用AntBuilder来复制文件，在接下来的页面中，你可以找到另一种复制文件的方法。)
 
-**Copying Binary Files**
+**二进制文件复制**
 ```groovy
 File src = new File("src.jpg")
 new File("dest.jpg").withOutputStream{ out ->
@@ -723,19 +724,19 @@ new File("dest.jpg").withOutputStream{ out ->
 }
 ```
 
-The majority of the convenience methods Groovy adds to java.io.File are geared toward text files. Luckily, binary files aren’t completely ignored. Calling withOutputStream allows you to write binary data within the closure, knowing that all that silly flush() and close() nonsense is already taken care of.
+Groovy添加到的大多数便利方法`java.io.File`都是针对文本文件的。幸运的是，二进制文件并没有完全被忽略。调用`withOutputStream`允许您在闭包中编写二进制数据，因为您知道那些愚蠢的`flush()`和`close()`废话都已经得到了解决。
 
-Of course, this method works for text files as well. What you sacrifice in brevity you gain back in a generic algorithm that can be used for any file, regardless of type.
+当然，这种方法也适用于文本文件。你在简洁中所做的牺牲，在通用算法中得到了回报，通用算法可以用于任何文件，无论其类型如何。
 
-**Copying Files Using the Underlying Operating System**
+**使用底层操作系统复制文件**
 ```groovy
 File src = new File("src.jpg")
 File dest = new File("dest.jpg")
 "cp ${src.name} ${dest.name}".execute()
 ```
-Using what we discussed in Section 5.4, Running a Shell Command, on page 89, letting your operating system do the heavy lifting makes quick work of copying files. You lose platform independence using this method, but you gain the full capabilities of the underlying operating system. Sometimes abstractions like java.io.File are helpful; other times they get in the way.
+使用我们在第5.4节中讨论的内容，在第89页运行Shell命令，让您的操作系统完成繁重的工作，从而快速复制文件。使用这种方法会失去平台独立性，但是可以获得底层操作系统的全部功能。有时候像`java.io.File`这样的抽象是有帮助的;其他时候，他们会成为障碍。
 
-**Adding Your Own Copy Method to File**
+**将自己的复制方法添加到文件中**
 ```groovy
 File.metaClass.copy = {String destName ->
   if(delegate.isFile()){
@@ -747,17 +748,17 @@ File.metaClass.copy = {String destName ->
 new File("src.jpg").copy("dest.jpg")
 ```
 
-Now that we’ve explored several ways to copy files, you can add the method of your choice directly to the java.io.File object. (For more information, see Section 10.11, Adding Methods to a Class Dynamically (ExpandoMetaClass), on page 198)
+现在，我们已经探索了复制文件的几种方法，您可以将选择的方法直接添加到`java.io.File`对象中。(有关更多信息，请参见第10.11节，动态地向类添加方法`ExpandoMetaClass`，见第198页)
 
-### 6.5 Using AntBuilder to Copy a File
+### 6.5 使用AntBuilder复制文件
 ```groovy
 def ant = new AntBuilder()
 ant.copy(file:"src.txt", tofile:"dest.txt")
 ```
 
-Anything that can be expressed in the traditional Ant XML format (usually found in a file named build.xml) can also be expressed in Groovy code using an groovy.util.AntBuilder. (See Chapter 8, Writing XML, on page 136 for more on easily working with XML using Groovy builders.) Since the underlying Ant JARs are included with Groovy, you don’t even need to have Ant installed on your system to take advantage of AntBuilder.
+任何可以用传统Ant XML格式表示的内容(通常可以在名为build.xml的文件中找到)也可以使用Groovy代码`Groovy.util.antbuilder`表示。(参见第8章，编写XML，第136页，了解更多关于使用Groovy生成器轻松使用XML的信息。)由于底层的Ant jar包含在Groovy中，您甚至不需要在系统上安装Ant来利用AntBuilder。
 
-In this example, we’re taking the <copy> task from Ant and using it in Groovy. (A great place to see all the core Ant tasks and their parameters is in the online documentation[^605]. ) Here is what this task looks like in its native Ant dialect:
+在此示例中，我们从Ant中获取`<copy>`任务，并在Groovy中使用它。 （在线文档[^605]中是查看所有核心Ant任务及其参数的好地方。）这是此任务在其本机Ant方言中的样子：
 ```xml
 // build.xml
 <project name="test" basedir=".">
@@ -776,31 +777,31 @@ BUILD SUCCESSFUL
 Total time: 0 seconds
 ```
 
-Creating an AntBuilder object in Groovy implicitly takes care of the boilerplate <project> and <target> code, much like a Groovy script takes care of the boilerplate public class and public static void main(String[ ] args), as discussed in Section 5.3, Accepting Command-Line Arguments, on page 88. After that,  ant.copy(file:"src.txt", tofile:"dest.txt") mirrors the Ant XML, albeit in MarkupBuilder dialect.
+在Groovy中创建AntBuilder对象隐式地处理了样板`<project>`和`<target>`代码，就像Groovy脚本处理了样板`public class` 和 `public static void main(String [] args)`一样， 在第88页的第5.3节“接受命令行参数”中进行了讨论。此后，`ant.copy(file: "src.txt", tofile: " dest.txt")`镜像了Ant XML，尽管使用了MarkupBuilder方言。
 
-It initially might seem strange to use Ant for things other than building Java projects. But if you think about it for just a moment, <javac> is only one of the many tasks that Ant supports natively. If Ant provides convenient tasks for copying, moving, renaming, and deleting files—all implemented in Java, therefore ensuring cross-platform compliance, I might add—why not take advantage of it? If you already are familiar with the common Ant tasks, this is a way you can reuse your existing knowledge rather than learning Yet Another API.
+最初，将Ant用于构建Java项目以外的事情似乎很奇怪。 但是，如果您想一想，<javac>仅仅是Ant本身支持的众多任务之一。 如果Ant提供了用于复制，移动，重命名和删除文件的便捷任务（全部用Java实现，因此确保了跨平台的合规性，我可能会添加），为什么不利用它呢？ 如果您已经熟悉了常见的Ant任务，则可以通过这种方法重用现有的知识，而不必学习“另一个API”。
 
-**Copying a File to a Directory**
+**将文件复制到目录**
 ```groovy
 def ant = new AntBuilder()
 ant.copy(file:"src.txt", todir:"../backup")
 ```
 
-Another nicety that Ant offers is the ability to copy a file to a directory. If you want the filename to remain the same, this cuts down on a bit of repetition.
+Ant提供的另一个好处是可以将文件复制到目录中。 如果您希望文件名保持不变，则可以减少一些重复。
 
-**Overwriting the Destination File**
+**覆盖目标文件**
 ```groovy
 def ant = new AntBuilder()
 ant.copy(file:"src.txt", tofile:"dest.txt", overwrite:true)
 ```
 
-By default, Ant will not overwrite the destination file if it is newer than the source file. To force the copy to happen, use the overwrite attribute.
+默认情况下，如果目标文件比源文件新，则Ant不会覆盖目标文件。 要强制执行复制，请使用`overwrite`属性。
 
-### 6.6 Using AntBuilder to Copy a Directory
+### 6.6 Using AntBuilder to Copy a Directory {#使用AntBuilder复制目录}
 ```groovy
 def ant = new AntBuilder()
-ant.copy(todir:"backup"){
-fileset(dir:"images")
+ant.copy(todir: "backup"){
+  fileset(dir: "images")
 }
 ```
 
@@ -815,9 +816,9 @@ fileset(dir:"images")
 </project>
 ```
 
-To copy an entire directory of files (including subdirectories), you need to use a nested fileset. Notice that the nested XML shows up as a nested closure in Groovy.
+要复制文件的整个目录（包括子目录），您需要使用嵌套的文件集。 注意，嵌套的XML在Groovy中显示为嵌套的闭包。
 
-**Selectively Including/Excluding Files**
+**选择性地包含/排除文件**
 ```groovy
 //NOTE: this WILL NOT copy files in subdirectories
 // due to the pattern in include and exclude
@@ -829,9 +830,9 @@ ant.copy(todir:"backup", overwrite:true){
   }
 }
 ```
-Expanding the fileset allows you to selectively include and exclude files based on pattern matching.
+扩展文件集使您可以根据模式匹配有选择地包括和排除文件。
 
-In accordance with Ant rules, the pattern "*.jpg" copies only those files in the parent directory. Files in subdirectories will not be copied unless you change the pattern to "**/*.jpg":
+根据Ant规则，模式 `*.jpg`仅复制父目录中的那些文件。 除非将模式更改为 `**/*.jpg`，否则不会复制子目录中的文件：
 ```groovy
 //NOTE: this WILL copy files in subdirectories
 // due to the pattern in include and exclude
@@ -844,7 +845,7 @@ ant.copy(todir:"backup", overwrite:true){
 }
 ```
 
-**Flattening the Directory Structure on Copy**
+**在复制时将目录结构展平**
 ```groovy
 def ant = new AntBuilder()
 ant.copy(todir:"backup", overwrite:true, flatten:true){
@@ -868,9 +869,9 @@ backup/button.jpg
 backup/arrow.jpg
 backup/big_image_thumb.jpg
 ```
-Ant offers a quirky little attribute called flatten on the <copy> task. Let’s assume you have files in images, images/icons, and images/thumbnails. If you want to consolidate them all to the backup directory without preserving the nested directory structure, you set the flatten attribute to true. Of course, bear in mind that you run the risk of filename collisions when you copy from many different directories into a single one. Remember to set the overwrite attribute appropriately.
+Ant在<copy>任务上提供了一个奇怪的小属性flatten。假设您有文件位于"images, images/icons, 和 images/thumbnails"目录中。如果希望在不保留嵌套目录结构的情况下将它们全部合并到备份目录，可以将flatten属性设置为true。当然，请记住，当您将许多不同的目录复制到一个目录中时，您可能会面临文件名冲突的风险。记住要适当地设置overwrite属性。
 
-### 6.7 Moving/Renaming Files
+### 6.7 Moving/Renaming Files {#移动/重命名文件}
 ```groovy
 // using the File method
 File src = new File("src.txt")
@@ -883,9 +884,9 @@ src.renameTo(new File("dest.txt"))
 def ant = new AntBuilder()
 ant.move(file:"src.txt", tofile:"dest.txt")
 ```
-After Section 6.4, Copying Files, on page 108 and Section 6.5, Using AntBuilder to Copy a File, on page 109, this section might be a bit anticlimactic. You can move files using the standard JDK File.renameTo method. You can also shell out to your operating system. You can also use the AntBuilder.move method. They all do the same thing—it’s a matter of personal preference which technique you use.
+在第108页的第6.4节，复制文件和第109页的第6.5节，使用AntBuilder复制文件之后，本节可能有点过时了。 您可以使用标准JDK`File.renameTo`方法移动文件。 您也可以使用您的操作系统命令。 您也可以使用`AntBuilder.move`方法。 他们都做相同的事情-使用哪种技术完全取决于个人喜好。
 
-### 6.8 Deleting Files
+### 6.8 Deleting Files {#删除文件}
 ```groovy
 // using the File method
 new File("src.txt").delete()
@@ -898,21 +899,21 @@ def ant = new AntBuilder()
 ant.delete(file:"src.txt")
 ```
 
-The techniques covered in Section 6.4, Copying Files, on page 108 and Section 6.5, Using AntBuilder to Copy a File, on page 109 apply equally well here. You can use the standard JDK File.delete method. You can also shell out to your operating system. You can also use the AntBuilder. delete method.
+第6.4节，第108页的复制文件和第6.5节，使用AntBuilder复制文件的第109页中介绍的技术在这里同样适用。 您可以使用标准的JDK`File.delete`方法。 您也可以使用您的操作系统命令。 您也可以使用`AntBuilder.delete`方法。
 
-**Deleting a Directory**
+**删除一个目录**
 ```groovy
 def ant = new AntBuilder()
 ant.delete(dir:"tmp")
 ```
 
-Just like with AntBuilder.copy, you can delete either an individual file or a directory. Remember that AntBuilder.copy won’t overwrite a newer destination file? Well, AntBuilder.delete won’t delete empty directories unless you explicitly ask it to do so:
+与`AntBuilder.copy`一样，您可以删除单个文件或目录。还记得`AntBuilder.copy`不会覆盖新的目标文件吗? `AntBuilder.delete`不会删除空目录，除非你明确要求它这样做:
 ```groovy
 def ant = new AntBuilder()
 ant.delete(dir:"tmp", includeemptydirs:"true")
 ```
 
-**Deleting Selected Files from a Directory**
+**从目录中删除选定的文件**
 ```groovy
 def ant = new AntBuilder()
 ant.delete{
@@ -920,9 +921,9 @@ ant.delete{
 }
 ```
 
-The same nested filesets we used in Section 6.6, Using AntBuilder to Copy a Directory, on page 110 work here as well. Remember that *.bak will delete only the files in the current directory; **/*.bak recursively deletes files all the way down the directory tree.
+我们在第6.6节中使用的嵌套文件集(使用AntBuilder复制目录)在110页中也可以使用。请记住`*.bak`只删除当前目录中的文件;`**/*.bak`递归地删除目录树中的所有文件。
 
-### 6.9 Creating a ZIP File/Tarball
+### 6.9 Creating a ZIP File/Tarball {#创建压缩文件}
 ```groovy
 def ant = new AntBuilder()
 
@@ -935,11 +936,11 @@ ant.gzip(zipfile:"../backup.tar.gz", src:"../backup.tar")
 ant.bzip2(zipfile:"../backup.tar.bz2", src:"../backup.tar")
 ```
 
-AntBuilder comes to the rescue once again when it comes to creating ZIP files. The techniques described here are similar to what we saw in Section 6.5, Using AntBuilder to Copy a File, on page 109.
+在创建ZIP文件时，AntBuilder再次为您提供帮助。 这里描述的技术与我们在第109页的第6.5节“使用AntBuilder复制文件”中看到的技术类似。
 
-Notice that AntBuilder.zip compresses the files by default. To compress a .tar file, you should call AntBuilder.gzip or AntBuilder.bzip2. Gzip is the more common compression format of the two, but bzip2 tends to yield a smaller (more compressed) file.
+请注意，默认情况下`AntBuilder.zip`会压缩文件。 要压缩`.tar`文件，应调用`AntBuilder.gzip`或`AntBuilder.bzip2`。 Gzip是两者中最常用的压缩格式，但是bzip2倾向于产生较小的文件（压缩程度更高）。
 
-**Zipping Up Selected Files**
+**压缩所选文件**
 ```groovy
 def ant = new AntBuilder()
 ant.zip(destfile:"../backup.zip"){
@@ -950,11 +951,11 @@ ant.zip(destfile:"../backup.zip"){
 }
 ```
 
-The same nested filesets we discussed in Section 6.6, Using AntBuilder to Copy a Directory, on page 110 work here as well. Remember that *.jpg will zip up only those files in the current directory; **/*.jpg recursively zips up files all the way down the directory tree.
+我们在第110页的第6.6节“使用AntBuilder复制目录”中讨论的嵌套文件集也可以在此处使用。 请记住`*.jpg`仅压缩当前目录中的那些文件； `**/*.jpg`递归地将文件压缩到目录树下。
 
-AntBuilder.tar supports the same nested fileset that you see here with AntBuilder.zip.
+`AntBuilder.tar`支持您在这里看到的与`AntBuilder.zip`相同的嵌套文件集。
 
-### 6.10 Unzipping/Untarring Files
+### 6.10 Unzipping/Untarring Files {解压缩文件}
 ```groovy
 def ant = new AntBuilder()
 
@@ -967,9 +968,9 @@ ant.bunzip2(src:"../backup.tar.bz2")
 ant.untar(src:"../backup.tar", dest:"/dest")
 ```
 
-Not surprisingly, unzipping files looks much like what we discussed in Section 6.9, Creating a ZIP File/Tarball, on the preceding page. If your tarball is compressed,  you should gunzip or bunzip2 it as appropriate.
+毫不奇怪，解压缩文件的外观很像我们在上一页的6.9节，创建`ZIP文件/Tarball`中讨论的那样。 如果压缩的tarball，则应适当对其进行gunzip或bunzip2压缩。
 
-**Unzipping Selected Files**
+**解压缩所选文件**
 ```groovy
 def ant = new AntBuilder()
 ant.unzip(src:"../backup.zip", dest:"/dest"){
@@ -980,17 +981,9 @@ ant.unzip(src:"../backup.zip", dest:"/dest"){
 }
 ```
 
-This example is using a patternset in this example, although the same nested filesets that we discussed in Section 6.6, Using AntBuilder to Copy a Directory, on page 110 work here as well. Remember that *.jpg will unzip files only in the root of the zip file; **/*.jpg recursively unzips files all the way down the directory tree.
+尽管在第110页的第6.6节“使用AntBuilder复制目录”中讨论的嵌套文件集也可以在此示例中使用，但该示例在此示例中使用了模式集。 请记住，`*.jpg`仅在zip文件的根目录中解压缩文件； `**/*.jpg`递归地将文件解压缩到目录树的下方。
 
-AntBuilder.untar supports the same nested patternset you can see here with AntBuilder.unzip.
-
-
-
-
-
-
-
-
+`AntBuilder.untar`支持您在这里看到的与`AntBuilder.unzip`相同的嵌套模式集。
 
 
 [^502]: http://www.cygwin.com/
