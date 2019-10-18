@@ -1,4 +1,4 @@
-## New to Groovy {#Groovy新手}
+## 第3章 New to Groovy {#Groovy新手}
 
 Groovy是对Java的补充、扩充，在某些情况下，它还提供了非常必要的改进。(毕竟，Java早在1995年就发布了。那是软件时代的前寒武纪，不是吗?) 例如，Java中需要的一些东西在Groovy中是可选的:分号、数据类型，甚至异常处理。默认情况下，Groovy自动包含的包比Java多得多。 Groovy向现有类(如String、List和Map)添加了新的方便方法。所有这些操作都是为了消除历史上减慢Java开发过程的一些减速带。
 
@@ -59,7 +59,7 @@ print shoppingList
 
 除了省略圆括号和分号之外，这个简单的例子还使用了方法指针(第10.7节，在第193页创建一个方法指针)来进一步简化语法。很快，您就有了一些与编写源代码完全不同的东西。添加“牛奶”、删除“啤酒”和打印购物清单都感觉非常自然，即使对于非程序员也是如此。下一页继续。
 
-- - - - - - 
+- - - - - -
  (DSLs).∗ :  http://en.wikipedia.org/wiki/Domain-specific_programming_language
 :::
 
@@ -224,20 +224,20 @@ Mon Sep 03 13:14:20 MDT 2007
 | 操作符    | 方法    |
 | :-- | :-- |
 |a == b or a != b     | a.equals(b)    |
- | a + b  | a.plus(b) | 
- | a - b  | a.minus(b) | 
- | a * b  | a.multiply(b) | 
- | a / b  | a.div(b) | 
- | a % b  | a.mod(b) | 
- | a++ or ++a  | a.next() | 
- | a- - or - -a  | a.previous() | 
- | a & b  | a.and(b) | 
- | a | b  | a.or(b) | 
- | a[b]  | a.getAt(b) | 
- | a[b] = c  | a.putAt(b,c) | 
- | a << b  | a.leftShift(b) | 
- | a >> b  | a.rightShift(b) | 
- | a < b or a > b or a <= b or a >= b  | a.compareTo(b) | 
+| a + b  | a.plus(b) |
+| a - b  | a.minus(b) |
+| a * b  | a.multiply(b) |
+| a / b  | a.div(b) |
+| a % b  | a.mod(b) |
+| a++ or ++a  | a.next() |
+| a- - or - -a  | a.previous() |
+| a & b  | a.and(b) |
+| a | b  | a.or(b) |
+| a[b]  | a.getAt(b) |
+| a[b] = c  | a.putAt(b,c) |
+| a << b  | a.leftShift(b) |
+| a >> b  | a.rightShift(b) |
+| a < b or a > b or a <= b or a >= b  | a.compareTo(b) |
 
 这种语法糖出现在GDK[^37] (JDK的Groovy增强)中。例如，第58页的第3.14节“列表快捷方式”演示了添加到`java.util.List`中的一些方便操作符。您可以使用传统的Java方法(`List.add("foo")`)或新的Groovy方法(`List << "foo"`)向列表添加项。
 
@@ -962,7 +962,7 @@ Total cost: 33.0
 您可以根据需要使用任意数量的参数。 第一个curry调用将填充最左侧的参数。 每个后续调用将填充右侧的下一个参数。
 
 
-## Java and Groovy Integration {#Java和Groovy集成}
+## 第4章 Java and Groovy Integration {#Java和Groovy集成}
 
 Groovy最大的卖点之一是它与Java的无缝集成。在本章中，我们将以各种方式探讨这种集成。我们将使用普通的旧Groovy对象(POGOs)作为普通旧Java对象(pojo)的完全替代。我们将从Java调用Groovy代码，从Groovy调用Java代码。最后，我们将探索如何使用Ant来编译整个项目，包括Groovy和Java类的健康组合。
 

@@ -1,4 +1,4 @@
-## Parsing XML {#解析XML}
+## 第7章 Parsing XML {#解析XML}
 Groovy使得使用XML变得轻而易举。 当然，您仍然可以在工具包中使用经过验证的Java XML库，但是一旦您体验了Groovy的原生`parsers `和`slurpers`，您就会想知道为什么要使用其他任何东西。 Groovy最大限度地减少了XML和代码之间的鸿沟，使XML感觉像是语言的自然扩展。 有关如何使用新发现的XML解析技能的一些实际示例，请参阅第9章，Web服务，第152页。
 
 ### 7.1 The “I'm in a Hurry” Guide to Parsing XML {#在“我有急事”指南解析XML}
@@ -722,7 +722,7 @@ pxml.children().each{child ->
 
 如果您知道嵌套的XML结构更深入，则应该递归调用`children()`。 如果您有属性，则可以在每个节点上调用`attributes()`以返回Map。 （有关XML文档结构的动态内省的更多提示，请参见第78页上的第7.8节，XmlParser:text(), children()和value()，这里的重点是不要为每个文档提供完整的解决方案。 可能的情况 - 重点是展示使用日常Groovy类处理XML的可能性。
 
-## Writing XML {#编写XML}
+## 第8章 Writing XML {#编写XML}
 在第7章，XML解析，第116页，我们探讨了摄取XML的不同方法。(既然您已经完全了解了XmlSlurper，那么“slurp”听起来是不是比“ingest”酷多了?)在本章中，我们将研究编写XML的不同方法。
 
 与Groovy解析器一样，您有两个用于构建XML文档的类似(但略有不同)类——markupbuilder和StreamingMarkupBuilder。在本章结束之前，您应该更清楚地了解每种方法的优缺点。

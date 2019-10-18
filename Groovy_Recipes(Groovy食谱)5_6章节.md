@@ -1,4 +1,4 @@
-## Groovy from the Command Line {#命令行中的Groovy}
+## 第5章 Groovy from the Command Line {#命令行中的Groovy}
 
 用于shell脚本的Java ?是的,对的。
 
@@ -387,7 +387,7 @@ load !{user.home}/.groovy/lib/*.jar
 
 您很快就会厌倦了每次都必须在命令行上键入常用的JAR（例如JDBC驱动程序）。 如果在主目录中创建`.groovy/lib`目录（请不要忘记前导点），则在命令提示符下运行Groovy时，在此目录中找到的所有JAR都会自动包含在CLASSPATH中。 默认情况下，`.groovy/lib`目录是禁用的； 确保在`$GROOVY_HOME/conf/groovy-starter.conf`中启用它。
 
-## File Tricks {#文件的技巧}
+## 第6章 File Tricks {#文件的技巧}
 
 Groovy提供了许多处理文件和目录的捷径。 列出文件，复制文件，重命名文件，删除文件-Groovy为所有这些平凡的任务带来了可喜的帮助。 Groovy直接向标准JDK类（例如java.io.File）添加新方法的事实使这些新功能看起来像是该语言的自然组成部分。
 
