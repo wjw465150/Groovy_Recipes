@@ -1134,25 +1134,25 @@ XmlSlurper允许您避免处理名称空间并提取相关字段。 有关更多
 雅虎有许多RSS源，它们提供的不仅是简单的博客联合组织。 有关通过有线发送真实数据的RSS供稿的几个示例，请参见`http://developer.yahoo.com/weather/`以及`http://developer.yahoo.com/traffic/`。
 
 # 第10章 Metaprogramming {#元编程}
-Metaprogramming[^1001] is writing code that has the ability to dynamically change its behavior at runtime. (I’d like this class to have that method on it right now.) It gives a fluidity and flexibility to your code that can seem positively alien if you are steeped in static programming languages such as C or Java. Dynamic languages such as Smalltalk and Ruby have this capability, and now Groovy allows you to do the same type of thing within a Java environment.
+元编程[^1001]是编写能够在运行时动态改变其行为的代码。(我希望这个类现在就有那个方法。)它为您的代码提供了流动性和灵活性，如果您精通C或Java之类的静态编程语言，那么您的代码可能会非常陌生。像Smalltalk和Ruby这样的动态语言就有这种功能，现在Groovy允许您在Java环境中做相同的事情。
 
-No self-respecting dynamic language would be complete without the complementary idea of reflection[^1002]—the ability to programmatically ask itself about itself at runtime. (What fields does this class have? What methods will it respond to?) Although this is possible in Java by using the Reflection API, in practice it is rarely used. Some might argue that the concepts are less relevant in a statically typed language than a dynamically typed one—after all, once you define an interface in Java, why programmatically ask the interface which methods it defines? You already know the answer to the question a priori, and in Java the interface will never change. (Polymorphism is based on this concept.)
+没有反射[^1002]的补充概念，即在运行时以编程方式询问自己的能力，没有一种自重的动态语言会是完整的。(此类具有哪些字段？它将响应什么方法？)尽管在Java中可以通过使用Reflection API做到这一点，但实际上很少使用它。有人可能会争辩说，这些概念在静态类型的语言中比在动态类型的语言中没有那么重要—毕竟，一旦用Java定义了接口，为什么要以编程方式询问该接口定义了哪些方法？ 您已经知道先验问题的答案，并且在Java中，接口永远不会改变。 （多态性基于此概念。）
 
-In Chapter 3, New to Groovy, on page 41, we discussed interesting add-ons to the Java language. Most developers already know what a java.util.ArrayList is, so pointing out the additional cool new methods is an exercise in working with a familiar class in a new way. Unless you’ve already been working with the Reflection API in Java or habitually instantiating all of your classes via Class.forName(), the ideas in this chapter might be a bit of a stretch in a new direction. (Why should you programmatically ask this class if it has a field or responds to a specific method—isn’t that what your compiler does for you?)
+在第41页的第3章，对Groovy入门中，我们讨论了Java语言的有趣附加组件。 大多数开发人员已经知道`java.util.ArrayList`是什么，因此指出其他一些很棒的新方法是一种以新方式使用熟悉的类的练习。除非您已经使用Java中的Reflection API进行操作，或者除非习惯通过`Class.forName()`实例化所有类，否则本章中的想法可能会朝着一个新的方向延伸。 （为什么您应该以编程方式询问此类是否具有字段或对特定方法作出响应，这不是您的编译器为您做的事情吗？）
 
-This chapter shows you ways to programmatically ask your class what fields and methods it has. We’ll also look at how to dynamically add new fields and methods at runtime via the MetaClass class. We’ll talk about calling methods that don’t exist using invokeMethod(). There are even objects called Expandos that are wholly created at runtime. Enjoy Groovy-style metaprogramming at its finest.
+本章介绍了以编程方式询问您的类有哪些字段和方法的方法。 我们还将研究如何在运行时通过MetaClass类动态添加新的字段和方法。 我们将讨论使用`invokeMethod()`不存在的调用方法。 甚至有称为Expandos的对象在运行时完全创建。 尽享Groovy风格的元编程。
 
-## 10.1 Discovering the Class
+## 10.1 Discovering the Class {#发现类}
 ```groovy
 def s = "Hello"
 println s.class
 ===> java.lang.String
 ```
-Every object in Java has a getClass() method. In Groovy, you can shorten the call to class. (See Section 4.2, Getter and Setter Shortcut Syntax, on page 72 for more on this.)
+Java中的每个对象都有一个`getClass()`方法。在Groovy中，可以缩短对类的调用。(更多信息见第72页4.2节，Getter和Setter快捷语法。)
 
-Notice in this example that you use duck typing to declare the variable s—def instead of String. Even so, the variable correctly identifies itself as a String when asked. (For more information, see Section 3.5, Optional Datatype Declaration (Duck Typing), on page 47.)
+注意，在本例中，您使用duck类型来声明变量s-def，而不是String。尽管如此，当被请求时，变量正确地将自己标识为字符串。(有关更多信息，请参见第3.5节，可选数据类型声明(Duck Typing)，见第47页。)
 
-Once you have the class, you can ask it all sorts of interesting questions. For the record, all this is available to you via the boring old java.lang.Class class. Groovy just adds the each() syntactic sugar for iteration, as well as the default it variable. (For more information, see Section 3.14, List Shortcuts, on page 58.)
+一旦有了这样的class，你就可以问各种有趣的问题。请注意，所有这些都可以通过乏味的旧类`java.lang.Class`获得。Groovy只是为迭代添加了`each()`语法糖，以及默认的it变量。(有关更多信息，请参见第3.14节，List快捷方式，见第58页。)
 ```groovy
 String.constructors.each{println it}
 ===>
@@ -1171,7 +1171,7 @@ interface java.lang.Comparable
 interface java.lang.CharSequence
 ```
 
-## 10.2 Discovering the Fields of a Class
+## 10.2 Discovering the Fields of a Class {#发现类的字段}
 ```groovy
 def d = new Date()
 println d.properties
@@ -1180,7 +1180,7 @@ time=1188657535348, timeImpl=1188657535348, class=class java.util.Date,
 timezoneOffset=360, date=1, hours=8, minutes=38, year=107,
 julianCalendar=sun.util.calendar.JulianCalendar@d085f8, seconds=55}
 ```
-Calling getProperties() on a class returns a java.util.HashMap of all the fields. For slightly prettier output, you can call each() on the HashMap. (Recall that it is the default iterator variable, as we discussed in Section 3.14, Iterating, on page 59.)
+在类上调用`getProperties()`将返回所有字段的`java.util.HashMap`。对于稍微漂亮一些的输出，您可以调用HashMap上的`each()`。(还记得吗，它是默认的迭代器变量，正如我们在第59页3.14节“迭代”中讨论的那样。)
 ```groovy
 d.properties.each{println it}
 ===>
@@ -1198,7 +1198,7 @@ year=107
 julianCalendar=sun.util.calendar.JulianCalendar@d085f8
 seconds=55
 ```
-Java offers you a way to do almost the same thing. Every java.lang.Class offers a getDeclaredFields() method that returns an array of java.lang.reflect.Field objects.
+Java为您提供了一种实现几乎相同功能的方法。每个`java.lang.Class`提供一个`getDeclaredFields()`方法，该方法返回一个`java.lang.reflect.Field`对象的数组。
 ```groovy
 d.class.declaredFields.each{println it}
 ===>
@@ -1211,11 +1211,11 @@ private static final long java.util.Date.serialVersionUID
 private static final java.lang.String[] java.util.Date.wtb
 private static final int[] java.util.Date.ttb
 ```
-Wait a second...how come the getProperties call doesn’t match the getDeclaredFields call? Perhaps the Javadocs[^1003] on the latter method can shed some light on the issue: “getDeclaredFields() returns an array of Field objects reflecting all the fields declared by the class or interface represented by this Class object. This includes public, protected, default (package) access, and private fields, but excludes inherited fields.”
+等一下…为什么`getProperties`调用不匹配`getDeclaredFields`调用?也许后一种方法上的Javadocs[^1003]可以解释这个问题:“`getDeclaredFields()`返回一个字段对象数组，它反映了这个类对象所声明的所有字段或这个类对象所表示的接口。这包括公共字段、受保护字段、默认(包)访问字段和私有字段，但不包括继承字段。”
 
-Although the Java method is technically more correct—the fields month, day, and year are technically part of an internal class—the Groovy method getProperties simply picks up the getters and setters on the class. Even though they aren’t really fields of the Date object, the API designer seems to want you to treat the object as if it did have those fields. Both methods are presented here so that you can choose the method that best suits your needs.
+虽然Java方法在技术上更加正确—字段month、day和year在技术上是内部类的一部分—Groovy方法`getProperties`只是获取类上的getter和setter。尽管它们并不是Date对象的真正字段，但API设计人员似乎希望您将对象视为具有这些字段的对象。这里提供了这两种方法，以便您可以选择最适合您需要的方法。
 
-**Groovy’s MetaClass Field**
+**Groovy的MetaClass字段**
 ```groovy
 class Person{
   String firstname
@@ -1230,15 +1230,15 @@ lastname=Smith
 class=class Person
 metaClass=groovy.lang.MetaClassImpl@ebd7c4[class Person]
 ```
-Calling getProperties() on a Java class returns exactly the number of fields you would expect. In Groovy, one more interesting field of note appears: metaClass.
+对Java类调用`getProperties()`将返回您所期望的字段数。在Groovy中，出现了一个更有趣的值得注意的领域: `metaClass(元类)`。
 
-You shouldn’t be surprised in the least to see firstname and lastname appear in the list. You might not expect to see class in the list, but recall from the previous section that getProperties() returns all inherited fields on an object, not just the ones you define. Since Person extends java.lang.Object, you see the getClass() method appear here as if it were a field on the Person class.
+看到firstname和lastname 出现在列表中，你不应该感到惊讶。您可能不希望在列表中看到class，但是回想一下前面的部分，`getProperties()`返回对象上的所有继承字段，而不仅仅是您定义的字段。由于Person扩展了`java.lang.Object`，所以可以看到`getClass()`方法出现在这里，就好像它是Person类上的一个字段。
 
-It is the last unexpected field—the MetaClass—that makes Groovy special. All Groovy classes implement the groovy.lang.GroovyObject interface. It is the getMetaClass() method on this interface that is responsible for bringing your last unexpected field to the party.
+它是使Groovy与众不同的最后一个意外字段`MetaClass`。所有Groovy类都实现了`Groovy.lang. Groovyobject`接口。这个接口上的`getMetaClass()`方法负责将最后一个未预料到的字段带到参与方。
 
-MetaClass is what makes Groovy a dynamic language. It is what allows new fields and methods to be added to classes at runtime instead of compile time. It is what allows you to add methods like execute() and toURL() to a java.lang.String, even though it is a Final class.
+`MetaClass`是使Groovy成为动态语言的原因。它允许在运行时而不是编译时向类添加新字段和方法。它允许您将`execute()`和`toURL()`这样的方法添加到`java.lang.String`中，即使它是`Final class`。
 
-Starting with the next section—Section 10.3, Checking for the Existence of a Field—and continuing through the rest of this chapter, the power of the MetaClass will slowly unfold. You’ll see how to get it here. We’ll discuss what you can do with it throughout the rest of the chapter.
+从下一节开始—10.3节，检查字段的存在—并继续本章的其余部分，`MetaClass`的力量将慢慢展开。你会看到怎么把它弄到这里。我们将在本章的其余部分讨论如何使用它。
 
 **MetaClasses for Java Classes**
 ```groovy
@@ -1248,9 +1248,9 @@ GroovySystem.metaClassRegistry.getMetaClass(Date)
 Date.metaClass
 ```
 
-Java objects in Groovy 1.0 don’t expose a MetaClass easily, but they all still have one. To find it, you have to query the MetaClassRegistry for the JDK class. In Groovy 1.5, this process has been greatly simplified—you simply ask the class, Groovy or Java, directly for its MetaClass.
+Groovy 1.0中的Java对象不容易公开MetaClass，但它们都有一个MetaClass。要找到它，您必须查询JDK类的MetaClassRegistry。在Groovy 1.5中，这个过程被极大地简化了——您只需直接向类请求它的MetaClass。
 
-## 10.3 Checking for the Existence of a Field
+## 10.3 Checking for the Existence of a Field {#检查字段是否存在}
 ```groovy
 class Person{
   String firstname
@@ -1268,35 +1268,39 @@ p.last = "Doe"
 ERROR: groovy.lang.MissingPropertyException: No such property:
 last for class: Person
 ```
-Every java.lang.Class has a getField() method that returns the field if it exists. If the call fails, it throws a java.lang.NoSuchFieldException. Groovy allows you to be a bit more fail-safe by querying the class before making the call. Calling the hasProperty() method on the MetaClass returns the field if it exists and returns null if it does not.
+每个`java.lang.Class`都有一个`getField()`方法，该方法返回存在的字段。如果调用失败，则抛出一个`java.lang.NoSuchFieldException`。通过在调用之前查询类，Groovy允许您更安全一点。在MetaClass上调用`hasProperty()`方法，如果它存在，则返回字段;如果不存在，则返回null。
 
-As discussed in Section 3.10, Groovy Truth, on page 54, a null response evaluates to false, allowing you to be both cautious and dynamic. This technique is exactly what JavaScript developers have done for years to ensure that their code works across different browsers.
+正如第54页第3.10节Groovy Truth中所讨论的，null响应的计算结果为false，这使您可以既谨慎又动态。这种技术正是JavaScript开发人员多年来一直在做的，以确保他们的代码能够跨不同的浏览器工作。
 
-**Groovy 1.0 Workaround**
+**Groovy 1.0 解决方案**
+
 ```groovy
 if(p.properties.containsKey("firstname")){
   p.firstname = "Jane"
 }
 ```
-The hasProperty() method came along in Groovy 1.5. In Groovy 1.0, you can effectively do the same check using the containsKey() method on the HashMap returned by the getProperties() method.
+`hasProperty()`方法出现在Groovy 1.5中。在Groovy 1.0中，可以使用`getProperties()`方法返回的HashMap上的`containsKey()`方法有效地进行相同的检查。
 
-**When Would You Use This?**
+**你什么时候用这个?**
 ```groovy
 // url to test this code:
 http://localhost:8080/groovlets/person.groovy?
 firstname=Scott&lastname=Davis&title=Bench+Warmer
+
 // person.groovy
 class Person{
-String firstname
-String lastname
-String toString(){"${firstname} ${lastname}"}
+  String firstname
+  String lastname
+  String toString(){"${firstname} ${lastname}"}
 }
+
 def person = new Person()
 request.parameterMap.each{name, value->
-if(person.metaClass.hasProperty(person, name)){
-person.setProperty(name, value[0])
+  if(person.metaClass.hasProperty(person, name)){
+    person.setProperty(name, value[0])
+  }
 }
-}
+
 println "QueryString: ${request.queryString}"
 println "<br/>"
 println "Incoming parameters: ${request.parameterMap}"
@@ -1304,15 +1308,16 @@ println "<br/>"
 println "Resulting Person: ${person}"
 ```
 
-Dynamically determining which fields a class has helps tremendously when you are populating it on the fly. For example, here is a simple Groovlet that fills in a class based on name/value pairs passed in via the query string. (In Figure 10.1, on the following page, you can see the rendered results in a browser.)
+动态地确定类具有哪些字段对于动态地填充类非常有帮助。例如，下面是一个简单的Groovlet，它根据通过查询字符串传入的`名称/值`对填充类。(在图10.1中，在下面的页面中，您可以看到在浏览器中呈现的结果。)
 
-This is a problem that every web framework in existence has to solve. But even if you’re not doing web development, this technique is equally handy. Anytime you dynamically populate a POGO—be it from XML, CSV, a hashmap, or anything else—you should politely ask the POGO whether it can handle the data stream rather than brusquely ramming it down its throat.
-**Figure 10.1: A Groovlet demonstrating the value of hasProperty()**
+这是每个现有web框架都必须解决的问题。但是，即使您不进行web开发，这种技术也同样方便。无论何时，当您从XML、CSV、hashmap或其他任何地方动态地填充POGO时，您都应该礼貌地询问POGO是否能够处理数据流，而不是粗暴地强行将其咽下去。
+
+**Figure 10.1: 展示hasProperty()值的Groovlet**
 ![Figure 10.1: A Groovlet demonstrating the value of hasProperty()](_v_images/20191017131550135_28206.png)
 
-To begin, you define the Person class and instantiate it. Next, you walk through the QueryString value by value. Based on the URL in the example, you should find firstname, lastname, and title entries in the query string. If you simply walked the key list and blithely called setProperty() on the person, bad things would happen by the time you reached title since person doesn’t have a title field. (Specifically, Groovy would complain with a groovy.lang.MissingPropertyException.) Wrapping the setProperty() call in a hasProperty() check ensures that only the fields that person knows how to deal with are injected. All unmatched fields are simply discarded.  
+首先，定义Person类并实例化它。接下来，逐个遍历QueryString值。根据示例中的URL，您应该在查询字符串中找到firstname、lastname和title条目。 如果您只是遍历键列表并在person上愉快地调用`setProperty()`，那么当您到达title时就会发生糟糕的事情，因为person没有title字段。(具体来说，Groovy会报错一个Groovy.lang.missingpropertyexception。) 在`hasProperty()`检查中包装`setProperty()`调用可以确保只有知道如何处理的字段被注入。所有不匹配的字段都会被简单地丢弃。 
 
-If you want to make the code a wee bit prettier, you can add a hasProperty() convenience method right on the person class:
+如果你想让代码更漂亮一点，你可以在person类上添加一个`hasProperty()`便利方法:
 ```groovy
 // person.groovy
 class Person{
@@ -1341,9 +1346,9 @@ println "<br/>"
 println "Resulting Person: ${person}"
 ```
 
-For more information on Groovlets, see Section 2.6, Running Groovy on a Web Server (Groovlets), on page 33. For more on query strings, see Section 9.4, Working with Query Strings, on page 159.
+有关groovlet的更多信息，请参见第2.6节，在Web服务器上运行Groovy (groovlet)，见第33页。有关查询字符串的更多信息，请参阅第159页关于处理查询字符串的9.4节。
 
-## 10.4 Discovering the Methods of a Class
+## 10.4 Discovering the Methods of a Class {#发现类的方法}
 ```groovy
 def d = new Date()
 d.class.methods.each{println it}
@@ -1360,9 +1365,9 @@ public int java.util.Date.getSeconds()
 ...
 ```
 
-Every Class has a getMethods() method. Iterating through this list is no different from iterating through the fields like we discussed in Section 10.2, Discovering the Fields of a Class, on page 183.
+每个类都有一个`getMethods()`方法。遍历这个列表与遍历字段没有什么不同，就像我们在10.2节中讨论的那样，在183页上查找类的字段。
 
-You can simplify your list a bit if you just show the method names:
+如果只显示方法名称，则可以稍微简化一下列表：
 ```groovy
 d.class.methods.name
 
@@ -1374,7 +1379,7 @@ setMinutes, setSeconds, toLocaleString, toGMTString, getTimezoneOffset,
 getClass, wait, wait, wait, notify, notifyAll]
 ```
 
-**Dynamically Calling Methods on a Class Using Evaluate**
+**使用Evaluate动态调用类的方法**
 ```groovy
 def d = new Date()
 
@@ -1397,17 +1402,17 @@ getTimezoneOffset: 360
 getClass: class java.util.Date
 ```
 
-In Section 5.10, Evaluating a String, on page 95, we talked about running Groovy code by evaluating an arbitrary String. What if you want to walk through all the methods on your Date object and dynamically execute all the getters? This example does the trick.
+在第95页的5.10节，Evaluating字符串中，我们讨论了通过Evaluating任意字符串来运行Groovy代码。 如果要遍历Date对象上的所有方法并动态执行所有`getter`，该怎么办？ 这个例子可以解决问题。
 
-Although this code works as expected, did you notice the fast one I pulled on you in the evaluate statement? You have multiple Date instances in play here: the d instance whose methods you iterate through and a separate dd that gets instantiated each time in the loop. You had to do this because each evaluate creates its own groovy.lang.GroovyShell, and unfortunately it can’t see the d variable. If you try to call d.${method.name}(), you’ll get an error message:
+尽管此代码可以按预期工作，但您是否在评估语句中注意到我快速拉给您的代码？这里有多个Date实例:您遍历其方法的d实例，以及在循环中每次实例化的单独dd。必须这样做，因为每个`evaluate`都创建了自己的`groovy.lang.GroovyShell`，不幸的是，它看不到d变量。如果您尝试调用`d.${method.name}()`，您将得到一个错误消息:
 ```groovy
 Caught: groovy.lang.MissingPropertyException:
 No such property: d for class: Script1
 ```
 
-Script1 is the anonymous script created by the evaluate call.
+Script1是由`evaluate`调用创建的匿名脚本。
 
-There’s a second way to solve this issue—one that reuses the same Date instance. In the sidebar on page 30, we talked about the groovy.lang.Binding class. This is essentially a hashmap of values that you can pass into the constructor of a GroovyShell. With just a few more lines of code, you can ensure that d is visible to the evaluate method call:
+解决此问题的第二种方法是重用相同的Date实例。在第30页的边栏中，我们讨论了`groovy.lang.Binding`类。这实际上是一个hashmap值，您可以将其传递给GroovyShell的构造函数。只需多几行代码，就可以确保d对于`evaluate`方法调用是可见的:
 ```groovy
 def d = new Date()
 def binding = new Binding()
@@ -1422,7 +1427,7 @@ d.class.methods.each{method ->
 }
 ```
 
-**Dynamically Calling Methods on a Class Using a GString**
+**使用GString动态调用类的方法**
 ```groovy
 def d = new Date()
 d.class.methods.each{method ->
@@ -1433,36 +1438,38 @@ d.class.methods.each{method ->
 }
 ```
 
-It’s important to understand the subtle points around evaluate, GroovyShell, and Binding, but it’s also important never to forget the power of the GString. This is the easiest, most concise way to dynamically call a method on a class—put it into a GString, and let the runtime evaluation of the statement do the rest.
+理解围绕evaluate、GroovyShell和Binding的细微之处很重要，但是不要忘记GString的强大功能也很重要。这是动态地调用类上的方法的最简单、最简洁的方法—将它放到GString中，然后让语句的运行时evaluation完成其余的工作。
 
-**Additional Methods of a Groovy Class**
+**Groovy类的其他方法**
 ```groovy
 class Person{
-String firstname
-String lastname
+  String firstname
+  String lastname
 }
+
 def p = new Person()
 p.class.methods.name
+
 ===> [getMetaClass, setMetaClass, invokeMethod, getFirstname,
 setFirstname, getLastname, setLastname, setProperty, getProperty,
 hashCode, getClass, equals, toString, wait, wait, wait, notify, notifyAll]
 ```
-Let’s evaluate this list of methods found on a Groovy object. The getters and setters for the fields are no surprise:
+让我们来计算在Groovy对象中找到的这个方法列表。字段的getter和setter并不奇怪:
 ```groovy
 getFirstname, setFirstname, getLastname, setLastname
 ```
 
-The methods from java.lang.Object and java.lang.Class are present and accounted for:
+分别来自`java.lang.Object`和`java.lang.Class`的方法如下:
 ```groovy
 hashCode, getClass, equals, toString, wait, wait, wait, notify, notifyAll
 ```
 
-What is left are the additions from groovy.lang.GroovyObject:
+剩下的是来自`groovy.lang.GroovyObject`的添加:
 ```groovy
 getMetaClass, setMetaClass, invokeMethod, setProperty, getProperty
 ```
 
-## 10.5 Checking for the Existence of a Method
+## 10.5 Checking for the Existence of a Method {#检查方法是否存在}
 ```groovy
 class Person{
   String firstname
@@ -1479,7 +1486,7 @@ ERROR: groovy.lang.MissingMethodException: No signature of method:
   Person.foo() is applicable for argument types: () values: {}
 ```
 
-As we did in Section 10.3, Checking for the Existence of a Field, on page 185, you can use the MetaClass to dynamically verify the existence of a method before you call it by using the respondsTo method. This method was added in Groovy 1.5.
+正如我们在第10.3节中所做的，检查字段是否存在，在第185页，您可以使用`MetaClass `的`respondsTo`方法在调用之前动态地验证方法的存在。这个方法是在Groovy 1.5中添加的。
 
 **Groovy 1.0**
 ```groovy
@@ -1488,12 +1495,12 @@ if(list.contains("getFirstname")){
   p.getFirstname()
 }
 ```
-For Groovy 1.0 users, you can accomplish the same thing by querying the list of methods on the class. Since getMethods() technically returns an array, you return it as a list so that you can use the convenient contains() method.
+对于Groovy 1.0用户，可以通过查询类上的方法列表来完成相同的工作。由于`getMethods()`从技术上返回一个数组，所以将它作为列表返回，这样就可以使用方便的`contains()`方法。
 
-**When Would You Use This?**
-We discussed duck typing in Section 3.5, Optional Datatype Declaration (Duck Typing), on page 47. Java is a statically typed language, which means that all the behavior of a class is defined at compile time. Groovy is a dynamically typed language, which means that behavior can be added at runtime that didn’t exist when the classes were compiled. (See Section 10.8, Calling Methods That Don’t Exist (invokeMethod), on page 193 for an example of this.) In simple terms, this means it is not necessary for you to be a duck (Duck d = new Duck()) as long as you walk and quack like a duck (respondsTo("walk") && respondsTo("quack")) at runtime
+**你什么时候用这个?**
+我们在第47页的3.5节(可选数据类型声明(duck typing)中讨论了duck typing。Java是一种静态类型语言，这意味着类的所有行为都是在编译时定义的。Groovy是一种动态类型语言，这意味着可以在运行时添加类编译时不存在的行为。(参见第10.8节，调用不存在的方法(invokeMethod)，在第193页有一个这样的例子。)简单来说，这意味着你没有必要成为鸭子(duck d = new duck())，只要你在运行时像鸭子一样走路和嘎嘎叫(respondsTo("walk") && respondsTo("quack"))
 
-**Checking for Overloaded Methods**
+**检查重载方法**
 ```groovy
 class Greeting{
   def sayHello(){
@@ -1527,17 +1534,17 @@ g.metaClass.respondsTo(g, "sayHello").each{m ->
 sayHello {class java.lang.String}
 sayHello {}
 ```
-If your class has several overloaded methods, you can pass additional parameters to the respondsTo method—one for each parameter’s unique datatype. If the method doesn’t accept any parameters (such as sayHello()), you pass in null for the parameter check.
+如果您的类有几个重载的方法，您可以将额外的参数传递给respondsTo方法——每个参数有一个唯一的数据类型。如果方法不接受任何参数(如sayHello())，则传递null以进行参数检查。
 
-If you want to see whether Greeting has a sayHello(String name1, String name2) method before you call it, try this:
+如果你想看看问候语是否有一个`sayHello(String name1, String name2)`方法在你调用它之前，试试这个:
 ```groovy
 if(g.metaClass.respondsTo(g, "sayHello", String, String)){
   g.sayHello("Jane", "Doe")
 }
 ```
-This technique is exactly what JavaScript developers have done for years to ensure that their code works across different browsers.
+这种技术正是JavaScript开发人员多年来一直在做的，以确保他们的代码能够跨不同的浏览器工作。
 
-## 10.6 Creating a Field Pointer
+## 10.6 Creating a Field Pointer {#创建字段指针}
 ```groovy
 class Person{
   String name
@@ -1554,9 +1561,9 @@ println p.name
 println p.@name
 ===> Jane
 ```
-When you write p.name, you are calling p.getName(). If you want to bypass encapsulation and access the field directly (even if it is private!), simply prefix the name of the field with an @. For example: p.@name. You should exercise great caution in using this—breaking encapsulation is nothing that should be done on a whim. It can yield unpredictable results if the getter or setter is doing anything other than directly setting the value of the attribute.
+当您编写`p.name`时，其实您正在调用`p.getName()`。 如果要绕过封装并直接访问该字段（即使它是私有的！），只需在字段名称前加上`@`前缀即可。 例如：`p.@name`。 使用此方法时应格外小心-打破封装并不是一时兴起的事情。 如果getter或setter除了直接设置属性的值之外还执行其他任何操作，则可能会产生不可预测的结果。
 
-## 10.7 Creating a Method Pointer
+## 10.7 Creating a Method Pointer {#创建方法指针}
 ```groovy
 def list = []
 def insert = list.&add
@@ -1565,11 +1572,11 @@ insert "Groovy"
 println list
 ===> ["Java", "Groovy"]
 ```
-Groovy allows you to create a pointer to a method by using an & prefix. In this example, insert is an alias for list.&add(). This allows you to create your own domain-specific language. The fact that Groovy allows optional parentheses (see Section 3.3, Optional Parentheses, on page 44) and optional semicolons (see Section 3.2, Optional Semicolons, on page 42) makes this seem less like a programming language and more like plain English.
+Groovy允许您使用`&`前缀创建指向方法的指针。 在此示例中，insert是`list.&add()`的别名。 这使您可以创建自己的域特定语言。 Groovy允许使用可选的括号（请参见第3.3节，可选的括号，第44页）和可选的分号（请参见第3.2节，可选的分号，第42页），这一事实使它看起来不太像编程语言，而更像是普通英语。
 
-One of my favorite features of Groovy—println "Hello"—wouldn’t exist if Groovy couldn’t alias calls to System.out.println(). For more on DSLs, see the sidebar on page 43.
+如果Groovy无法别名调用`System.out.println()`，那么我最喜欢的Groovy功能之一`println "Hello")`将不存在。 有关DSL的更多信息，请参阅第43页的边栏。
 
-## 10.8 Calling Methods That Don’t Exist (invokeMethod)
+## 10.8 Calling Methods That Don’t Exist (invokeMethod) {#调用不存在的方法(invokeMethod)}
 ```groovy
 class Person{
   String name
@@ -1600,15 +1607,15 @@ println scott.relationships
   "knows":["Neal", "Venkat", "Ted", "Ben", "David"],
   "workedWith":["Brian", "Jared"]]
 ```
-With invokeMethod(), you can begin to see the power of dynamic languages. In this example, you want complete flexibility in how you define relationships with Person. If you want to say scott.likesToEatSushiWith "Chris", you don’t want to have to create a likesToEatSushiWith() method and statically compile it into the class. You want to be able to create new types of relationships on the fly.
+使用`invokeMethod()`，您可以开始了解动态语言的功能。 在此示例中，您希望在与Person的关系定义方面具有完全的灵活性。 如果您想说`scott.likesToEatSushiWith "Chris"`，则无需创建`likesToEatSushiWith())`方法并将其静态编译到类中。 您希望能够动态创建新型的关系。
 
-While the relationshipsMap gives you the flexibility to store arbitrary name/value pairs, having to write scott.put("onceWentRollerSkatingWith", "Megan") isn’t as elegant as scott.onceWentRollerSkatingWith "Megan". 
+尽管RelationshipsMap可以让您灵活地存储任意名称/值对，但不得不编写`scott.put(" onceWentRollerSkatingWith","Megan")`不如`scott.onceWentRollerSkatingWith "Megan"`优雅。
 
-invokeMethod(String name, Object args) is at the heart of Groovy metaprogramming. Every method call on an object is intercepted by invokeMethod. The name parameter is the method call (married, knows, and workedWith). The args parameter is an Object array that catches all subsequent parameters (Kim, Neal, and Brian).
+`invokeMethod(String name,Object args)`是Groovy元编程的核心。 对象上的每个方法调用都会被`invokeMethod`拦截。 `name`参数是方法调用（married, knows, 和 workedWith）。 `args`参数是一个Object数组，可捕获所有后续参数(Kim，Neal和Brian)。
 
-Without invokeMethod(), none of the parsers or slurpers discussed in Chapter 7, Parsing XML, on page 116 would work as elegantly as they do, allowing you to call the child XML elements as if they were method calls on the parent node.
+如果没有`invokeMethod()`，第116页第7章“解析XML”中讨论的解析器或slurpers都无法像它们那样优雅地工作，从而使您可以像在父节点上调用方法一样调用子XML元素。 。
 
-## 10.9 Creating an Expando
+## 10.9 Creating an Expando {#创建一个Expando}
 ```groovy
 def e = new Expando()
 e.class
@@ -1620,21 +1627,21 @@ e.class.methods.name
 toString, setProperty, getProperty, getProperties, getMetaClass,
 setMetaClass, getClass, wait, wait, wait, notify, notifyAll]
 ```
-Expandos are curious little creatures. They are blank slates—objects that are just waiting for you to attach new fields and methods to them. You can see that after you create them, they have no fields to speak of and only the basic methods that they inherit from java.lang.Object and groovy.lang.GroovyObject.
+Expandos是好奇的小动物。 它们是空白状态，只是等待您为它们附加新字段和方法的对象。 您可以看到，在创建它们之后，它们就没有字段可说了，只有它们从`java.lang.Object`和`groovy.lang.GroovyObject`继承的基本方法。
 
-So then, what are they good for?
+那么，它们有什么用？
 ```groovy
 e.latitude = 70
 e.longitude = 30
 println e
 ===> {longitude=30, latitude=70}
 ```
-Expandos will magically expand to support any fields you need. You simply attach the field to the object, and your expando begins to take shape. (Dynamic languages such as JavaScript use this to great effect.)
+Expandos将神奇地扩展以支持您需要的任何字段。 您只需将字段附加到对象，然后您的expando就开始成形。 （诸如JavaScript之类的动态语言可以很好地发挥作用。）
 
-And what about methods? Simply add a new closure to the expando. (See Section 3.17, Closures and Blocks, on page 67 for more information.)
+那么方法呢?只需向expando添加一个新的闭包。(更多信息见第67页3.17节，闭包和块。)
 ```groovy
 e.areWeLost = {->
-return (e.longitude != 30) || (e.latitude != 70)
+  return (e.longitude != 30) || (e.latitude != 70)
 }
 
 e.areWeLost()
@@ -1644,7 +1651,7 @@ e.latitude = 12
 e.areWeLost()
 ===> true
 ```
-In this example, the areWeLost closure accepts no arguments. Here is an example of a closure that takes a single parameter:
+在本例中，areWeLost闭包不接受任何参数。下面是一个使用单个参数的闭包示例:
 ```groovy
 e.goNorth = { howMuch ->
   e.latitude += howMuch
@@ -1657,7 +1664,7 @@ e.goNorth(20)
 ===> 32
 ```
 
-## 10.10 Adding Methods to a Class Dynamically (Categories)
+## 10.10 Adding Methods to a Class Dynamically (Categories) {#动态地向类添加方法(Categories)}
 ```groovy
 use(RandomHelper){
   15.times{ println 10.rand() }
@@ -1671,17 +1678,17 @@ class RandomHelper{
 }
 ===> 5 2 7 0 7 8 2 3 5 1 7 8 9 8 1
 ```
-Categories allow you to add new functionality to any class at runtime. This means you can add those missing methods that the original author forgot—even if you don’t have access to the original source code.
+Categories允许您在运行时向任何类添加新功能。这意味着您可以添加原始作者所遗忘的那些缺少的方法—即使您无法访问原始源代码。
 
-In this example, we add a rand() method to the Integer class. Calling 10.rand() returns a random number from 0 to 9. Calling 100.rand() does the same from 0 to 99. You get the idea. Any Integer inside the use block gets this method automatically. Anything outside the use block is unaffected.
+在本例中，我们向Integer类添加了一个`rand()`方法。调用`10.rand()`返回一个从0到9的随机数。调用`100.rand()`在0到99之间执行相同的操作。您明白了。`use`块中的任何Integer都将自动获得此方法。use块之外的任何东西都不受影响。
 
-Notice that there is nothing special about the RandomHelper class—it doesn’t extend any magical parent class or implement a special interface. The only requirement is that the methods all must accept an instance of themselves (self) as the first argument. This type of class is called a category in Groovy.
+请注意，RandomHelper类没有什么特别的，它不会扩展任何神奇的父类或实现特殊的接口。 唯一的要求是所有方法都必须接受自己（self）的实例作为第一个参数。 这种类型的类在Groovy中称为`category `。
 
-Using pure Java, you’d be blocked from adding new behavior directly to the java.lang.Integer class for a couple of reasons. First, your chances of adding the rand() method to the source code of Integer, compiling it, and getting widespread distribution is pretty slim. (“Hey, which version of Java does your application require?” “Uh, 1.5. Scott...how many servers do you have with that version in production?”)
+使用纯Java，由于多种原因，您将无法直接向`java.lang.Integer`类添加新行为。 首先，将`rand()`方法添加到Integer的源代码，对其进行编译并获得广泛分布的机会非常渺茫。 （“嘿，您的应用程序需要哪个版本的Java？”  “呃，1.5。Scott...在生产中您使用多少版本的服务器？”）
 
-OK, so modifying the source code is ruled out. The next logical step is to extend Integer, right? Well, it would be if Integer weren’t declared final. (D’oh!) So, using a pure Java solution, you are left to create your own com.mycompany.Integer class that wraps a java.lang.Integer with your  custom behavior. The problem with this solution is that because of Java’s strong typing, you cannot polymorphically swap Sun’s Integer out for your own. This six-line solution is looking better all the time, isn’t it?
+所以修改源代码是不可能的。下一个逻辑步骤是扩展Integer，对吧?如果Integer没有被声明为final。因此，使用纯Java解决方案，您可以创建自己的`com.mycompany.Integer`类，它用您的自定义行为包装`Java.lang.integer`。这个解决方案的问题是，由于Java的强类型，您不能用自己的Integer替换Sun的Integer。这个6行的解决方案看起来总是更好，不是吗?
 
-**A Slightly More Advanced Category Example**
+**一个稍微高级的Category示例**
 ```groovy
 use(InternetUtils){
   println "http://localhost:8080/".get()
@@ -1716,11 +1723,11 @@ class InternetUtils{
 }
 ```
 
-In this example, you define an InternetUtils class that offers a couple of new methods: a no-argument get method that converts any String to a URL object and performs an HTTP GET request, an overloaded get method that accepts a String as a query string, and finally an overloaded get method that constructs a well-formed query string out of the params hashmap. (For more on using Groovy to streamline HTTP GET requests, see Section 9.3, Making an HTTP GET Request, on page 155.)
+在这个例子中，你定义一个InternetUtils类，提供了一些新的方法：任何字符串转换为一个URL对象，并执行一个HTTP GET请求，接受字符串作为查询字符串的重载get方法不带参数的get方法 ，最后是重载的get方法，该方法从参数hashmap中构造出格式正确的查询字符串。 （有关使用Groovy简化HTTP GET请求的更多信息，请参阅第9.3节，发出HTTP GET请求，第155页。）
 
-The use block keeps the new functionality narrowly scoped. You don’t have to worry about your new methods sneaking out to all Strings across your entire application. >Of course, if you do want to globally apply these new methods to all Strings, see Section 10.11, Adding Methods to a Class Dynamically (ExpandoMetaClass), on the next page.
+使用块使新功能的范围缩小。 您不必担心新方法会潜入整个应用程序的所有Strings中。 当然，如果您确实想将这些新方法全局地应用于所有String，请参见下一页的第10.11节，将方法动态添加到类（ExpandoMetaClass）。
 
-You can use as many categories as you want in a single use block. Simply pass a comma-separated list to the use block:
+您可以在一个使用块中使用任意数量的categories 。 只需将逗号分隔的列表传递给use块：
 ```groovy
 use(RandomHelper, InternetUtils, SomeOtherCategory) { ... }
 ```
@@ -1728,7 +1735,7 @@ Categories are just as useful in Java as they are in Groovy. (Sorry, I couldn’
 
 Mixing in new functionality to any class is now at your fingertips. Once you get hooked on this new programming paradigm, you’ll wonder how you ever lived without it. (See Section 8.14, Parsing Complex CSV, on page 149 for another example of categories in action.)
 
-## 10.11 Adding Methods to a Class Dynamically (ExpandoMetaClass)
+## 10.11 Adding Methods to a Class Dynamically (ExpandoMetaClass) {动态地向类添加方法（ExpandoMetaClass）}
 ```groovy
 Integer.metaClass.rand = {->
   def r = new Random()
@@ -1738,11 +1745,11 @@ Integer.metaClass.rand = {->
 15.times{ println 10.rand() }
 ===> 2 5 5 5 8 7 2 9 1 4 0 9 9 0 8
 ```
-In Section 10.2, Groovy’s MetaClass Field, on page 184, we learned that every class in Groovy has a MetaClass. In Section 10.9, Creating an Expando, on page 194, we learned about malleable objects that can have new methods added to them on the fly. The ExpandoMetaClass class combines these two concepts—every class’s MetaClass can be extended at runtime like an expando. In this example, we add the rand() method directly to Integer’s MetaClass. This means that all Integers in the running application now have a rand() method.
+在第10.2节Groovy的MetaClass字段（第184页）中，我们了解到Groovy中的每个类都有一个MetaClass。 在第194页的10.9节，创建Expando中，我们了解了可延展的对象，这些对象可以动态添加新方法。 ExpandoMetaClass类结合了这两个概念-每个类的MetaClass都可以在运行时像Expando一样进行扩展。 在此示例中，我们将rand()方法直接添加到Integer的MetaClass。 这意味着正在运行的应用程序中的所有Integer现在都具有rand()方法。
 
-When using categories (as discussed in Section 10.10, Adding Methods to a Class Dynamically (Categories), on page 196), each method must have a self parameter. When using ExpandoMetaClass, the delegate serves this role. The this keyword gives you the MetaClass—delegate gives you one class up in the chain. In this particular case, the call to delegate gives you 10.
+当使用categories(如第10.10节所讨论的，在第196页动态地向类添加方法(categories))时，每个方法必须有一个`self`参数。在使用ExpandoMetaClass时，delegate充当此角色。这个关键字为您提供了元类委托，它为您提供了链中的一个类。在本例中，对委托的调用为10。
 
-**A Slightly More Advanced ExpandoMetaClass Example**
+**一个稍微高级一点的ExpandoMetaClass示例**
 ```groovy
 String.metaClass.get = {->
   return delegate.toURL().text
@@ -1756,10 +1763,10 @@ String.metaClass.get = {String queryString ->
 String.metaClass.get = {Map params ->
   def list = []
   params.each{k,v->
-  list << "$k=" + URLEncoder.encode(v)
-}
+    list << "$k=" + URLEncoder.encode(v)
+  }
 
-def url = delegate + "?" + list.join("&")
+  def url = delegate + "?" + list.join("&")
   return url.get()
 }
 
@@ -1772,13 +1779,9 @@ params.vl = "lang_eng"
 params.p = "groovy"
 println "http://search.yahoo.com/search".get(params)
 ```
-In terms of functionality, the three methods here are identical to the examples found in Section 10.10, Adding Methods to a Class Dynamically (Categories), on page 196. In terms of implementation, you’re faced with code that is firmly grounded in Groovy syntax and idioms. The self references have all been changed to delegate. Closures are used as opposed to static methods grouped together in a category class.
+就功能而言，这里的三个方法与第10.10节中的示例相同，即在第196页动态地向类添加方法(Categories)。在实现方面，您所面对的代码是基于Groovy语法和习惯用法的。self引用都已更改为delegate。闭包与分组在category类中的静态方法不同。
 
-So, which should you use—a category or ExpandoMetaClass? The answer is “It depends.” (Isn’t that always the answer?) A category is perfect if you want to limit the scope of your new methods to a well-defined block of code. An ExpandoMetaClass is better if you want to have your new methods applied to all instances across the entire running application. If you want your new functionality to be easily shared by both Java and Groovy code, categories leave you with a plain old Java class with static methods. ExpandoMetaClasses are more closely tied to Groovy, but they are significantly more performant as well.
-
-
-
-
+那么，应该使用category还是ExpandoMetaClass?答案是“视情况而定。”(这难道不总是答案吗?)如果您希望将新方法的范围限制在定义良好的代码块内，那么category 是最理想的。如果希望将新方法应用于整个正在运行的应用程序中的所有实例，则最好使用ExpandoMetaClass。如果您希望Java和Groovy代码能够轻松地共享新功能，那么category就留给您一个带有静态方法的普通旧Java类。ExpandoMetaclass与Groovy的联系更紧密，但它们的性能也明显更好。
 
 
 [^901]: http://en.wikipedia.org/wiki/Procedural_programming
