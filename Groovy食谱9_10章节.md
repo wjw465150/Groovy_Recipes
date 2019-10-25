@@ -1,10 +1,10 @@
-# 第9章 Web Services {#Web服务}
+## 第9章 Web Services {#Web服务}
 
 Web服务如今无处不在。作为一个行业，一旦我们发现XML可以通过HTTP和HTML传递，我们就进入了面向服务的体系结构(SOA)的新时代。这种从远程数据源获取数据的新方法意味着开发人员必须理解底层TCP/IP和HTTP的机制，以及各种更高层的XML方言:SOAP、REST和XML-RPC。幸运的是，Groovy在所有方面都帮助了我们。
 
 在本章中，我们将从如何确定本地`TCP/IP`地址和域名以及远程系统的域名的底层基础知识开始。我们将向上移动到HTTP—学习如何以编程方式获取、发布、放置和删除。我们将以如何发送和接收SOAP消息、XML-RPC消息和RESTful请求的示例结束本章。我们甚至还将解析一些逗号分隔值(CSV)数据，这只是为了满足以前的需要。
 
-## 9.1 Finding Your Local IP Address and Name {#查找您的本地IP地址和名称}
+### 9.1 Finding Your Local IP Address and Name {#查找您的本地IP地址和名称}
 ```groovy
 InetAddress.localHost.hostAddress
 ===> 63.246.7.76
@@ -62,7 +62,7 @@ Ethernet adapter Local Area Connection:
     Lease Expires . . . . . . . . . . : Tuesday, October 16, 2007 2:53:02 PM
 ```
 
-## 9.2 Finding a Remote IP Address and Domain Name {#查找远程IP地址和域名}
+### 9.2 Finding a Remote IP Address and Domain Name {#查找远程IP地址和域名}
 ```groovy
 InetAddress.getByName("www.aboutgroovy.com")
 ===> www.aboutgroovy.com/63.246.7.76
@@ -123,7 +123,7 @@ Name: www.aboutgroovy.com
 Address: 63.246.7.76
 ```
 
-## 9.3 Making an HTTP GET Request {#发出HTTP GET请求}
+### 9.3 Making an HTTP GET Request {#发出HTTP GET请求}
 ```groovy
 def page = new URL("http://www.aboutgroovy.com").text
 ===>
@@ -261,7 +261,7 @@ RESTful Web服务是一种Web服务。 REST代表代表性状态转移[^903]。 
 
 Yahoo提供了一个RESTful API [^904]，该API以XML返回查询结果。 此查询返回搜索词groovy的前十个匹配。 有关此查询的结果及其解析方法，请参阅第9.1页的第9.12节“将Yahoo Search结果解析为XML”。
 
-## 9.4 Working with Query Strings {#使用查询字符串}
+### 9.4 Working with Query Strings {#使用查询字符串}
 ```javascript
 "http://search.yahoo.com/search?p=groovy".toURL().text
 ```
@@ -409,7 +409,7 @@ println get.text
 
 还记得我们在第161页的第9.4节“从映射中构建查询字符串”中讨论的查询字符串/哈希映射不匹配吗？ 因为QueryString类当前已实现，所以对`qs.add()`的每次调用都会替换名称/值对。 为了支持重复的命名元素，如果名称存在，则需要重构QueryString类以将值追加到List。 有关如何添加此功能的想法，请参阅第193页，第10.8节“调用不存在的方法（invokeMethod）”。
 
-## 9.5 Making an HTTP POST Request {#发出HTTP POST请求}
+### 9.5 Making an HTTP POST Request {#发出HTTP POST请求}
 ```groovy
 def url = new URL("http://search.yahoo.com/search")
 def connection = url.openConnection()
@@ -550,7 +550,7 @@ def results = connection.content.text
 
 RESTful Web服务通常期望POST主体中包含XML，而不是到目前为止展示的查询字符串。 要传递XML，您需要对代码进行两个小的更改。 首先，您很可能需要将`Content-Type`从`application/www-form-urlencoded`（POST的默认设置）更改为`application/xml`。 （确切的Content-Type取决于您正在调用的RESTful服务。）您需要做的另一件事不是对数据进行URL编码, XML有效负载应以其本机格式传输。 有关POST XML的另一个示例，请参见第9.10节，发出SOAP请求，第172页。
 
-## 9.6 Making an HTTP PUT Request {#发出HTTP PUT请求}
+### 9.6 Making an HTTP PUT Request {#发出HTTP PUT请求}
 ```groovy
 def xml = """<car id="142">
   <make>Toyota</make>
@@ -627,7 +627,7 @@ def result = put.text
 ```
 Put类与Post类几乎相同，但具有三个区别。 将queryString字段交换为普通的String字段。 另外，您公开一个contentType字段，以便您可以根据需要进行更改。 最后，将requestMethod设置为PUT。
 
-## 9.7 Making an HTTP DELETE Request {#发出HTTP DELETE请求}
+### 9.7 Making an HTTP DELETE Request {#发出HTTP DELETE请求}
 ```
 def url = new URL("http://localhost:8888/jaw/car/142")
 def connection = url.openConnection()
@@ -674,7 +674,7 @@ def results = delete.text
 ```
 Delete类与Get类几乎相同，但有一个区别:requestMethod设置为DELETE。
 
-## 9.8 Making a RESTful Request {#发出RESTful请求}
+### 9.8 Making a RESTful Request {#发出RESTful请求}
 ```groovy
 def partialRestRequest = "http://geocoder.us/service/rest/geocode?address="
 def address = "1600 Pennsylvania Ave, Washington DC"
@@ -724,7 +724,7 @@ XmlSlurper允许您避免处理名称空间并提取相关字段。 有关更多
 k. http://flickr.com
 :::
 
-## 9.9 Making a CSV Request {#发出CSV请求}
+### 9.9 Making a CSV Request {#发出CSV请求}
 ```groovy
 def partialCsvRequest = "http://geocoder.us/service/csv/geocode?address="
 def address = "1600 Pennsylvania Ave, Washington DC"
@@ -749,7 +749,7 @@ println "Zip: [${tokens[5]}]"
 ```
 在结果字符串上调用`split(",")`可让您轻松访问各个字段。 有关解析CSV的更多信息，请参阅第148页，第8.14节“将CSV转换为XML”。
 
-## 9.10 Making a SOAP Request {#发出SOAP请求}
+### 9.10 Making a SOAP Request {#发出SOAP请求}
 ```groovy
 def address = "1600 Pennsylvania Av, Washington, DC"
 def soapRequest = """<SOAP-ENV:Envelope
@@ -830,7 +830,7 @@ Geocoder.us的SOAP接口有点不典型。 geocodeResponse的名称空间和其�
 
 尽管有这些bug，我还是决定继续使用这个站点作为SOAP示例。能够用四种不同的方言对相同的服务提出相同的请求，再加上能够展示如何灵活地处理响应异常，这是一个意想不到的“好处”，这让人难以拒绝。因为我试图向您展示的是客户端代码，而不是规范的服务器端SOAP示例，所以我认为您可以忽略一两个障碍。
 
-## 9.11 Making an XML-RPC Request {#发出XML-RPC请求}
+### 9.11 Making an XML-RPC Request {#发出XML-RPC请求}
 ```groovy
 def address = "1600 Pennsylvania Av, Washington, DC"
 def xmlrpcRequest = """<methodCall>
@@ -949,7 +949,7 @@ methodResponse.params.param.value.array.data.value.struct.member.each{member ->
 ```
 XmlSlurper允许您避免处理名称空间并提取相关字段。 有关更多信息，请参见第7.9节“使用命名空间解析XML文档”。 尽管嵌套响应的深度几乎是可笑的（您的目标经纬度和长元素深度为11个级别），但您仍可以轻松地找到它们并打印结果。
 
-## 9.12 Parsing Yahoo Search Results as XML {#将Yahoo搜索结果解析为XML}
+### 9.12 Parsing Yahoo Search Results as XML {#将Yahoo搜索结果解析为XML}
 ```groovy
 def yahooAddress = "http://search.yahooapis.com/WebSearchService/V1/webSearch?"
 def queryString = "appid=YahooDemo&query=groovy&results=10"
@@ -994,7 +994,7 @@ http://en.wikipedia.org/wiki/Groovy
 ```
 XmlSlurper允许您避免处理名称空间并提取相关字段。 有关更多信息，请参见第7.9页的第7.9节“使用命名空间解析XML文档”。
 
-##9.13 Parsing an Atom Feed {#解析Atom Feed}
+###9.13 Parsing an Atom Feed {#解析Atom Feed}
 ```
 def atom = "http://aboutgroovy.com/item/atom".toURL().text
 ```
@@ -1061,7 +1061,7 @@ Atom是REST的一种实现，它已经超越了简单的Blogsphere联合组织�
 
 有关如何创建Atom提要的信息，请参见第12.4节，设置Atom提要，见第239页。
 
-## 9.14 Parsing an RSS Feed {#解析RSS Feed}
+### 9.14 Parsing an RSS Feed {#解析RSS Feed}
 ```groovy
 def rssFeed = "http://aboutgroovy.com/podcast/rss".toURL().text
 ```
@@ -1133,7 +1133,7 @@ XmlSlurper允许您避免处理名称空间并提取相关字段。 有关更多
 
 雅虎有许多RSS源，它们提供的不仅是简单的博客联合组织。 有关通过有线发送真实数据的RSS供稿的几个示例，请参见`http://developer.yahoo.com/weather/`以及`http://developer.yahoo.com/traffic/`。
 
-# 第10章 Metaprogramming {#元编程}
+## 第10章 Metaprogramming {#元编程}
 元编程[^1001]是编写能够在运行时动态改变其行为的代码。(我希望这个类现在就有那个方法。)它为您的代码提供了流动性和灵活性，如果您精通C或Java之类的静态编程语言，那么您的代码可能会非常陌生。像Smalltalk和Ruby这样的动态语言就有这种功能，现在Groovy允许您在Java环境中做相同的事情。
 
 没有反射[^1002]的补充概念，即在运行时以编程方式询问自己的能力，没有一种自重的动态语言会是完整的。(此类具有哪些字段？它将响应什么方法？)尽管在Java中可以通过使用Reflection API做到这一点，但实际上很少使用它。有人可能会争辩说，这些概念在静态类型的语言中比在动态类型的语言中没有那么重要—毕竟，一旦用Java定义了接口，为什么要以编程方式询问该接口定义了哪些方法？ 您已经知道先验问题的答案，并且在Java中，接口永远不会改变。 （多态性基于此概念。）
@@ -1142,7 +1142,7 @@ XmlSlurper允许您避免处理名称空间并提取相关字段。 有关更多
 
 本章介绍了以编程方式询问您的类有哪些字段和方法的方法。 我们还将研究如何在运行时通过MetaClass类动态添加新的字段和方法。 我们将讨论使用`invokeMethod()`不存在的调用方法。 甚至有称为Expandos的对象在运行时完全创建。 尽享Groovy风格的元编程。
 
-## 10.1 Discovering the Class {#发现类}
+### 10.1 Discovering the Class {#发现类}
 ```groovy
 def s = "Hello"
 println s.class
@@ -1171,7 +1171,7 @@ interface java.lang.Comparable
 interface java.lang.CharSequence
 ```
 
-## 10.2 Discovering the Fields of a Class {#发现类的字段}
+### 10.2 Discovering the Fields of a Class {#发现类的字段}
 ```groovy
 def d = new Date()
 println d.properties
@@ -1250,7 +1250,7 @@ Date.metaClass
 
 Groovy 1.0中的Java对象不容易公开MetaClass，但它们都有一个MetaClass。要找到它，您必须查询JDK类的MetaClassRegistry。在Groovy 1.5中，这个过程被极大地简化了——您只需直接向类请求它的MetaClass。
 
-## 10.3 Checking for the Existence of a Field {#检查字段是否存在}
+### 10.3 Checking for the Existence of a Field {#检查字段是否存在}
 ```groovy
 class Person{
   String firstname
@@ -1348,7 +1348,7 @@ println "Resulting Person: ${person}"
 
 有关groovlet的更多信息，请参见第2.6节，在Web服务器上运行Groovy (groovlet)，见第33页。有关查询字符串的更多信息，请参阅第159页关于处理查询字符串的9.4节。
 
-## 10.4 Discovering the Methods of a Class {#发现类的方法}
+### 10.4 Discovering the Methods of a Class {#发现类的方法}
 ```groovy
 def d = new Date()
 d.class.methods.each{println it}
@@ -1469,7 +1469,7 @@ hashCode, getClass, equals, toString, wait, wait, wait, notify, notifyAll
 getMetaClass, setMetaClass, invokeMethod, setProperty, getProperty
 ```
 
-## 10.5 Checking for the Existence of a Method {#检查方法是否存在}
+### 10.5 Checking for the Existence of a Method {#检查方法是否存在}
 ```groovy
 class Person{
   String firstname
@@ -1544,7 +1544,7 @@ if(g.metaClass.respondsTo(g, "sayHello", String, String)){
 ```
 这种技术正是JavaScript开发人员多年来一直在做的，以确保他们的代码能够跨不同的浏览器工作。
 
-## 10.6 Creating a Field Pointer {#创建字段指针}
+### 10.6 Creating a Field Pointer {#创建字段指针}
 ```groovy
 class Person{
   String name
@@ -1563,7 +1563,7 @@ println p.@name
 ```
 当您编写`p.name`时，其实您正在调用`p.getName()`。 如果要绕过封装并直接访问该字段（即使它是私有的！），只需在字段名称前加上`@`前缀即可。 例如：`p.@name`。 使用此方法时应格外小心-打破封装并不是一时兴起的事情。 如果getter或setter除了直接设置属性的值之外还执行其他任何操作，则可能会产生不可预测的结果。
 
-## 10.7 Creating a Method Pointer {#创建方法指针}
+### 10.7 Creating a Method Pointer {#创建方法指针}
 ```groovy
 def list = []
 def insert = list.&add
@@ -1576,7 +1576,7 @@ Groovy允许您使用`&`前缀创建指向方法的指针。 在此示例中，i
 
 如果Groovy无法别名调用`System.out.println()`，那么我最喜欢的Groovy功能之一`println "Hello")`将不存在。 有关DSL的更多信息，请参阅第43页的边栏。
 
-## 10.8 Calling Methods That Don’t Exist (invokeMethod) {#调用不存在的方法(invokeMethod)}
+### 10.8 Calling Methods That Don’t Exist (invokeMethod) {#调用不存在的方法(invokeMethod)}
 ```groovy
 class Person{
   String name
@@ -1615,7 +1615,7 @@ println scott.relationships
 
 如果没有`invokeMethod()`，第116页第7章“解析XML”中讨论的解析器或slurpers都无法像它们那样优雅地工作，从而使您可以像在父节点上调用方法一样调用子XML元素。 。
 
-## 10.9 Creating an Expando {#创建一个Expando}
+### 10.9 Creating an Expando {#创建一个Expando}
 ```groovy
 def e = new Expando()
 e.class
@@ -1664,7 +1664,7 @@ e.goNorth(20)
 ===> 32
 ```
 
-## 10.10 Adding Methods to a Class Dynamically (Categories) {#动态地向类添加方法(Categories)}
+### 10.10 Adding Methods to a Class Dynamically (Categories) {#动态地向类添加方法(Categories)}
 ```groovy
 use(RandomHelper){
   15.times{ println 10.rand() }
@@ -1735,7 +1735,7 @@ Categories are just as useful in Java as they are in Groovy. (Sorry, I couldn’
 
 Mixing in new functionality to any class is now at your fingertips. Once you get hooked on this new programming paradigm, you’ll wonder how you ever lived without it. (See Section 8.14, Parsing Complex CSV, on page 149 for another example of categories in action.)
 
-## 10.11 Adding Methods to a Class Dynamically (ExpandoMetaClass) {动态地向类添加方法（ExpandoMetaClass）}
+### 10.11 Adding Methods to a Class Dynamically (ExpandoMetaClass) {动态地向类添加方法（ExpandoMetaClass）}
 ```groovy
 Integer.metaClass.rand = {->
   def r = new Random()
