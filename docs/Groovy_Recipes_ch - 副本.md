@@ -1,7 +1,6 @@
 # Groovy_Recipes(Groovy食谱)
 
-<a name="1___写在前面"></a>
-## 写在前面
+## 写在前面 {#Preface}
 Groovy是一种成功的、强大的、成熟的语言，所有优秀的Java开发人员都应该在他们的工具箱中拥有它。它可以用于使单元测试更富有表现力,脚本任务,比如XML解析或倒入数据,提供扩展点在您的应用程序中,最终用户可以自定义行为与自己的脚本,用于定义特定于域的语言表达可读的和简洁的业务规则,甚至作为一个成熟的通用语言编写应用程序的端到端基于groovy的Grails web框架。
 
 Groovy的主要目标一直是通过提供一种优雅的语言来简化开发人员的工作，这种语言由于其类似java的语法而易于学习，但是它也为所有常见的编程任务提供了有用的特性和API。 Groovy还试图通过将Java推进到21世纪来解决Java的缺点。您现在就可以使用Groovy—无需等待Java 7、8或9—并且可以从闭包中获益;属性;列表、映射和正则表达式的本机语法;和更多。
@@ -15,8 +14,7 @@ Groovy的主要目标一直是通过提供一种优雅的语言来简化开发�
 Guillaume Laforge (Groovy项目经理)
 January 3, 2008
 
-<a name="2___第1章_介绍"></a>
-## 第1章 介绍
+## 第1章 介绍 {#1_Introduction}
 曾几何时，Java是您编写过一次并在任何地方运行的语言。能够在一个操作系统(比如OS X)上编写代码，然后不加修改地将代码放到另一个操作系统(Windows、Solaris或Linux)上，对于习惯于等待在自己机器上运行的版本的用户来说，这是一个巨大的胜利。在使用Java之前，您的操作系统似乎总是最不受支持的，不是吗?
 
 随着我们对Java的进一步了解，平台(Java虚拟机，或JVM)提供了WORA的魔力，而不是语言。因此, 我们正处于第二次Java革命中——Java语言与150多种其他语言共享平台[^11]。 矛盾的是，随着Java语言失去其垄断地位，Java平台变得比以往任何时候都更加重要。
@@ -37,8 +35,7 @@ Groovy在已经安装的JVM(1.4、1.5或1.6)上运行。您可以在用于Java�
 
 在我写这本书的过程中，在我的笔记本电脑上保存一份PDF文档已经不止一次地证明了它的价值。如果一个PDF文件可以折角，那么我的文档就几乎是破旧不堪了。能够以电子方式搜索代码片段或短语(就在文本编辑器旁边的窗口中)绝对是无价的。它改变了我编写Groovy的方式，在我开始写这本书之前，我已经有多年的Groovy经验了!
 
-<a name="3____1_1_Groovy__Java应该是这样的"></a>
-### 1.1 Groovy, Java应该是这样的
+### 1.1 Groovy, Java应该是这样的 {#1_1_Groovy__the_Way_Java_Should_Be}
 Groovy的设计旨在吸引Java开发人员。 Groovy最终是Java。 在JVM上运行的其他语言就是其他语言。 JRuby [^12]的重点是使现有的Ruby代码在JVM上运行。 Jython [^13]的重点是使现有的Python代码在JVM上运行。 Groovy的重点是与您现有的Java代码集成。
 
 我并不是要减少其他语言的价值。 如果您已经有使用另一种语言实现的现有代码库，那么好处是无可否认的。 但是，它们如何使现有Java代码库的Java开发人员受益呢？ Groovy和Java非常兼容，因此在大多数情况下，您可以获取Java文件`foo.java`，并将其重命名为`foo.groovy`。 您将拥有一个完全有效（和可执行）的Groovy文件。 该技巧不适用于JVM上的任何其他邻居。
@@ -159,8 +156,7 @@ public class Person extends java.lang.Object implements groovy.lang.GroovyObject
 
 回想一下，您可以将`Person.java`从字面上重命名为`Person.groovy`，并且在语法上仍然可以正确使用Groovy。 但是，当您看到Groovy版本的简单优雅之后，为什么还要增加所有这些复杂性呢？
 
-<a name="4____1_2_避免冗长"></a>
-### 1.2 避免冗长
+### 1.2 避免冗长 {#1_2_Stripping_Away_the_Verbosity}
 让我们进一步探讨这个冗长的问题。考虑Java中规范的“Hello World”示例:
 ```java
 public class HelloWorld {
@@ -220,8 +216,7 @@ new File("../simpleFile.txt" ).eachLine{ line ->
 
 如果您想轻松快速地处理样式规则，您可以使用一个单行程序来替代Java示例中的35行。行数只是我喜欢Groovy的一个例子—我可以看到森林就是树木，这是一个真正的好处。 我编写的Groovy代码可以直接替代Java，这是另一个事实。 由于这些原因，我喜欢将Groovy视为“可执行伪代码”。
 
-<a name="5____1_3_Groovy:蓝色药丸还是红色药丸_"></a>
-### 1.3 Groovy:蓝色药丸还是红色药丸?
+### 1.3 Groovy:蓝色药丸还是红色药丸? {#1_3_Groovy__The_Blue_Pill_or_the_Red_Pill_}
 在科幻电影《黑客帝国》中，主角neo有两种选择。如果他吃了蓝色药丸，他将回到他的日常生活。没有什么变化。然而，如果他选择了红色药丸，他将获得一个全新的世界观。他会得到超级英雄的能力。(当然，他选择了红色药丸。如果他不这么做，那就算不上一部电影。)
 
 Groovy同时提供了两个选择。
@@ -240,8 +235,7 @@ Groovy的“蓝色药丸”使Java更容易使用。正如所示的Person类示�
 
 这就是Groovy的名字和世界观的由来。Groovy是一种具有您希望它具有的特性的语言。传统的Java开发变得更容易了，还是一种将其他语言的所有这些令人兴奋的新特性都放到JVM上的方法?答案是两者皆有。
 
-<a name="6____1_4_路线图"></a>
-### 1.4 路线图
+### 1.4 路线图 {#1_4_Road_Map}
 您可以通过多种方式阅读这本书。 每章都专注于特定主题，例如`XML`，`文件I/O`，`Web服务`或`元编程`。 要全面了解该主题以及Groovy如何为您提供帮助，只需像阅读其他任何书籍一样，从头至尾阅读本章即可。
 
 但是，如果您急着需要解决某个特定问题，那么目录就是您的朋友。 每章分为解决特定问题或描述特定语言功能的部分：“列出目录中的所有文件”，“读取文件的内容”，“将文本写入文件”等等。 每个部分都以一个代码块开头，您可以键入它来开始您的业务。 如果您需要更多说明，请继续阅读。 我试图使每个部分尽可能独立。 如果它使用其他地方描述的功能，则应以合理的方式明智地交叉引用各节
@@ -269,8 +263,7 @@ Groovy的“蓝色药丸”使Java更容易使用。正如所示的Person类示�
 
 Chapter 12, Grails and Web Services, on page 233 shows how to use Grails for more than returning simple HTML. We'll look at RESTful web services, JSON web services, Atom feeds, podcast feeds, and more.
 
-<a name="7____1_5_致谢"></a>
-### 1.5 致谢
+### 1.5 致谢 {#1_5_Acknowledgments}
 再次感谢Dave Thomas和Andy Hunt创建了实用书架。 这是我第二本与他们在一起的书，作为作者和书名的狂热读者，我对他们将开发者与出版公司友好的组合在一起感到惊喜。
 
 这也是我第二次与Daniel Steinberg担任编辑。 他采用了我半透明的观点，即编写代码优先的Groovy书，并且千方百计地哄骗了您现在所掌握的东西。 他用一句话对“嗯？”，“为什么？”和“真的？”的评论温和地推动了我，在我太简洁的地方上扩大想法，在太过临床的地方给散文加热，并提供了理由和我的真实观点。 大括号和分号还不够的世界经验。 和他一起工作真是一种快乐，我真的很期待我们的下一个项目。
@@ -281,12 +274,10 @@ Chapter 12, Grails and Web Services, on page 233 shows how to use Grails for mor
 
 最后，我的家人应该得到我最深的谢意。 尽管他们常常首当其冲地受到我奇怪的写作时间表和永远存在的截止日期的困扰，但他们却很少抱怨它-至少对我来说不是。 我的妻子金（Kim）付出了看似毫无底线的耐心和鼓励，但也并没有引起人们的注意。 在《 Groovy Recipes》写作期间，她最常问的两个问题是“您是否已经完成这本书了？”和“您什么时候打算写一些我想阅读的东西？”我可以对一个人回答“是……最终”。 对方则表示“很快...我希望”。 年轻的克里斯托弗（Christopher）十分支持写作过程，只要它不妨碍我们诺曼·洛克威尔（Norman Rockwellian）往返幼儿园或我们在任天堂Wii上的时间。 （我确定没有这样做。）年轻的伊丽莎白现在步步高大，够到家里爸爸的门把手，要确保我走得太久没有灿烂的笑容和一两个传染性的傻笑。。 你们每个人都很爱。
 
-<a name="8___第2章_开始"></a>
-## 第2章 开始
+## 第2章 开始 {#2_Getting_Started}
 安装Groovy与安装Ant、Tomcat或Java本身一样简单——解压缩发行版，创建环境变量，并确保二进制文件位于您的路径中。Groovy就绪后，您可以以任何方式运行它——编译或未编译，从shell或GUI控制台，或从命令行或web服务器。如果您有两分钟(或者更少)的时间，那么您就有足够的时间开始尝试Groovy。在您说“下一代Java开发”之前，本章将让您启动并运行。
 
-<a name="9____2_1_安装Groovy"></a>
-### 2.1 安装Groovy
+### 2.1 安装Groovy {#2_1_Installing_Groovy}
 1. 从`http://groovy.codehaus.org`下载并解压groovy.zip。
 2. 创建`GROOVY_HOME`环境变量。
 3. 将`$GROOVY_HOME/bin`添加到`PATH`中。
@@ -326,7 +317,6 @@ $ chmod a+x *
 ```
 目录到位后，下一步需要创建GROOVY_HOME环境变量。 这样做的步骤因SHELL而异。 对于Bash，您可以在主目录中编辑`.bash_profile`或`.bash_rc`文件。 添加以下内容：
 ```bash
-<a name="10____Groovy"></a>
 ### Groovy
 GROOVY_HOME=/opt/groovy
 PATH=$PATH:$GROOVY_HOME/bin
@@ -355,8 +345,7 @@ Groovy Version: 1.5.0 JVM: 1.5.0_13-119
 Groovy Version: 1.5.0 JVM: 1.5.0_13-119
 ```
 
-<a name="11____2_2_运行Groovy脚本"></a>
-### 2.2 运行Groovy脚本
+### 2.2 运行Groovy脚本 {#2_2_Running_a_Groovy_Script}
 ```bash
 // hello.groovy
 println "Hello Groovy World"
@@ -375,8 +364,7 @@ $ groovy hello
 
 有关运行未编译Groovy的更多信息，请参见第5章，第86页命令行中的Groovy。
 
-<a name="12____2_3_编译Groovy"></a>
-### 2.3 编译Groovy
+### 2.3 编译Groovy {#2_3_Compiling_Groovy}
 
 ```bash
 $ groovyc hello.groovy
@@ -394,8 +382,7 @@ $ java -cp %GROOVY_HOME%/embeddable/groovy-all-1.5.0.jar;. hello
 
 有关编译Groovy和与Java类集成的更多信息，请参阅第69页第4章，Java和Groovy集成。
 
-<a name="13____2_4_运行Groovy_Shell__groovysh_"></a>
-### 2.4 运行Groovy Shell (groovysh)
+### 2.4 运行Groovy Shell (groovysh) {#2_4_Running_the_Groovy_Shell}
 
 ```bash
 $ groovysh
@@ -528,8 +515,7 @@ help command
 ```
 在Groovy shell中键入`help`时，会显示一些隐藏的好东西。`import`的行为与它在Java源代码中的行为一样，允许您使用其他包中的类。如果您正在定义一个很长的类，并且搞砸了，`clear`将返回到一个:000状态。要清除整个会话，输入`purge`可以使您回到最初启动shell时的状态。`record`将您键入的所有内容保存到一个文件中，允许您稍后“回放”。`history`显示了shell记住您输入的内容。
 
-<a name="14____2_5_运行Groovy控制台（groovyConsole）"></a>
-### 2.5 运行Groovy控制台（groovyConsole）
+### 2.5 运行Groovy控制台（groovyConsole） {#2_5_Running_the_Groovy_Console}
 ```bash
 $ groovyConsole
 ```
@@ -540,8 +526,7 @@ $ groovyConsole
 
 您甚至有一个图形对象浏览器来更深入地查看给定类上可用的字段和方法。控制台运行的最后一个对象是Person的实例。在下面的页面中，选择`Script > Inspect Last to snoop`，如图2.2所示。
 
-<a name="15____2_6_在Web服务器上运行Groovy__groovlet_"></a>
-### 2.6 在Web服务器上运行Groovy (groovlet)
+### 2.6 在Web服务器上运行Groovy (groovlet) {#2_6_Running_Groovy_on_a_Web_Server}
 ```bash
 1. Copy $GROOVY_HOME/embeddable/groovy.jar to WEB-INF/lib.
 2. Add groovy.servlet.GroovyServlet to WEB-INF/web.xml.
@@ -650,8 +635,7 @@ groovlet并不意味着可以替代功能齐全的web框架。它们只是一些
 **图2.4：显示服务器统计信息的Groovlet**
 ![Figure 2.4: A Groovlet showing server statistics](_v_images/20190924135730923_32664.png)
 
-<a name="16____2_7_Groovy结合Eclipse"></a>
-### 2.7 Groovy结合Eclipse
+### 2.7 Groovy结合Eclipse {#2_7_Groovy___Eclipse}
 ```
 http://groovy.codehaus.org/Eclipse+Plugin
 ```
@@ -687,8 +671,7 @@ http://groovy.codehaus.org/Eclipse+Plugin
 1. 在包资源管理器中，右键单击您的项目，然后选择 `Build Path > Configure Build Path`.
 2. 将默认输出文件夹从`bin`更改为`bin-groovy`。
 
-<a name="17____2_8_Groovy结合IntelliJ_IDEA"></a>
-### 2.8 Groovy结合IntelliJ IDEA
+### 2.8 Groovy结合IntelliJ IDEA {#2_8_Groovy___IntelliJ-IDEA}
 ```
 http://www.jetbrains.com/idea/
 ```
@@ -699,8 +682,7 @@ http://www.jetbrains.com/idea/
 **图2.5：IntelliJ IDEA 7.x中的代码完成**
 ![Figure 2.5: Code completion in IntelliJ IDEA 7.x](_v_images/20190924141442125_18115.png)
 
-<a name="18____2_9_Groovy结合TextMate"></a>
-### 2.9 Groovy结合TextMate
+### 2.9 Groovy结合TextMate {#2_9_Groovy___TextMate}
 ```
 http://macromates.com/
 http://macromates.com/wiki/Main/SubversionCheckout
@@ -721,8 +703,7 @@ Windows用户可能想要签出` E Text Editor`。它承诺“TextMate在Windows
 **图2.6：TextMate的套件编辑器**
 ![Figure 2.6: TextMate’s Bundle Editor](_v_images/20190924142000546_1555.png)
 
-<a name="19____2_10_Groovy在此处插入您的IDE或文本编辑器"></a>
-### 2.10 Groovy在此处插入您的IDE或文本编辑器
+### 2.10 Groovy在此处插入您的IDE或文本编辑器 {#2_10_Groovy____Insert_Your_IDE_or_Text_Editor_Here_}
 
 ```
 http://groovy.codehaus.org/Other+Plugins
@@ -732,8 +713,7 @@ http://groovy.codehaus.org/Other+Plugins
 
 另一个很好的信息来源是您友好的社区搜索引擎。 例如，在搜索引擎中输入`groovy xcode`，`groovy vi`或`groovy [您的IDE]`会产生很多来自成功博客（当然，也包括失败）的人们的点击量。
 
-<a name="20___第3章_Groovy新手"></a>
-## 第3章 Groovy新手
+## 第3章 Groovy新手 {#3_New_to_Groovy}
 
 Groovy是对Java的补充、扩充，在某些情况下，它还提供了非常必要的改进。(毕竟，Java早在1995年就发布了。那是软件时代的前寒武纪，不是吗?) 例如，Java中需要的一些东西在Groovy中是可选的:分号、数据类型，甚至异常处理。默认情况下，Groovy自动包含的包比Java多得多。 Groovy向现有类(如String、List和Map)添加了新的方便方法。所有这些操作都是为了消除历史上减慢Java开发过程的一些减速带。
 
@@ -741,8 +721,7 @@ Groovy最有趣的地方是，您一直在编写它，甚至没有意识到它�
 
 但是Groovy不仅仅改进了现有的语言。Groovy引入了新的类，如`Closure`、`Range`和`GString`。Groovy引入了安全解引用的概念，以避免冗长的空检查块。Groovy提供了一个新的特殊的多行字符串变量。总的来说，Groovy以一种积极的方式“拥抱和扩展”Java。继续读下去，看看如果Java是在21世纪编写的，它会是什么样子。
 
-<a name="21____3_1_自动导入"></a>
-### 3.1 自动导入
+### 3.1 自动导入 {#3_1_Automatic_Imports}
 ```groovy
 import java.lang.*;
 import java.util.*;
@@ -757,8 +736,7 @@ Java自动为您导入`java.lang`包。 这意味着您可以使用诸如String�
 
 在Groovy中，您可以获得许多附加包。换句话说，您可以使用这些包中的类，而不必在文件的顶部显式地导入它们。这些自动导入的净效果是，在默认情况下，您可以使用更多的JDK和GDK。Java类及其Groovy增强功能，如`List`(第3.14节，第58页上的List快捷方式)、`Map`(第3.15节，第62页上的Map快捷方式)、`File`(第6章，第100页上的File Tricks)和`URL`(第9章，第152页上的Web服务)，在您需要它们的时候就会出现。此外,常见的Groovy类,如`XmlParse`和`XmlSlurper`(7.2节,理解XmlSlurper XmlParse和之间的区别,117页),`Expando`(10.9节,创建一个Expando, 194页),和`ExpandoMetaClass`(添加一个类的方法动态(ExpandoMetaClass), 190页)准备好了,等待你由于自动导入,Groovy并代表你。
 
-<a name="22____3_2_可选的分号"></a>
-### 3.2 可选的分号
+### 3.2 可选的分号 {#3_2_Optional_Semicolons}
 ```groovy
 msg = "Hello"
 msg += " World"; msg += "!";
@@ -813,8 +791,7 @@ DSL的最好之处在于，它们不仅为初学者和非程序员带来好处-�
 
 那么，当涉及到可选分号时，我们该怎么办呢?我个人不使用它们，坦白地说，我也不想念它们。我认为，如果它们不是真正必需的，那么它们只不过是视觉上的杂乱-一个残留的尾巴，它反映了Groovy的过去，而不是决定了它的未来。一旦您被DSL的bug所困扰(请参阅前一页的侧栏)，就有机会去掉无法发音的符号，转而使用更像英语的编程风格，这是一个可喜的改变。(当然，我总是愿意你请我喝杯啤酒，试着让我明白我的错误。事先警告一下-可能要喝上几品脱才能说服我……)
 
-<a name="23____3_3_可选的括号"></a>
-### 3.3 可选的括号
+### 3.3 可选的括号 {#3_3_Optional_Parentheses}
 ```groovy
 println("Hello World!")
 println "Hello World!"
@@ -849,8 +826,7 @@ deliver
 
 但这并不意味着我总是避免括号。我可能用的比不用的多。如果我正在编写DSL(如第43页边栏中讨论的那样)，我倾向于使用更少的括号。如果我正在编写更传统的Java/Groovy代码，我将更经常地使用它们。但是在一天结束的时候，我没有一个艰难而快速的决策过程，除了“在这个时候，去掉括号似乎是正确的做法。”
 
-<a name="24____3_4_可选的返回语句"></a>
-### 3.4 可选的返回语句
+### 3.4 可选的返回语句 {#3_4_Optional_Return_Statements}
 ```groovy
 String getFullName(){
   return "${firstName} ${lastName}"
@@ -870,8 +846,7 @@ Groovy中方法的最后一行是一个隐式返回语句。我们可以显式�
 
 如果我需要过早地退出一个方法，我就会使用return语句。例如，我非常相信快速失败，所以在我的withdraw()方法中，会尽快返回“资金不足——稍后再试”。如果我在方法的早期使用return，我可能也会在最后一行使用它来实现视觉对称。另一方面，return并没有为快速的单行方法(如前一段中的add方法)增加多少清晰度。Groovy允许我有目的地编程，而不是让我屈服于编译器的同行压力。当我准备好时，我将使用return，而不是因为编译器让我这么做。
 
-<a name="25____3_5_可选数据类型声明_鸭子类型_"></a>
-### 3.5 可选数据类型声明(鸭子类型)
+### 3.5 可选数据类型声明(鸭子类型) {#3_5_Optional_Datatype_Declaration__Duck_Typing_}
 ```groovy
 //In scripts:
 w = "Hello"
@@ -908,8 +883,7 @@ def d = new Duck()
 ```
 几本畅销Python书籍的作者Alex Martelli创造了duck typing[^35] 这个短语来描述动态类型语言。只要变量像鸭子一样“走路”和像鸭子一样“嘎嘎叫”，它就不必被正式声明为Duck类型——换句话说，它必须在运行时响应那些方法调用。
 
-<a name="26____3_6_可选的异常处理"></a>
-### 3.6 可选的异常处理
+### 3.6 可选的异常处理 {#3_6_Optional_Exception_Handling}
 ```groovy
 //in Groovy:
 def reader = new FileReader("/foo.txt")
@@ -947,8 +921,7 @@ Reader reader = new FileReader("/foo.txt");
 
 Groovy通过将所有已检查的异常转换为未检查的异常来解决这个问题。这一小步将返回异常严重程度的判断给开发人员。如果您运行的web服务经常从最终用户获得格式不正确的请求，您可能会选择显式地捕获NullPointerException，即使Java编译器不需要它。 如果您指的是一个不可能丢失的文件(例如: `WEB-INF/web.xml`)。您可以选择不捕获FileNotFoundException。 多亏了Groovy，“不应该发生的异常条件”的定义现在完全回到了您的控制之中。就像使用可选的逗号和括号一样，您的编程也是有目的的。捕获异常是因为您希望这样做，而不是编译器希望您这样做。
 
-<a name="27____3_7_操作符重载"></a>
-### 3.7 操作符重载
+### 3.7 操作符重载 {#3_7_Operator_Overloading}
 ```groovy
 def d = new Date()
 ===> Sat Sep 01 13:14:20 MDT 2007
@@ -987,8 +960,7 @@ Mon Sep 03 13:14:20 MDT 2007
 
 是否使用运算符重载取决于您，但是我必须承认，`date + 7`的感觉比`date.roll(Calendar.DATE,7)`更加自然。
 
-<a name="28____3_8_安全解除引用___"></a>
-### 3.8 安全解除引用(?)
+### 3.8 安全解除引用(?) {#3_8_Safe_Dereferencing____}
 ```groovy
 def s = "Jane"
 s.size()
@@ -1033,8 +1005,7 @@ else{
 println person?.address?.phoneNumber
 ```
 
-<a name="29____3_9_自动装箱"></a>
-### 3.9 自动装箱
+### 3.9 自动装箱 {#3_9_Autoboxing}
 ```groovy
 def i = 2
 println i.class
@@ -1102,8 +1073,7 @@ println sum
 
 用于`java.math`的Javadoc。BigDecimal指出，它最适合用于“不可变的、任意精度带符号的小数”。BigDecimal类让用户完全控制舍入行为。“最小意外原则表明`1.1 + 1.1应该返回2.2`,`10 * 0.1应该等于1.0`。BigDecimal(和Groovy)提供了您期望的结果。
 
-<a name="30____3_10_Groovy的True"></a>
-### 3.10 Groovy的True
+### 3.10 Groovy的True {#3_10_Groovy_Truth}
 ```groovy
 //true
 if(1) // any non-zero value is true
@@ -1167,8 +1137,7 @@ else{
 ```
 `0、NULL和""(空字符串)`的值都为false。这意味着在处理来自用户的输入时，简单的if(args)捕获了所有最可能要避免的事情。
 
-<a name="31____3_11_嵌入引号"></a>
-### 3.11 嵌入引号
+### 3.11 嵌入引号 {#3_11_Embedded_Quotes}
 ```groovy
 def s1 = 'My name is "Jane"'
 def s2 = "My name is 'Jane'"
@@ -1176,8 +1145,7 @@ def s3 = "My name is \"Jane\""
 ```
 Groovy向Java字符串添加了一些不错的新技巧。在Java中，一个单引号用于表示一个char基元。在Groovy中，我们可以使用单引号来包围字符串。这意味着我们可以使用单引号来保存包含双引号的字符串，而不必转义它们。当然，包含嵌入单引号的双引号字符串也是如此。使用退格转义字符在两种语言中是相同的。
 
-<a name="32____3_12_heredoc_三重引号_"></a>
-### 3.12 heredoc(三重引号)
+### 3.12 heredoc(三重引号) {#3_12_Heredocs__Triple_Quotes_}
 ```groovy
 String s = """This is a
 multi-line String.
@@ -1203,8 +1171,7 @@ Heredocs [^312]支持多种动态语言，从Python到Perl到Ruby。 Heredoc允�
 有关heredocs实际应用的示例，请参阅第239页第12.4节，设置Atom提要。
 
 
-<a name="33____3_13_Groovy的String"></a>
-### 3.13 Groovy的String
+### 3.13 Groovy的String {#3_13_GStrings}
 ```groovy
 def name = "John"
 println "Hello ${name}. Today is ${new Date()}"
@@ -1232,8 +1199,7 @@ Dear ${name},
 """
 ```
 
-<a name="34____3_14_列表快捷方式"></a>
-### 3.14 列表快捷方式
+### 3.14 列表快捷方式 {#3_14_List_Shortcuts}
 ```groovy
 def languages = ["Java", "Groovy", "JRuby"]
 println languages.class
@@ -1429,8 +1395,7 @@ println languages*.toUpperCase()
 ===> [JAVA, GROOVY, JRUBY]
 ```
 
-<a name="35____3_15_映射快捷方式"></a>
-### 3.15 映射快捷方式
+### 3.15 映射快捷方式 {#3_15_Map_Shortcuts}
 ```groovy
 def family = [dad:"John", mom:"Jane"]
 println family.getClass()
@@ -1549,8 +1514,7 @@ family.containsValue("John")
 
 您可以使用与Java的`values()`中相同的策略来查找Groovy中的Map值，它返回所有值的列表，`containsValue()`让您知道某个值是否存在。
 
-<a name="36____3_16_范围"></a>
-### 3.16 范围
+### 3.16 范围 {#3_16_Ranges}
 ```groovy
 def r = 1..3
 println r.class
@@ -1640,8 +1604,7 @@ r.reverse()
 ```
 如果您需要向后遍历Range，则有一个方便的`reverse()`方法。
 
-<a name="37____3_17_闭包和块"></a>
-### 3.17 闭包和块
+### 3.17 闭包和块 {#3_17_Closures_and_Blocks}
 ```groovy
 def hi = { println "Hi"}
 hi()
@@ -1714,13 +1677,11 @@ Total cost: 33.0
 您可以根据需要使用任意数量的参数。 第一个curry调用将填充最左侧的参数。 每个后续调用将填充右侧的下一个参数。
 
 
-<a name="38___第4章_Java和Groovy集成"></a>
-## 第4章 Java和Groovy集成
+## 第4章 Java和Groovy集成 {#4_Java_and_Groovy_Integration}
 
 Groovy最大的卖点之一是它与Java的无缝集成。在本章中，我们将以各种方式探讨这种集成。我们将使用普通的旧Groovy对象(POGOs)作为普通旧Java对象(pojo)的完全替代。我们将从Java调用Groovy代码，从Groovy调用Java代码。最后，我们将探索如何使用Ant来编译整个项目，包括Groovy和Java类的健康组合。
 
-<a name="39____4_1_Groovy的对象"></a>
-### 4.1 Groovy的对象
+### 4.1 Groovy的对象 {#4_1_GroovyBeans__aka_POGOs_}
 ```groovy
 package org.davisworld.bookstore
 class Book{
@@ -1785,8 +1746,7 @@ println Book.getDeclaredMethod("toString")
 ∗. http://java.sun.com/docs/books/tutorial/java/javaOO/accesscontrol.html
 :::
 
-<a name="40____4_2_自动生成的Getter和Setter"></a>
-### 4.2 自动生成的Getter和Setter
+### 4.2 自动生成的Getter和Setter {#4_2_Autogenerated_Getters_and_Setters}
 ```groovy
 class Book{
   String title
@@ -1882,8 +1842,7 @@ println b3.title
 ===> null
 ```
 
-<a name="41____4_3_getProperty和setProperty"></a>
-### 4.3 getProperty和setProperty
+### 4.3 getProperty和setProperty {#4_3_getProperty_and_setProperty}
 ```groovy
 class Book{
   String title
@@ -1921,8 +1880,7 @@ println b."${prop}"
 
 与`getProperty`和`setProperty`方法一样，还有一种更“出色”的方法来处理字段。您可以将字段的名称传递给GString以获得最大的灵活性。(有关GStrings的更多信息，请参见第3.13节，GStrings，第57页。)
 
-<a name="42____4_4_使属性只读"></a>
-### 4.4 使属性只读
+### 4.4 使属性只读 {#4_4_Making_Attributes_Read-Only}
 ```groovy
 class Book{
   final String title
@@ -1946,8 +1904,7 @@ println book2.title
 
 最终修饰符在Groovy和Java中的工作方式相同。 具体来说，这意味着只能在实例化类时才能设置属性。 如果您尝试在事实之后修改属性，则会引发` groovy.lang.ReadOnlyPropertyException`。
 
-<a name="43____4_5_构造函数快捷语法"></a>
-### 4.5 构造函数快捷语法
+### 4.5 构造函数快捷语法 {#4_5_Constructor_Shortcut_Syntax}
 ```groovy
 class Book{
   String title
@@ -1965,8 +1922,7 @@ Groovy为构造函数提供了便利，这是您在Java中从未见过的。 通
 
 这个构造函数快捷方式的特别之处在于，它也可以在纯Java类中使用。构造函数行为是在运行时添加的，因此它既适用于Groovy也适用于Java类。有关这方面的实际演示，请参见第4.9节，从Groovy调用Java，见第81页。
 
-<a name="44____4_6_可选参数_默认值"></a>
-### 4.6 可选参数/默认值
+### 4.6 可选参数/默认值 {#4_6_Optional_Parameters_Default_Values}
 ```groovy
 class Payment{
 BigDecimal amount
@@ -2024,8 +1980,7 @@ Ticket.buy(1, "adult", 0.15)
 ```
 考虑到新buy()方法中参数的顺序，您不可能在不指定所有三个值的情况下请求一张成人票的15%折扣。optionals列表中的级联重要性顺序表明，可以安全地忽略右边的参数，但是必须指定左边的参数。
 
-<a name="45____4_7_私有方法"></a>
-### 4.7 私有方法
+### 4.7 私有方法 {#4_7_Private_Methods}
 ```groovy
 class Book{
   String title
@@ -2057,8 +2012,7 @@ book.poke()
 
 Java尊重private修饰符。 在Java中实例化时，不能通过常规方式调用poke()。
 
-<a name="46____4_8_从Java调用Groovy"></a>
-### 4.8 从Java调用Groovy
+### 4.8 从Java调用Groovy {#4_8_Calling_Groovy_from_Java}
 ```java
 public class BookstoreJava implements Bookstore {
   private Book b; // written in Groovy
@@ -2097,8 +2051,7 @@ Bjarne Stroustrup曾有句著名的话：“ C可以很容易地将自己拍到�
 
 使用纯Java实现中必须使用的一小部分代码就可以获得相同的行为。这段代码唯一需要做的事情就是编译Groovy类(我们将在下一页的Groovy联合编译器4.11节中讨论)，并且在`$GROOVY_HOME/embeddable`中找到的单个Groovy JAR位于类路径的某个地方。
 
-<a name="47____4_9_从Groovy调用Java"></a>
-### 4.9 从Groovy调用Java
+### 4.9 从Groovy调用Java {#4_9_Calling_Java_from_Groovy}
 ```groovy
 class BookstoreGroovy implements Bookstore{
   Book b // written in Groovy
@@ -2115,8 +2068,7 @@ class BookstoreGroovy implements Bookstore{
 ```
 在第79页的第4.8节“从Java调用Groovy”中，我们看到Groovy类在从Java运行时看起来就像Java类。在这个例子中，您可以看到Java类在从Groovy运行时看起来就像Groovy类。即使Publisher是用Java编写的，您仍然可以使用Groovy中提供的很酷的构造函数快捷方式(第4.5节，构造函数快捷语法，见第76页)。
 
-<a name="48____4_10_Groovy和Java中的接口"></a>
-### 4.10 Groovy和Java中的接口
+### 4.10 Groovy和Java中的接口 {#4_10_Interfaces_in_Groovy_and_Java}
 ```groovy
 // Bookstore.java
 public interface Bookstore {
@@ -2136,8 +2088,7 @@ public class BookstoreJava implements Bookstore {...}
 
 这段代码唯一需要做的事情就是编译您的Groovy类(我们将在第4.11节，Groovy联合编译器中对此进行讨论)，并且在`$GROOVY_HOME/embeddable`中找到的单个Groovy JAR位于类路径的某个地方。
 
-<a name="49____4_11_Groovy联合编译器"></a>
-### 4.11 Groovy联合编译器
+### 4.11 Groovy联合编译器 {#4_11_The_Groovy_Joint_Compiler}
 ```bash
 // compile Groovy code
 $ groovyc *.groovy
@@ -2211,8 +2162,7 @@ $ groovyc * -j -Jclasspath=$GROOVY_HOME/embeddable/groovy-all-1.5.0.jar:.
 $ groovyc * -j -Jclasspath=$GROOVY_HOME/embeddable/groovy-all-1.5.0.jar:. -Jsource=1.4 -Jtarget=1.4
 ```
 
-<a name="50____4_12_用Ant编译项目"></a>
-### 4.12 用Ant编译项目
+### 4.12 用Ant编译项目 {#4_12_Compiling_Your_Project_with_Ant}
 ```xml
 <taskdef name="groovyc"
          classname="org.codehaus.groovy.ant.Groovyc"
@@ -2227,15 +2177,13 @@ $ groovyc * -j -Jclasspath=$GROOVY_HOME/embeddable/groovy-all-1.5.0.jar:. -Jsour
 
 为了避免taskdef步骤，将Groovy JAR从 `$GROOVY_HOME/embeddable` 放到 `$ANT_HOME/lib` 目录中。
 
-<a name="51____4_13_使用Maven编译项目"></a>
-### 4.13 使用Maven编译项目
+### 4.13 使用Maven编译项目 {#4_13_Compiling_Your_Project_with_Maven}
 ```js
 http://mojo.codehaus.org/groovy
 ```
 虽然Groovy不提供Maven 2.0开箱即用的支持，但是Mojo项目提供了这种支持。有一个Maven插件允许您联合编译Groovy代码(详细信息请参阅第82页的第4.11节，Groovy联合编译器)。还有一个Maven原型插件，它为您的Groovy项目生成一个框架。
 
-<a name="52___第5章_命令行中的Groovy"></a>
-## 第5章 命令行中的Groovy
+## 第5章 命令行中的Groovy {#5_Groovy_from_the_Command_Line}
 
 用于shell脚本的Java ?是的,对的。
 
@@ -2243,8 +2191,7 @@ http://mojo.codehaus.org/groovy
 
 在本章中，我们将讨论如何从命令提示符运行未编译的Groovy脚本，并从用户处获取命令行参数。您可以像调用本机操作系统命令一样轻松地调用其他Groovy脚本。Groovy作为胶水语言的才能在这里得到了充分的展示。Groovy泰然自若地模糊了本机操作系统任务和Java库之间的区别，执行管理任务——我敢说吗?非常愉快。
 
-<a name="53____5_1_运行未编译的Groovy脚本"></a>
-### 5.1 运行未编译的Groovy脚本
+### 5.1 运行未编译的Groovy脚本 {#5_1_Running_Uncompiled_Groovy_Scripts}
 ```bash
 groovy hello.groovy
 groovy hello
@@ -2258,8 +2205,7 @@ println "Hello Groovy World"
 
 对于我们这些精通企业Java开发和“编译 -> JAR -> WAR -> EAR -> 部署”生命周期的人来说，认为我们实际上只需要保存一个文件并运行它，似乎有些不切实际。一旦你体验过“想一下 -> 编码 -> 运行”，你就会对它上瘾。
 
-<a name="54____5_2_打捆Groovy"></a>
-### 5.2 打捆Groovy
+### 5.2 打捆Groovy {#5_2_Shebanging_Groovy}
 ```bash
 #!/usr/bin/env groovy
 println "Hello Groovy World"
@@ -2275,8 +2221,7 @@ Shebanging Groovy脚本假设有四件事：
 
 我有许多实用程序脚本保存在`~/bin`中。她们已经在我的`PATH`上了。这意味着，无论我在文件系统的哪个位置，我都可以键入一些聪明的操作，在某种程度上模糊地记得我是用Groovy编写脚本的，但老实说，我并不关心。
 
-<a name="55____5_3_接受命令行参数"></a>
-### 5.3 接受命令行参数
+### 5.3 接受命令行参数 {#5_3_Accepting_Command_Line_Arguments}
 ```groovy
 if(args){
   println "Hello ${args[0]}"
@@ -2320,8 +2265,7 @@ a
 test
 ```
 
-<a name="56____5_4_运行Shell命令"></a>
-### 5.4 运行Shell命令
+### 5.4 运行Shell命令 {#5_4_Running_a_Shell_Command}
 ```bash
 // in Windows:
 println "cmd /c dir".execute().text
@@ -2366,8 +2310,7 @@ FTYPE
 
 Windows用户的最后一点建议-不要忘记在目录中转义反斜杠：`println "cmd /c dir c:\\tmp".execute().text`。
 
-<a name="57____5_5_在Groovy脚本中使用Shell通配符"></a>
-### 5.5 在Groovy脚本中使用Shell通配符
+### 5.5 在Groovy脚本中使用Shell通配符 {#5_5_Using_Shell_Wildcards_in_Groovy_Scripts}
 ```groovy
 //in Windows:
 println "cmd /c dir *.groovy".execute().text
@@ -2389,8 +2332,7 @@ println "sh -c ls -al *.groovy".execute().text
 
 不幸的是，如果我尝试在单个字符串上调用`execute`，则此命令所需的嵌入式引号会引起我极大的伤痛。 幸运的是，我们也可以在String数组上调用execute。 数组中的第一个元素是命令，所有随后的元素都作为参数传递。 尽管这种形式较为冗长（乍一看也不太直观），但它确实有效。 我们为样式点获得-1，但为完成工作而获得+1。...
 
-<a name="58____5_6_一次运行多个Shell命令"></a>
-### 5.6 一次运行多个Shell命令
+### 5.6 一次运行多个Shell命令 {#5_6_Running_Multiple_Shell_Commands_at_Once}
 ```bash
 //in Windows:
 println "cmd /c dir c:\\opt & dir c:\\tmp".execute().text
@@ -2399,8 +2341,7 @@ println "ls /opt & ls /tmp".execute().text
 ```
 您可以使用“＆”字符将多个shell命令串在一起。 当然，这与Groovy无关-这是基础OS的功能。 为了证明这一点，请尝试直接在命令提示符下键入用引号引起来的命令。
 
-<a name="59____5_7_等待Shell命令完成后再继续"></a>
-### 5.7 等待Shell命令完成后再继续
+### 5.7 等待Shell命令完成后再继续 {#5_7_Waiting_for_a_Shell_Command_to_Finish_Before_Continuing}
 ```bash
 def p = "convert -crop 256x256 full.jpg tile.jpg".execute()
 p.waitFor()
@@ -2409,8 +2350,7 @@ println "ls".execute().text
 
 如果您有一个运行时间较长的命令，并希望在继续操作之前等待它完成，则可以将该命令分配给一个变量，然后使用" .waitFor()"方法。 此示例显示了ImageMagick命令"convert -crop"，该命令拍摄大图像并将其分解为"256 x 256"像素的图块。 在显示当前目录的目录列表之前，您需要等待命令完成，以确保显示所有生成的图块。
 
-<a name="60____5_8_获取系统属性"></a>
-### 5.8 获取系统属性
+### 5.8 获取系统属性 {#5_8_Getting_System_Properties}
 ```bash
 println System.getProperty("java.version")
 ===> 1.5.0_07
@@ -2472,8 +2412,7 @@ user.language=en
 **Reading in Custom Values from -D or JAVA_OPTS**
 `System.properties`哈希表不仅可以处理每个系统上出现的无聊的旧默认值，还可以提供更多好处。 自定义值可以通过两种方法传递到`System.properties`中。 如果您曾经在Ant目标中使用过“-D”参数（例如，`ant -Dserver.port = 9090 deploy`），则您知道它们也会显示在` System.properties`中（System.getProperty("server.port")）。 存储在`JAVA_OPTS`环境变量中的值也显示在`System.properties`中。
 
-<a name="61____5_9_获取环境变量"></a>
-### 5.9 获取环境变量
+### 5.9 获取环境变量 {#5_9_Getting_Environment_Variables}
 ```groovy
 println System.getenv("JAVA_HOME")
 ===> /Library/Java/Home
@@ -2501,8 +2440,7 @@ PATH=/opt/local/bin:/usr/local/bin:...
 
 像其他任何东西一样，在不同的时间提供给您都很重要。 您的自定义调整可能通过环境变量或`-D`参数进入。 这些变量可能会将您指向用户的主目录或可以找到配置文件的应用程序目录，例如`server.xml`，`struts-config.xml`或`.bash_profile`。 重要的是，无论使用哪种特定机制，您都将能够管理整个系统。
 
-<a name="62____5_10_计算一个字符串"></a>
-### 5.10 计算一个字符串
+### 5.10 计算一个字符串 {#5_10_Evaluating_a_String}
 ```groovy
 def s = "Scott"
 def cmdName = "size"
@@ -2526,8 +2464,7 @@ s.class.methods.each{cmdName ->
 
 尽管此示例无法按书面形式运行-它没有考虑到一些字符串方法需要的参数，比如“s.substring(2,4)”它显示了动态评估Groovy代码的潜在价值。它也很好地说明了其中的风险。如果您盲目地接受终端用户的命令并动态地执行它们，那么您应该为发送给您`rm -Rf /`的脚本准备好。有关动态评估方法的工作示例，请参见第10.4节，类方法的发现，见第188页。
 
-<a name="63____5_11_调用另一个Groovy脚本"></a>
-### 5.11 调用另一个Groovy脚本
+### 5.11 调用另一个Groovy脚本 {#5_11_Calling_Another_Groovy_Script}
 ```groovy
 // hello.groovy
 println "Howdy"
@@ -2600,8 +2537,7 @@ evaluate(new File("/some/other/dir/hello.groovy"))
 
 如果您试图使用脚本到脚本的调用来做比我们已经讨论过的更复杂的事情，我的建议是将您的脚本编译成字节码，将它们放在您选择的包中，将它们打包，然后像调用其他任何Java类一样调用它们。
 
-<a name="64____5_12_动态的Groovy__Groovy__e_"></a>
-### 5.12 动态的Groovy (Groovy -e)
+### 5.12 动态的Groovy (Groovy -e) {#5_12_Groovy_on_the_Fly__groovy__e_}
 ```bash
 $ groovy -e "println System.properties['java.class.path']"
 ===>
@@ -2613,8 +2549,7 @@ Groovy使快速运行代码变得很容易。您可以保存一个文件并立�
 
 例如，假设您正在类路径上拾取一个奇怪的JAR。 您可以在类似Unix的系统上键入"echo $CLASSPATH"来查看环境变量是否是罪魁祸首。 （在Windows系统上设置将获得相似的结果。）如果类路径显示为空，那么讨厌的JAR可以在许多其他地方潜入。 查看 "$JAVA_HOME/lib, $JAVA_HOME/lib/ext, 和 $GROOVY_HOME/lib"，以查看是否有任何陌生人潜伏。 前面的示例将向您精确显示JRE所看到的内容-您可以从那里查找入侵者。
 
-<a name="65____5_13_在命令行中包含JAR"></a>
-### 5.13 在命令行中包含JAR
+### 5.13 在命令行中包含JAR {#5_13_Including_JARs_at_the_Command_Line}
 ```bash
 $ groovy -classpath ~/lib/derbyclient.jar:~/lib/jdom.jar:. db2xml.groovy
 ```
@@ -2637,15 +2572,13 @@ load !{user.home}/.groovy/lib/*.jar
 
 您很快就会厌倦了每次都必须在命令行上键入常用的JAR（例如JDBC驱动程序）。 如果在主目录中创建`.groovy/lib`目录（请不要忘记前导点），则在命令提示符下运行Groovy时，在此目录中找到的所有JAR都会自动包含在CLASSPATH中。 默认情况下，`.groovy/lib`目录是禁用的； 确保在`$GROOVY_HOME/conf/groovy-starter.conf`中启用它。
 
-<a name="66___第6章_文件的技巧"></a>
-## 第6章 文件的技巧
+## 第6章 文件的技巧 {#6_File_Tricks}
 
 Groovy提供了许多处理文件和目录的捷径。 列出文件，复制文件，重命名文件，删除文件-Groovy为所有这些平凡的任务带来了可喜的帮助。 Groovy直接向标准JDK类（例如java.io.File）添加新方法的事实使这些新功能看起来像是该语言的自然组成部分。
 
 健壮的Java构建工具Ant在本章中也有客串出现。 Ant远远超出了标准Java I/O库功能，增加了对相关功能（如批处理操作和ZIP文件）的支持。 即使Ant是用Java编写的，但大多数开发人员熟悉的接口是普遍存在的build.xml文件。 Groovy对XML的本机支持在第7章“解析XML”（第116页）和第8章“编写XML”（第136页）中进行了广泛讨论。在本章中，您将看到一个很好的例子，说明如何在AntBuilder中使用它-所有功能 Ant，没有XML。 一路都是纯代码； 您再也不会以相同的方式查看构建文件了。
 
-<a name="67____6_1_列出目录中的所有文件"></a>
-### 6.1 列出目录中的所有文件
+### 6.1 列出目录中的所有文件 {#6_1_Listing_All_Files_in_a_Directory}
 ```groovy
 new File(".").eachFile{file ->
   println file
@@ -2804,8 +2737,7 @@ new File(".").eachFile{file ->
 ./GroovyLogo.zip
 ```
 
-<a name="68____6_2_读取文件的内容"></a>
-### 6.2 读取文件的内容
+### 6.2 读取文件的内容 {#6_2_Reading_the_Contents_of_a_File}
 ```groovy
 new File("x.txt").eachLine{line->
   println line
@@ -2862,8 +2794,7 @@ Number of words: 31
 
 使用我们在本节中讨论的几个方便的文件方法，您可以轻松地返回一些元数据，如行数和字数。在本例中，我选择了罗密欧与朱丽叶的一个简短片段[^602]。作为程序员，不难想象Groovy脚本可以递归遍历一个目录，只查看`.java`文件，并返回项目的基本"行数/文件数"，不是吗?
 
-<a name="69____6_3_将文本写入文件"></a>
-### 6.3 将文本写入文件
+### 6.3 将文本写入文件 {#6_3_Writing_Text_to_a_File}
 ```groovy
 File file = new File("hello.txt")
 file.write("Hello World\n")
@@ -2960,8 +2891,7 @@ logDir.eachFile{file ->
 在每个月末，我喜欢将网络服务器的每日流量文件汇总为每月摘要。 仅用八行代码，我就可以轻松实现这一点。 我在摘要目录中创建了一个名为`merged.log`的文件。 如果该文件已经存在，则可以通过快速`mergedFile.write("")`清空上一次运行中的所有数据。 然后，我遍历当前目录中的每个项目，将重点放在以`.log`结尾的文件上。 （`file.isFile`检查确保我不会意外地包含以`.log`结尾的目录名称。）`mergedFile.append(file.text)`获取当前文件的文件内容并将其附加到 mergedFile。
 
 
-<a name="70____6_4_复制文件"></a>
-### 6.4 复制文件
+### 6.4 复制文件 {#6_4_Copying_Files}
 ```groovy
 def src = new File("src.txt")
 new File("dest.txt").write(src.text)
@@ -3005,8 +2935,7 @@ new File("src.jpg").copy("dest.jpg")
 
 现在，我们已经探索了复制文件的几种方法，您可以将选择的方法直接添加到`java.io.File`对象中。(有关更多信息，请参见第10.11节，动态地向类添加方法`ExpandoMetaClass`，见第198页)
 
-<a name="71____6_5_使用AntBuilder复制文件"></a>
-### 6.5 使用AntBuilder复制文件
+### 6.5 使用AntBuilder复制文件 {#6_5_Using_AntBuilder_to_Copy_a_File}
 ```groovy
 def ant = new AntBuilder()
 ant.copy(file:"src.txt", tofile:"dest.txt")
@@ -3053,8 +2982,7 @@ ant.copy(file:"src.txt", tofile:"dest.txt", overwrite:true)
 
 默认情况下，如果目标文件比源文件新，则Ant不会覆盖目标文件。 要强制执行复制，请使用`overwrite`属性。
 
-<a name="72____6_6_使用AntBuilder复制目录"></a>
-### 6.6 使用AntBuilder复制目录
+### 6.6 使用AntBuilder复制目录 {#6_6_Using_AntBuilder_to_Copy_a_Directory}
 ```groovy
 def ant = new AntBuilder()
 ant.copy(todir: "backup"){
@@ -3128,8 +3056,7 @@ backup/big_image_thumb.jpg
 ```
 Ant在<copy>任务上提供了一个奇怪的小属性flatten。假设您有文件位于"images, images/icons, 和 images/thumbnails"目录中。如果希望在不保留嵌套目录结构的情况下将它们全部合并到备份目录，可以将flatten属性设置为true。当然，请记住，当您将许多不同的目录复制到一个目录中时，您可能会面临文件名冲突的风险。记住要适当地设置overwrite属性。
 
-<a name="73____6_7_移动_重命名文件"></a>
-### 6.7 移动/重命名文件
+### 6.7 移动/重命名文件 {#6_7_Moving_Renaming_Files}
 ```groovy
 // using the File method
 File src = new File("src.txt")
@@ -3144,8 +3071,7 @@ ant.move(file:"src.txt", tofile:"dest.txt")
 ```
 在第108页的第6.4节，复制文件和第109页的第6.5节，使用AntBuilder复制文件之后，本节可能有点过时了。 您可以使用标准JDK`File.renameTo`方法移动文件。 您也可以使用您的操作系统命令。 您也可以使用`AntBuilder.move`方法。 他们都做相同的事情-使用哪种技术完全取决于个人喜好。
 
-<a name="74____6_8_删除文件"></a>
-### 6.8 删除文件
+### 6.8 删除文件 {#6_8_Deleting_Files}
 ```groovy
 // using the File method
 new File("src.txt").delete()
@@ -3182,8 +3108,7 @@ ant.delete{
 
 我们在第6.6节中使用的嵌套文件集(使用AntBuilder复制目录)在110页中也可以使用。请记住`*.bak`只删除当前目录中的文件;`**/*.bak`递归地删除目录树中的所有文件。
 
-<a name="75____6_9_创建压缩文件"></a>
-### 6.9 创建压缩文件
+### 6.9 创建压缩文件 {#6_9_Creating_a_ZIP_File_Tarball}
 ```groovy
 def ant = new AntBuilder()
 
@@ -3245,12 +3170,10 @@ ant.unzip(src:"../backup.zip", dest:"/dest"){
 
 `AntBuilder.untar`支持您在这里看到的与`AntBuilder.unzip`相同的嵌套模式集。
 
-<a name="76___第7章_解析XML"></a>
-## 第7章 解析XML
+## 第7章 解析XML {#7_Parsing_XML}
 Groovy使得使用XML变得轻而易举。 当然，您仍然可以在工具包中使用经过验证的Java XML库，但是一旦您体验了Groovy的原生`parsers `和`slurpers`，您就会想知道为什么要使用其他任何东西。 Groovy最大限度地减少了XML和代码之间的鸿沟，使XML感觉像是语言的自然扩展。 有关如何使用新发现的XML解析技能的一些实际示例，请参阅第9章，Web服务，第152页。
 
-<a name="77____7_1_在“我有急事”指南解析XML"></a>
-### 7.1 在“我有急事”指南解析XML
+### 7.1 在“我有急事”指南解析XML {#7_1_The__I_m_in_a_Hurry__Guide_to_Parsing_XML}
 ```groovy
 def p = """<person id="99">John Smith</person>"""
 def person = new XmlSlurper().parseText(p)
@@ -3290,8 +3213,7 @@ XmlSlurper允许您通过简单地按名称请求节点来导航任意深度的X
 
 `Groovy/XML`关系有许多微妙的细微差别。 我们将介绍第二个解析器--`XmlParser`.它将在下一节中补充`XmlSlurpe`r。 根据您的观点，它们可能是令人困惑的相似或令人发狂的不同。 我们将花费本章的其余部分来比较和对比它们。 但是，如果您需要做的就是解析一些简单的XML而不想过多考虑它，那么您可以使用`XmlSlurper`并继续您的生活。
 
-<a name="78____7_2_了解XmlParser和XmlSlurper之间的区别"></a>
-### 7.2 了解XmlParser和XmlSlurper之间的区别
+### 7.2 了解XmlParser和XmlSlurper之间的区别 {#7_2_Understanding_the_Difference_Between_XmlParser_and_XmlSlurper}
 
 ```groovy
 def p = """<person id="99">John Smith</person>"""
@@ -3372,8 +3294,7 @@ XmlSlurper是一个空安全的XML解析器。 要求`person.@foo`（一个不�
 
 什么，你不相信我？ 你仍然想知道当firstname和lastname不是API的编译部分时，XmlParser如何处理像`person.firstname`和`person.lastname`这样的调用？ 有关更多信息，请参见第193页上的第10.8节“调用不存在的方法（invokeMethod）”。
 
-<a name="79____7_3_解析XML文档"></a>
-### 7.3 解析XML文档
+### 7.3 解析XML文档 {#7_3_Parsing_XML_Documents}
 ```groovy
 def file = new File("person.xml")
 def url = "http://somewhere.org/person.xml"
@@ -3402,8 +3323,7 @@ person = new XmlSlurper().parseText(p)
 
 由于接受String的重载parse()方法将其视为URL，因此如果已经将XML存储在String变量中，则可以使用单独的parseText()方法。 我们将在本节的大多数示例中使用parseText()，因为为了清晰和`复制/粘贴`友好性，XML与其余代码内联。
 
-<a name="80____7_4_处理XML属性"></a>
-### 7.4 处理XML属性
+### 7.4 处理XML属性 {#7_4_Dealing_with_XML_Attributes}
 
 ```groovy
 def p = """<person id="99" ssn="555-11-2222">John Smith</person>"""
@@ -3490,8 +3410,7 @@ XmlParser和XmlSlurper都支持相同的属性替代语法。 使用hashmap表�
 
 当然，在XmlParser的情况下，您可以轻松地使用`person.attribute("${att}")`。 在XmlSlurper的情况下，你可以使用`person."@${att}"`。
 
-<a name="81____7_5_获取XML元素的主体"></a>
-### 7.5 获取XML元素的主体
+### 7.5 获取XML元素的主体 {#7_5_Getting_the_Body_of_an_XML_Element}
 ```groovy
 def p = """<person id="100">Jane Doe</person>"""
 
@@ -3553,8 +3472,7 @@ Jane
 Doe
 ```
 
-<a name="82____7_6_处理混合大小写元素名称"></a>
-### 7.6 处理混合大小写元素名称
+### 7.6 处理混合大小写元素名称 {#7_6_Dealing_with_Mixed_Case_Element_Names}
 
 ```groovy
 // 注意firstname和LastName中的大小写差异
@@ -3583,8 +3501,7 @@ println person.LastName
 
 无论是XML解析器关心XML元素的名称是否为小写，大写或混合大小写。 您在Groovy中引用它们的方式都要与它们在XML文件中显示的方式相同。
 
-<a name="83____7_7_处理连字符元素名称"></a>
-### 7.7 处理连字符元素名称
+### 7.7 处理连字符元素名称 {#7_7_Dealing_with_Hyphenated_Element_Names}
 ```groovy
 //注意带连字符和下划线的元素名称
 //Groovy必须使用特殊语法来处理连字符
@@ -3632,8 +3549,7 @@ Smith
 
 但请注意，带有下划线的名称可以按原样使用。 下划线在Groovy和XML中都有效，因此您可以在Groovy中保留引号。 人们往前走，没有什么可看的。 这里没有泄漏的抽象。
 
-<a name="84____7_8_深入导航嵌套XML"></a>
-### 7.8 深入导航嵌套XML
+### 7.8 深入导航嵌套XML {#7_8_Navigating_Deeply_Nested_XML}
 ```groovy
 def p = """
 <person id="100">
@@ -3851,8 +3767,7 @@ Denver
 Boulder
 ```
 
-<a name="85____7_9_使用名称空间解析XML文档"></a>
-### 7.9 使用名称空间解析XML文档
+### 7.9 使用名称空间解析XML文档 {#7_9_Parsing_an_XML_Document_with_Namespaces}
 ```groovy
 def p_xml = """
 <p:person
@@ -3953,8 +3868,7 @@ println item.'product:name'
 
 您是否注意到XmlParser让您在名称空间和元素名称之间使用一个点?XmlSlurper再次接近于匹配原始XML语法。`item.'product:name'`对应于`<item><product:name>`使用相同的符号`:(冒号)`。 不幸的是，冒号不是变量名中的合法字符。在XmlSlurper中，需要用引号括住名称空间元素名。
 
-<a name="86____7_10_从XML填充GroovyBean"></a>
-### 7.10 从XML填充GroovyBean
+### 7.10 从XML填充GroovyBean {#7_10_Populating_a_GroovyBean_from_XML}
 ```groovy
 def p = """
 <person>
@@ -3980,14 +3894,12 @@ pxml.children().each{child ->
 
 如果您知道嵌套的XML结构更深入，则应该递归调用`children()`。 如果您有属性，则可以在每个节点上调用`attributes()`以返回Map。 （有关XML文档结构的动态内省的更多提示，请参见第78页上的第7.8节，XmlParser:text(), children()和value()，这里的重点是不要为每个文档提供完整的解决方案。 可能的情况 - 重点是展示使用日常Groovy类处理XML的可能性。
 
-<a name="87___第8章_编写XML"></a>
-## 第8章 编写XML
+## 第8章 编写XML {#8_Writing_XML}
 在第7章，XML解析，第116页，我们探讨了摄取XML的不同方法。(既然您已经完全了解了XmlSlurper，那么“slurp”听起来是不是比“ingest”酷多了?)在本章中，我们将研究编写XML的不同方法。
 
 与Groovy解析器一样，您有两个用于构建XML文档的类似(但略有不同)类——markupbuilder和StreamingMarkupBuilder。在本章结束之前，您应该更清楚地了解每种方法的优缺点。
 
-<a name="88____8_1_在“我有急事”指南编写XML"></a>
-### 8.1 在“我有急事”指南编写XML
+### 8.1 在“我有急事”指南编写XML {#8_1_The__I_m_in_a_Hurry__Guide_to_Creating_an_XML_Document}
 
 ```groovy
 def xml = new groovy.xml.MarkupBuilder()
@@ -4017,8 +3929,7 @@ def xml2 = new groovy.xml.MarkupBuilder(fw)
 
 默认情况下，MarkupBuilder将输出回显到`System.out`。如果希望捕获输出，备用构造函数接受`Writer`。您可以传入`StringWriter`来捕获内存中的输出，也可以使用`FileWriter`将结果直接写入文件。
 
-<a name="89____8_2_创建混合大小写元素名称"></a>
-### 8.2 创建混合大小写元素名称
+### 8.2 创建混合大小写元素名称 {#8_2_Creating_Mixed_Case_Element_Names}
 
 ```groovy
 def xml = new groovy.xml.MarkupBuilder()
@@ -4036,8 +3947,7 @@ xml.PERSON(id:100){
 
 如第125页第7.6节中讨论的，处理混合大小写元素名称，Groovy代码的目的是尽可能匹配XML输出。尽管本例中的奇怪情况不遵循`Java/Groovy`编码约定(类以大写字母开头，变量以小写字母开头，常量全部大写)，但Groovy保留了这种情况，以便您的输出完全符合您的期望。
 
-<a name="90____8_3_创建带连字符的元素名称"></a>
-### 8.3 创建带连字符的元素名称
+### 8.3 创建带连字符的元素名称 {#8_3_Creating_Hyphenated_Element_Names}
 ```groovy
 def xml = new groovy.xml.MarkupBuilder()
 xml.person(id:99){
@@ -4069,8 +3979,7 @@ Caught: groovy.lang.MissingPropertyException:
 No such property: first for class: builder
 ```
 
-<a name="91____8_4_使用MarkupBuilder创建名称空间XML"></a>
-### 8.4 使用MarkupBuilder创建名称空间XML
+### 8.4 使用MarkupBuilder创建名称空间XML {#8_4_Creating_Namespaced_XML_Using_MarkupBuilder}
 ```groovy
 def xml = new groovy.xml.MarkupBuilder()
 def params = [:]
@@ -4098,8 +4007,7 @@ id='99'>
 
 从技术上讲，MarkupBuilder并不理解名称空间，但这并不妨碍它轻松地吐出您要求它吐出的任何内容。在第8.7节中，使用StreamingMarkupBuilder创建带名称空间的XML，在第142页，您可以看到一个支持名称空间的构建器。
 
-<a name="92____8_5_理解MarkupBuilder和StreamingMarkupBuilder之间的区别"></a>
-### 8.5 理解MarkupBuilder和StreamingMarkupBuilder之间的区别
+### 8.5 理解MarkupBuilder和StreamingMarkupBuilder之间的区别 {#8_5_Understanding_the_Difference_Between_MarkupBuilder_and_StreamingMarkupBuilder}
 
 ```groovy
 // MarkupBuilder
@@ -4143,8 +4051,7 @@ MarkupBuilder是这两种方法中比较简单的一种，但也比较有限。S
 
 本章的其余部分将重点介绍StreamingMarkupBuilder及其为团队带来的高级功能。
 
-<a name="93____8_6_分别创建XML文档的各个部分"></a>
-### 8.6 分别创建XML文档的各个部分
+### 8.6 分别创建XML文档的各个部分 {#8_6_Creating_Parts_of_the_XML_Document_Separately}
 
 ```groovy
 def builder = new groovy.xml.StreamingMarkupBuilder()
@@ -4200,8 +4107,7 @@ println builder.bind(personList)
 
 在本例中，personList闭包包含对另外两个闭包的引用:person1和person2。StreamingMarkupBuilder提供了一个`out`目标，您应该将嵌入式闭包指向该目标。如果没有`out`, StreamingMarkupBuilder无法区分希望发出的元素(firstname)和需要取消引用的闭包之间的区别。
 
-<a name="94____8_7_使用StreamingMarkupBuilder创建名称空间XML"></a>
-### 8.7 使用StreamingMarkupBuilder创建名称空间XML
+### 8.7 使用StreamingMarkupBuilder创建名称空间XML {#8_7_Creating_Namespaced_XML_Using_StreamingMarkupBuilder}
 
 ```groovy
 def builder = new groovy.xml.StreamingMarkupBuilder().bind{
@@ -4227,8 +4133,7 @@ println builder
 
 在第8.4节中，使用MarkupBuilder创建名称空间XML，在第138页，我们欺骗MarkupBuilder发出名称空间XML元素，尽管从技术上讲它并不支持名称空间。 另一方面，StreamingMarkupBuilder是名称空间感知的。将名称空间声明传递到保留的名称空间`mkp`。 任何以`mkp为`前缀的内容都被解释为构造器的内部指令，而不是应该发出的输出。 请注意，`location.address`是作为`location:address`发出的，而`mkp.declareNamespace`在输出中找不到。 您可以通过传入一个空字符串作为键来指定XML文档的默认命名空间。
 
-<a name="95____8_8_打印XML声明"></a>
-### 8.8 打印XML声明
+### 8.8 打印XML声明 {#8_8_Printing_Out_the_XML_Declaration}
 
 ```groovy
 def builder = new groovy.xml.StreamingMarkupBuilder()
@@ -4250,8 +4155,7 @@ println builder2.bind{
 ```
 在保留的`mkp`名称空间上调用xmlDeclaration()时，将打印XML声明。 您可以直接在StreamingMarkupBuilder实例上设置编码，以覆盖默认的系统编码。
 
-<a name="96____8_9_打印输出处理指令"></a>
-### 8.9 打印输出处理指令
+### 8.9 打印输出处理指令 {#8_9_Printing_Out_Processing_Instructions}
 
 ```groovy
 def builder = new groovy.xml.StreamingMarkupBuilder()
@@ -4264,8 +4168,7 @@ println builder.bind(person)
 ```
 当您在保留的`mkp`名称空间上调用`pi()`时，将打印处理指令，如用于XSLT的指令。
 
-<a name="97____8_10_打印任意字符串（注释，CDATA）"></a>
-### 8.10 打印任意字符串（注释，CDATA）
+### 8.10 打印任意字符串（注释，CDATA） {#8_10_Printing_Arbitrary_Strings__Comments__CDATA_}
 
 ```groovy
 def comment = "<!-- address is optional -->"
@@ -4320,16 +4223,14 @@ println builder
 在XML中，CDATA[^810]部分提示解析器不要将文本视为标记。相反，它应该被解释为普通的旧字符数据。实际上，这意味着您可以传入通常需要转义的字符，例如`<, >, &`和`引号`(单引号和双引号)。
 
 
-<a name="98____8_11_将StreamingMarkupBuilder输出写入文件"></a>
-### 8.11 将StreamingMarkupBuilder输出写入文件
+### 8.11 将StreamingMarkupBuilder输出写入文件 {#8_11_Writing_StreamingMarkupBuilder_Output_to_a_File}
 ```groovy
 def writer = new FileWriter("person.xml")
 writer << builder.bind(person)
 ```
 您可以将StreamingMarkupBuilder的输出传递给实现`Writer`接口的任何Java类。
 
-<a name="99____8_12_StreamingMarkupBuilder概览"></a>
-### 8.12 StreamingMarkupBuilder概览
+### 8.12 StreamingMarkupBuilder概览 {#8_12_StreamingMarkupBuilder_at_a_Glance}
 ```groovy
 def comment = "<!-- address is new to this release -->"
 def builder = new groovy.xml.StreamingMarkupBuilder()
@@ -4364,8 +4265,7 @@ System.out << builder.bind(person)
 ```
 将您在过去几节中学到的所有内容放在一起，可以为您构建各种复杂的XML文档提供所需的工具。 MarkupBuilder仍然可以用于简单的工作，但是当您需要执行复杂的工作时，可以使用StreamingMarkupBuilder。
 
-<a name="100____8_13_快速创建HTML"></a>
-### 8.13 快速创建HTML
+### 8.13 快速创建HTML {#8_13_Creating_HTML_on_the_Fly}
 ```groovy
 def x = new groovy.xml.MarkupBuilder()
 x.html{
@@ -4467,8 +4367,7 @@ htmlWriter << html
 ```
 使用StreamingMarkupBuilder，您可以异步定义页面的块，并根据需要将它们组合在一起。这允许您组合一个更健壮的模板系统。
 
-<a name="101____8_14_CSV转换为XML"></a>
-### 8.14 CSV转换为XML
+### 8.14 CSV转换为XML {#8_14_Converting_CSV_to_XML}
 ```groovy
 // input file (addresses.csv):
 99,John Smith,456 Fleet St,Denver,CO,80021
@@ -4599,8 +4498,7 @@ class SmartCsvParser {
 
 您使用了一个(category 类别)（如在第10.10节，将方法动态添加到类（Categories），在第196页中所述）将smartSplit方法添加到从fileIn.eachLine返回的字符串中。 这使您可以将smartSplit保留在本地。 如果您认为此方法在全局范围内受到关注，则很可能会改用ExpandoMetaClass类（如第198页上的第10.11节“将方法动态添加到类中（ExpandoMetaClass）中所述）”。
 
-<a name="102____8_15_将JDBC结果集转换为XML"></a>
-### 8.15 将JDBC结果集转换为XML
+### 8.15 将JDBC结果集转换为XML {#8_15_Converting_JDBC_ResultSets_to_XML}
 ```groovy
 //table addressbook:
 |name |address |city |st |zipcode
@@ -4631,15 +4529,13 @@ xml.addressBook{
 ```
 类似于`File.eachFil`e允许您遍历目录中的每个文件（第6.1节，列出目录中的所有文件，第100页）和`List.each`允许您遍历列表中的每个项目（第3.14节，列表快捷方式） ，在第58页）上，可以使用`groovy.sql.Sql`对象使用`eachRow`闭包对JDBC ResultSet进行迭代。 在MarkupBuilder中混合可以为您提供一个透明的JDBC到XML转换器。
 
-<a name="103___第9章_Web服务"></a>
-## 第9章 Web服务
+## 第9章 Web服务 {#9_Web_Services}
 
 Web服务如今无处不在。作为一个行业，一旦我们发现XML可以通过HTTP和HTML传递，我们就进入了面向服务的体系结构(SOA)的新时代。这种从远程数据源获取数据的新方法意味着开发人员必须理解底层TCP/IP和HTTP的机制，以及各种更高层的XML方言:SOAP、REST和XML-RPC。幸运的是，Groovy在所有方面都帮助了我们。
 
 在本章中，我们将从如何确定本地`TCP/IP`地址和域名以及远程系统的域名的底层基础知识开始。我们将向上移动到HTTP—学习如何以编程方式获取、发布、放置和删除。我们将以如何发送和接收SOAP消息、XML-RPC消息和RESTful请求的示例结束本章。我们甚至还将解析一些逗号分隔值(CSV)数据，这只是为了满足以前的需要。
 
-<a name="104____9_1_查找您的本地IP地址和名称"></a>
-### 9.1 查找您的本地IP地址和名称
+### 9.1 查找您的本地IP地址和名称 {#9_1_Finding_Your_Local_IP_Address_and_Name}
 ```groovy
 InetAddress.localHost.hostAddress
 ===> 63.246.7.76
@@ -4697,8 +4593,7 @@ Ethernet adapter Local Area Connection:
     Lease Expires . . . . . . . . . . : Tuesday, October 16, 2007 2:53:02 PM
 ```
 
-<a name="105____9_2_查找远程IP地址和域名"></a>
-### 9.2 查找远程IP地址和域名
+### 9.2 查找远程IP地址和域名 {#9_2_Finding_a_Remote_IP_Address_and_Domain_Name}
 ```groovy
 InetAddress.getByName("www.aboutgroovy.com")
 ===> www.aboutgroovy.com/63.246.7.76
@@ -4759,8 +4654,7 @@ Name: www.aboutgroovy.com
 Address: 63.246.7.76
 ```
 
-<a name="106____9_3_发出HTTP_GET请求"></a>
-### 9.3 发出HTTP GET请求
+### 9.3 发出HTTP GET请求 {#9_3_Making_an_HTTP_GET_Request}
 ```groovy
 def page = new URL("http://www.aboutgroovy.com").text
 ===>
@@ -4898,8 +4792,7 @@ RESTful Web服务是一种Web服务。 REST代表代表性状态转移[^903]。 
 
 Yahoo提供了一个RESTful API [^904]，该API以XML返回查询结果。 此查询返回搜索词groovy的前十个匹配。 有关此查询的结果及其解析方法，请参阅第9.1页的第9.12节“将Yahoo Search结果解析为XML”。
 
-<a name="107____9_4_使用查询字符串"></a>
-### 9.4 使用查询字符串
+### 9.4 使用查询字符串 {#9_4_Working_with_Query_Strings}
 ```javascript
 "http://search.yahoo.com/search?p=groovy".toURL().text
 ```
@@ -5047,8 +4940,7 @@ println get.text
 
 还记得我们在第161页的第9.4节“从映射中构建查询字符串”中讨论的查询字符串/哈希映射不匹配吗？ 因为QueryString类当前已实现，所以对`qs.add()`的每次调用都会替换名称/值对。 为了支持重复的命名元素，如果名称存在，则需要重构QueryString类以将值追加到List。 有关如何添加此功能的想法，请参阅第193页，第10.8节“调用不存在的方法（invokeMethod）”。
 
-<a name="108____9_5_发出HTTP_POST请求"></a>
-### 9.5 发出HTTP POST请求
+### 9.5 发出HTTP POST请求 {#9_5_Making_an_HTTP_POST_Request}
 ```groovy
 def url = new URL("http://search.yahoo.com/search")
 def connection = url.openConnection()
@@ -5189,8 +5081,7 @@ def results = connection.content.text
 
 RESTful Web服务通常期望POST主体中包含XML，而不是到目前为止展示的查询字符串。 要传递XML，您需要对代码进行两个小的更改。 首先，您很可能需要将`Content-Type`从`application/www-form-urlencoded`（POST的默认设置）更改为`application/xml`。 （确切的Content-Type取决于您正在调用的RESTful服务。）您需要做的另一件事不是对数据进行URL编码, XML有效负载应以其本机格式传输。 有关POST XML的另一个示例，请参见第9.10节，发出SOAP请求，第172页。
 
-<a name="109____9_6_发出HTTP_PUT请求"></a>
-### 9.6 发出HTTP PUT请求
+### 9.6 发出HTTP PUT请求 {#9_6_Making_an_HTTP_PUT_Request}
 ```groovy
 def xml = """<car id="142">
   <make>Toyota</make>
@@ -5267,8 +5158,7 @@ def result = put.text
 ```
 Put类与Post类几乎相同，但具有三个区别。 将queryString字段交换为普通的String字段。 另外，您公开一个contentType字段，以便您可以根据需要进行更改。 最后，将requestMethod设置为PUT。
 
-<a name="110____9_7_发出HTTP_DELETE请求"></a>
-### 9.7 发出HTTP DELETE请求
+### 9.7 发出HTTP DELETE请求 {#9_7_Making_an_HTTP_DELETE_Request}
 ```
 def url = new URL("http://localhost:8888/jaw/car/142")
 def connection = url.openConnection()
@@ -5315,8 +5205,7 @@ def results = delete.text
 ```
 Delete类与Get类几乎相同，但有一个区别:requestMethod设置为DELETE。
 
-<a name="111____9_8_发出RESTful请求"></a>
-### 9.8 发出RESTful请求
+### 9.8 发出RESTful请求 {#9_8_Making_a_RESTful_Request}
 ```groovy
 def partialRestRequest = "http://geocoder.us/service/rest/geocode?address="
 def address = "1600 Pennsylvania Ave, Washington DC"
@@ -5366,8 +5255,7 @@ XmlSlurper允许您避免处理名称空间并提取相关字段。 有关更多
 k. http://flickr.com
 :::
 
-<a name="112____9_9_发出CSV请求"></a>
-### 9.9 发出CSV请求
+### 9.9 发出CSV请求 {#9_9_Making_a_CSV_Request}
 ```groovy
 def partialCsvRequest = "http://geocoder.us/service/csv/geocode?address="
 def address = "1600 Pennsylvania Ave, Washington DC"
@@ -5392,8 +5280,7 @@ println "Zip: [${tokens[5]}]"
 ```
 在结果字符串上调用`split(",")`可让您轻松访问各个字段。 有关解析CSV的更多信息，请参阅第148页，第8.14节“将CSV转换为XML”。
 
-<a name="113____9_10_发出SOAP请求"></a>
-### 9.10 发出SOAP请求
+### 9.10 发出SOAP请求 {#9_10_Making_a_SOAP_Request}
 ```groovy
 def address = "1600 Pennsylvania Av, Washington, DC"
 def soapRequest = """<SOAP-ENV:Envelope
@@ -5474,8 +5361,7 @@ Geocoder.us的SOAP接口有点不典型。 geocodeResponse的名称空间和其�
 
 尽管有这些bug，我还是决定继续使用这个站点作为SOAP示例。能够用四种不同的方言对相同的服务提出相同的请求，再加上能够展示如何灵活地处理响应异常，这是一个意想不到的“好处”，这让人难以拒绝。因为我试图向您展示的是客户端代码，而不是规范的服务器端SOAP示例，所以我认为您可以忽略一两个障碍。
 
-<a name="114____9_11_发出XML_RPC请求"></a>
-### 9.11 发出XML-RPC请求
+### 9.11 发出XML-RPC请求 {#9_11_Making_an_XML_RPC_Request}
 ```groovy
 def address = "1600 Pennsylvania Av, Washington, DC"
 def xmlrpcRequest = """<methodCall>
@@ -5594,8 +5480,7 @@ methodResponse.params.param.value.array.data.value.struct.member.each{member ->
 ```
 XmlSlurper允许您避免处理名称空间并提取相关字段。 有关更多信息，请参见第7.9节“使用命名空间解析XML文档”。 尽管嵌套响应的深度几乎是可笑的（您的目标经纬度和长元素深度为11个级别），但您仍可以轻松地找到它们并打印结果。
 
-<a name="115____9_12_将Yahoo搜索结果解析为XML"></a>
-### 9.12 将Yahoo搜索结果解析为XML
+### 9.12 将Yahoo搜索结果解析为XML {#9_12_Parsing_Yahoo_Search_Results_as_XML}
 ```groovy
 def yahooAddress = "http://search.yahooapis.com/WebSearchService/V1/webSearch?"
 def queryString = "appid=YahooDemo&query=groovy&results=10"
@@ -5640,7 +5525,7 @@ http://en.wikipedia.org/wiki/Groovy
 ```
 XmlSlurper允许您避免处理名称空间并提取相关字段。 有关更多信息，请参见第7.9页的第7.9节“使用命名空间解析XML文档”。
 
-###9.13 解析Atom Feed
+###9.13 解析Atom Feed {#9_13_Parsing_an_Atom_Feed}
 ```
 def atom = "http://aboutgroovy.com/item/atom".toURL().text
 ```
@@ -5707,8 +5592,7 @@ Atom是REST的一种实现，它已经超越了简单的Blogsphere联合组织�
 
 有关如何创建Atom提要的信息，请参见第12.4节，设置Atom提要，见第239页。
 
-<a name="116____9_14_解析RSS_Feed"></a>
-### 9.14 解析RSS Feed
+### 9.14 解析RSS Feed {#9_14_Parsing_an_RSS_Feed}
 ```groovy
 def rssFeed = "http://aboutgroovy.com/podcast/rss".toURL().text
 ```
@@ -5780,8 +5664,7 @@ XmlSlurper允许您避免处理名称空间并提取相关字段。 有关更多
 
 雅虎有许多RSS源，它们提供的不仅是简单的博客联合组织。 有关通过有线发送真实数据的RSS供稿的几个示例，请参见`http://developer.yahoo.com/weather/`以及`http://developer.yahoo.com/traffic/`。
 
-<a name="117___第10章_元编程"></a>
-## 第10章 元编程
+## 第10章 元编程 {#10_Metaprogramming}
 元编程[^1001]是编写能够在运行时动态改变其行为的代码。(我希望这个类现在就有那个方法。)它为您的代码提供了流动性和灵活性，如果您精通C或Java之类的静态编程语言，那么您的代码可能会非常陌生。像Smalltalk和Ruby这样的动态语言就有这种功能，现在Groovy允许您在Java环境中做相同的事情。
 
 没有反射[^1002]的补充概念，即在运行时以编程方式询问自己的能力，没有一种自重的动态语言会是完整的。(此类具有哪些字段？它将响应什么方法？)尽管在Java中可以通过使用Reflection API做到这一点，但实际上很少使用它。有人可能会争辩说，这些概念在静态类型的语言中比在动态类型的语言中没有那么重要—毕竟，一旦用Java定义了接口，为什么要以编程方式询问该接口定义了哪些方法？ 您已经知道先验问题的答案，并且在Java中，接口永远不会改变。 （多态性基于此概念。）
@@ -5790,8 +5673,7 @@ XmlSlurper允许您避免处理名称空间并提取相关字段。 有关更多
 
 本章介绍了以编程方式询问您的类有哪些字段和方法的方法。 我们还将研究如何在运行时通过MetaClass类动态添加新的字段和方法。 我们将讨论使用`invokeMethod()`不存在的调用方法。 甚至有称为Expandos的对象在运行时完全创建。 尽享Groovy风格的元编程。
 
-<a name="118____10_1_发现类"></a>
-### 10.1 发现类
+### 10.1 发现类 {#10_1_Discovering_the_Class}
 ```groovy
 def s = "Hello"
 println s.class
@@ -5820,8 +5702,7 @@ interface java.lang.Comparable
 interface java.lang.CharSequence
 ```
 
-<a name="119____10_2_发现类的字段"></a>
-### 10.2 发现类的字段
+### 10.2 发现类的字段 {#10_2_Discovering_the_Fields_of_a_Class}
 ```groovy
 def d = new Date()
 println d.properties
@@ -5900,8 +5781,7 @@ Date.metaClass
 
 Groovy 1.0中的Java对象不容易公开MetaClass，但它们都有一个MetaClass。要找到它，您必须查询JDK类的MetaClassRegistry。在Groovy 1.5中，这个过程被极大地简化了——您只需直接向类请求它的MetaClass。
 
-<a name="120____10_3_检查字段是否存在"></a>
-### 10.3 检查字段是否存在
+### 10.3 检查字段是否存在 {#10_3_Checking_for_the_Existence_of_a_Field}
 ```groovy
 class Person{
   String firstname
@@ -5999,8 +5879,7 @@ println "Resulting Person: ${person}"
 
 有关groovlet的更多信息，请参见第2.6节，在Web服务器上运行Groovy (groovlet)，见第33页。有关查询字符串的更多信息，请参阅第159页关于处理查询字符串的9.4节。
 
-<a name="121____10_4_发现类的方法"></a>
-### 10.4 发现类的方法
+### 10.4 发现类的方法 {#10_4_Discovering_the_Methods_of_a_Class}
 ```groovy
 def d = new Date()
 d.class.methods.each{println it}
@@ -6121,8 +6000,7 @@ hashCode, getClass, equals, toString, wait, wait, wait, notify, notifyAll
 getMetaClass, setMetaClass, invokeMethod, setProperty, getProperty
 ```
 
-<a name="122____10_5_检查方法是否存在"></a>
-### 10.5 检查方法是否存在
+### 10.5 检查方法是否存在 {#10_5_Checking_for_the_Existence_of_a_Method}
 ```groovy
 class Person{
   String firstname
@@ -6197,8 +6075,7 @@ if(g.metaClass.respondsTo(g, "sayHello", String, String)){
 ```
 这种技术正是JavaScript开发人员多年来一直在做的，以确保他们的代码能够跨不同的浏览器工作。
 
-<a name="123____10_6_创建字段指针"></a>
-### 10.6 创建字段指针
+### 10.6 创建字段指针 {#10_6_Creating_a_Field_Pointer}
 ```groovy
 class Person{
   String name
@@ -6217,8 +6094,7 @@ println p.@name
 ```
 当您编写`p.name`时，其实您正在调用`p.getName()`。 如果要绕过封装并直接访问该字段（即使它是私有的！），只需在字段名称前加上`@`前缀即可。 例如：`p.@name`。 使用此方法时应格外小心-打破封装并不是一时兴起的事情。 如果getter或setter除了直接设置属性的值之外还执行其他任何操作，则可能会产生不可预测的结果。
 
-<a name="124____10_7_创建方法指针"></a>
-### 10.7 创建方法指针
+### 10.7 创建方法指针 {#10_7_Creating_a_Method_Pointer}
 ```groovy
 def list = []
 def insert = list.&add
@@ -6231,8 +6107,7 @@ Groovy允许您使用`&`前缀创建指向方法的指针。 在此示例中，i
 
 如果Groovy无法别名调用`System.out.println()`，那么我最喜欢的Groovy功能之一`println "Hello")`将不存在。 有关DSL的更多信息，请参阅第43页的边栏。
 
-<a name="125____10_8_调用不存在的方法_invokeMethod_"></a>
-### 10.8 调用不存在的方法(invokeMethod)
+### 10.8 调用不存在的方法(invokeMethod) {#10_8_Calling_Methods_That_Don_t_Exist_invokeMethod_}
 ```groovy
 class Person{
   String name
@@ -6271,8 +6146,7 @@ println scott.relationships
 
 如果没有`invokeMethod()`，第116页第7章“解析XML”中讨论的解析器或slurpers都无法像它们那样优雅地工作，从而使您可以像在父节点上调用方法一样调用子XML元素。 。
 
-<a name="126____10_9_创建一个Expando"></a>
-### 10.9 创建一个Expando
+### 10.9 创建一个Expando {#10_9_Creating_an_Expando}
 ```groovy
 def e = new Expando()
 e.class
@@ -6321,8 +6195,7 @@ e.goNorth(20)
 ===> 32
 ```
 
-<a name="127____10_10_动态地向类添加方法_Categories_"></a>
-### 10.10 动态地向类添加方法(Categories)
+### 10.10 动态地向类添加方法(Categories) {#10_10_Adding_Methods_to_a_Class_Dynamically_Categories_}
 ```groovy
 use(RandomHelper){
   15.times{ println 10.rand() }
@@ -6393,8 +6266,7 @@ Categories are just as useful in Java as they are in Groovy. (Sorry, I couldn’
 
 Mixing in new functionality to any class is now at your fingertips. Once you get hooked on this new programming paradigm, you’ll wonder how you ever lived without it. (See Section 8.14, Parsing Complex CSV, on page 149 for another example of categories in action.)
 
-<a name="128____10_11_动态地向类添加方法_ExpandoMetaClass_"></a>
-### 10.11 动态地向类添加方法(ExpandoMetaClass)
+### 10.11 动态地向类添加方法(ExpandoMetaClass) {#10_11_Adding_Methods_to_a_Class_Dynamically__ExpandoMetaClass_}
 ```groovy
 Integer.metaClass.rand = {->
   def r = new Random()
