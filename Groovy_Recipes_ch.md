@@ -267,7 +267,7 @@ Groovy的“蓝色药丸”使Java更容易使用。正如所示的Person类示�
 
 第11章，Grails的使用，第200页介绍了一个功能全面的web框架，它构建在熟悉的Java库(如Spring和Hibernate)之上，但是它使用Groovy作为动态粘合剂将所有东西粘在一起。
 
-Chapter 12, Grails and Web Services, on page 233 shows how to use Grails for more than returning simple HTML. We'll look at RESTful web services, JSON web services, Atom feeds, podcast feeds, and more.
+第 12 章，Grails 和 Web 服务，第 233 页，展示了如何使用 Grails 来实现不只是返回简单的 HTML。 我们将了解 RESTful Web 服务、JSON Web 服务、Atom 提要、播客提要等。
 
 <a name="7____1_5_致谢"></a>
 ### 1.5 致谢
